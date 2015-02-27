@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainVC.h"
+#import "ConnectVC.h"
 #import "Utils.h"
 
 AppDelegate *g_app;
@@ -34,10 +35,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     self.mainVc = [MainVC new];
     self.menuVc = [MenuVC new];
+    self.connectVc = [ConnectVC new];
     
     // The Navigation Controller
     self.naviVc  = [UINavigationController alloc];
     self.naviVc = [self.naviVc initWithRootViewController:self.mainVc];
+    [self.naviVc pushViewController:self.connectVc animated:NO];
+    //self.naviVc = [self.naviVc initWithRootViewController:self.connectVc];
     self.naviVc.navigationBar.hidden = YES;
     
     self.window.rootViewController = [self naviVc];

@@ -5,9 +5,8 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVC">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConnectVC">
             <connections>
-                <outlet property="navBar" destination="pYg-3P-Bvh" id="H5m-dd-Y6Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,13 +15,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pYg-3P-Bvh">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SW3-ua-Jke">
+                    <rect key="frame" x="0.0" y="78" width="320" height="482"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNf-gW-Ea3">
                     <rect key="frame" x="0.0" y="26" width="320" height="44"/>
                     <items>
-                        <navigationItem title="Sensorec" id="oug-28-Qmt">
-                            <barButtonItem key="leftBarButtonItem" title="Connect" id="miT-Zh-o6b">
+                        <navigationItem title="Choose Sensor" id="Chb-t1-HVd">
+                            <barButtonItem key="leftBarButtonItem" title="Back" id="Pxp-ha-IoC">
                                 <connections>
-                                    <action selector="btnConnect:" destination="-1" id="czZ-zz-aio"/>
+                                    <action selector="btnBack:" destination="-1" id="tsj-hN-hzF"/>
                                 </connections>
                             </barButtonItem>
                         </navigationItem>
@@ -31,7 +34,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="95" y="100"/>
+            <point key="canvasLocation" x="269" y="334"/>
         </view>
     </objects>
 </document>
