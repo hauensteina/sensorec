@@ -35,13 +35,6 @@
 //---------------
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 
-// Sounds
-//----------------------
-@property SystemSoundID badSound;
-@property SystemSoundID goodSound;
-@property SystemSoundID moreUpSound;
-@property SystemSoundID moreDownSound;
-@property SystemSoundID backStraightSound;
 
 @end
 
@@ -55,29 +48,6 @@
 - (void)viewDidLoad
 //---------------------
 {
-    NSURL *soundURL;
-    soundURL = [[NSBundle mainBundle] URLForResource:@"badsound"
-                                              withExtension:@"aiff"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)soundURL, &_badSound);
-
-    soundURL = [[NSBundle mainBundle] URLForResource:@"goodsound"
-                                       withExtension:@"aiff"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)soundURL, &_goodSound);
-
-    soundURL = [[NSBundle mainBundle] URLForResource:@"more_up"
-                                       withExtension:@"aiff"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)soundURL, &_moreUpSound);
-
-    soundURL = [[NSBundle mainBundle] URLForResource:@"more_down"
-                                       withExtension:@"aiff"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)soundURL, &_moreDownSound);
-    
-    soundURL = [[NSBundle mainBundle] URLForResource:@"backstraight"
-                                       withExtension:@"aiff"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)soundURL, &_backStraightSound);
-    
-    
-    
     [super viewDidLoad];
     self.view.frame = [[UIScreen mainScreen] bounds];
 
@@ -88,32 +58,16 @@
 - (void) playBadSound
 //--------------------------
 {
-    if ([g_app.options[@"sounds"] isEqualToString:@"System"]) {
-        [self playSystemSound:@"low_power"];
-    }
-    else {
-        AudioServicesPlaySystemSound (_badSound);
-        //AudioServicesPlayAlertSound(_badSound); // also vibrates
-    }
+    [self playSystemSound:@"low_power"];
 }
+
 //--------------------------
 - (void) playGoodSound
 //--------------------------
 {
-    if ([g_app.options[@"sounds"] isEqualToString:@"System"]) {
-        [self playSystemSound:@"SIMToolkitPositiveACK"];
-    }
-    else {
-        AudioServicesPlaySystemSound (_goodSound);
-        //AudioServicesPlayAlertSound(_badSound); // also vibrates
-    }
+    [self playSystemSound:@"SIMToolkitPositiveACK"];
 }
-//--------------------------
-- (void) playStraightSound
-//--------------------------
-{
-    AudioServicesPlaySystemSound (_backStraightSound);
-}
+
 
 #pragma mark Button Callbacks
 
