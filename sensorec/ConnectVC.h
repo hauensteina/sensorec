@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SensoPlex.h"
 
-@interface ConnectVC : UIViewController
+@interface ConnectVC : UIViewController <SensoPlexDelegate>
 
 // the SensoPlex object to work with to interact with the SP-10BN Module
 @property (strong, nonatomic, retain) SensoPlex *sensoPlex;

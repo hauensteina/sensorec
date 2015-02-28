@@ -28,13 +28,18 @@
                                     <action selector="btnBack:" destination="-1" id="tsj-hN-hzF"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" title="Scan" id="z70-3l-Uha">
+                                <connections>
+                                    <action selector="btnScan:" destination="-1" id="D0K-9p-fIN"/>
+                                </connections>
+                            </barButtonItem>
                         </navigationItem>
                     </items>
                 </navigationBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="269" y="334"/>
+            <point key="canvasLocation" x="164" y="224"/>
         </view>
     </objects>
 </document>

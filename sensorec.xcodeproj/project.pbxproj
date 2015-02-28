@@ -7,12 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC1CB0D11A97DFC100F72D83 /* more_down.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AC1CB0CF1A97DFC100F72D83 /* more_down.aiff */; };
-		AC1CB0D21A97DFC100F72D83 /* more_up.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AC1CB0D01A97DFC100F72D83 /* more_up.aiff */; };
 		AC1CB0D41A97E16300F72D83 /* backstraight.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AC1CB0D31A97E16300F72D83 /* backstraight.aiff */; };
 		AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = AC2E42BA1A898B9B004CB504 /* Icon-57.png */; };
-		AC4DCDF51A9564A400CB9627 /* badsound.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AC4DCDF41A9564A400CB9627 /* badsound.aiff */; };
-		AC4DCDF71A9564AF00CB9627 /* goodsound.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AC4DCDF61A9564AF00CB9627 /* goodsound.aiff */; };
 		AC60E56B1A8A6D0D00E73EC5 /* prm.c in Sources */ = {isa = PBXBuildFile; fileRef = AC60E5691A8A6D0D00E73EC5 /* prm.c */; };
 		AC60E56D1A8A6FFD00E73EC5 /* cfuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */; };
 		AC7D5A081A968E4D003FFB11 /* MenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7D5A061A968E4D003FFB11 /* MenuVC.m */; };
@@ -68,12 +64,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AC1CB0CF1A97DFC100F72D83 /* more_down.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = more_down.aiff; sourceTree = "<group>"; };
-		AC1CB0D01A97DFC100F72D83 /* more_up.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = more_up.aiff; sourceTree = "<group>"; };
 		AC1CB0D31A97E16300F72D83 /* backstraight.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = backstraight.aiff; path = sensorec/backstraight.aiff; sourceTree = "<group>"; };
 		AC2E42BA1A898B9B004CB504 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
-		AC4DCDF41A9564A400CB9627 /* badsound.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = badsound.aiff; sourceTree = "<group>"; };
-		AC4DCDF61A9564AF00CB9627 /* goodsound.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = goodsound.aiff; sourceTree = "<group>"; };
 		AC60E5691A8A6D0D00E73EC5 /* prm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prm.c; sourceTree = "<group>"; };
 		AC60E56A1A8A6D0D00E73EC5 /* prm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prm.h; sourceTree = "<group>"; };
 		AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cfuncs.m; sourceTree = "<group>"; };
@@ -207,6 +199,7 @@
 				ACA440271A65CD04009C30C0 /* Default-568h@2x.png */,
 				AC855AB61AA116FE001D761C /* SensoPlexLibrary */,
 				ACA43FF81A65C4C2009C30C0 /* sensorec */,
+				ACD0DB1F1A6D9B2A0038E94D /* Assets */,
 				ACA43FF91A65C4C2009C30C0 /* Supporting Files */,
 				ACA440121A65C4C2009C30C0 /* sensorecTests */,
 				ACA43FF71A65C4C2009C30C0 /* Products */,
@@ -225,11 +218,6 @@
 		ACA43FF81A65C4C2009C30C0 /* sensorec */ = {
 			isa = PBXGroup;
 			children = (
-				AC1CB0CF1A97DFC100F72D83 /* more_down.aiff */,
-				AC1CB0D01A97DFC100F72D83 /* more_up.aiff */,
-				AC4DCDF61A9564AF00CB9627 /* goodsound.aiff */,
-				AC4DCDF41A9564A400CB9627 /* badsound.aiff */,
-				ACD0DB1F1A6D9B2A0038E94D /* Assets */,
 				ACD0DB1A1A6D92D60038E94D /* sensorec.png */,
 				ACA4403C1A68A2CE009C30C0 /* amber-led-on-md.png */,
 				ACA4402C1A66E3DB009C30C0 /* green-led-on-md.png */,
@@ -305,6 +293,7 @@
 				ACD0DB231A6D9B3B0038E94D /* Icon-180.png */,
 			);
 			name = Assets;
+			path = sensorec;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -388,7 +377,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC4DCDF71A9564AF00CB9627 /* goodsound.aiff in Resources */,
 				ACD0DB251A6D9B3B0038E94D /* Icon-120.png in Resources */,
 				ACD0DB1B1A6D92D60038E94D /* sensorec.png in Resources */,
 				ACA4402E1A66E3DB009C30C0 /* green-led-on-md.png in Resources */,
@@ -402,10 +390,7 @@
 				AC7D5A091A968E4D003FFB11 /* MenuVC.xib in Resources */,
 				ACA440281A65CD04009C30C0 /* Default-568h@2x.png in Resources */,
 				ACD0DB351A6D9C5F0038E94D /* Icon-58.png in Resources */,
-				AC1CB0D11A97DFC100F72D83 /* more_down.aiff in Resources */,
-				AC1CB0D21A97DFC100F72D83 /* more_up.aiff in Resources */,
 				ACA4402F1A66E3DB009C30C0 /* led-red-control-md.png in Resources */,
-				AC4DCDF51A9564A400CB9627 /* badsound.aiff in Resources */,
 				AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */,
 				ACD0DB3A1A6D9C5F0038E94D /* Icon-144.png in Resources */,
 				ACD0DB321A6D9C5F0038E94D /* Icon-29.png in Resources */,
