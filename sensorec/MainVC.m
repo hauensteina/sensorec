@@ -44,6 +44,7 @@
 
 @property BOOL ledOn;
 @property BOOL recording;
+@property NSTimer *tmStatus;
 
 @end
 
@@ -140,6 +141,13 @@
     [connectVC.sensoPlex getLogStatus];
 }
 
+//-----------------------------
+- (void) tmStatus:(id)sender
+//-----------------------------
+{
+    [g_app.connectVc.sensoPlex getLogStatus];
+}
+
 //======================================
 #pragma mark Senso info from ConnectVC
 //======================================
@@ -159,6 +167,13 @@
     if ([status isEqualToString:@"YES"]) {
         [_btnRecord setTitle:@"Stop Recording" forState:UIControlStateNormal];
         _recording = YES;
+        [_tmStatus invalidate];
+        _tmStatus = [NSTimer scheduledTimerWithTimeInterval:1
+                                                     target:self
+                                                   selector:@selector(tmStatus:)
+                                                   userInfo:nil
+                                                    repeats:NO];
+        
     }
     else {
         [_btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
