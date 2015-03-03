@@ -257,5 +257,32 @@ NSString *chomp (NSString *s);
 // Call any akepa write endpoint. Result string is passed to completion.
 // If nothing comes back, the string will start with 'err_network'.
 
+
+//-----------------------------------------------------
+void putNum (NSNumber *val, NSString *key);
+//-----------------------------------------------------
+// Store a number in UserDefaults
+
+//-----------------------------------------------------
+NSNumber *getNum (NSString *key);
+//-----------------------------------------------------
+// Get number from UserDefaults
+
+//-----------------------------------------------------
+int getInt (NSString *key);
+//-----------------------------------------------------
+// Get number from UserDefaults, return as int
+
+//-----------------------------------------------------
+void putStr (NSString *val, NSString *key);
+//-----------------------------------------------------
+// Store a string in UserDefaults
+
+//-----------------------------------------------------
+NSString *getStr (NSString *key);
+//-----------------------------------------------------
+// Get object from UserDefaults, return as string
+
+
 @end // LKUtil
 

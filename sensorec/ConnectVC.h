@@ -14,6 +14,7 @@
 // the SensoPlex object to work with to interact with the SP-10BN Module
 @property (strong, nonatomic, retain) SensoPlex *sensoPlex;
 @property CBPeripheral *mySenso;
+@property NSString *mySensoName;
 @property BOOL connected;
 
 @end

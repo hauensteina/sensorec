@@ -654,4 +654,60 @@ NSString* getCaller()
     }
 } // getCaller()
 
+#pragma Userdefaults
+
+
+//==============================
+#pragma mark Userdefaults
+//==============================
+
+#define DEF [NSUserDefaults standardUserDefaults]
+
+//-----------------------------------------------------
+void putNum (NSNumber *val, NSString *key)
+//-----------------------------------------------------
+// Store a number in UserDefaults
+{
+    [DEF setObject:val forKey:key];
+}
+
+//-----------------------------------------------------
+NSNumber *getNum (NSString *key)
+//-----------------------------------------------------
+// Get number from UserDefaults
+{
+    return [DEF objectForKey:key];
+}
+
+//-----------------------------------------------------
+int getInt (NSString *key)
+//-----------------------------------------------------
+// Get number from UserDefaults, return as int
+{
+    return [[DEF objectForKey:key] intValue];
+}
+
+//-----------------------------------------------------
+void putStr (NSString *val, NSString *key)
+//-----------------------------------------------------
+// Store a string in UserDefaults
+{
+    [DEF setObject:val forKey:key];
+}
+
+//-----------------------------------------------------
+NSString *getStr (NSString *key)
+//-----------------------------------------------------
+// Get object from UserDefaults, return as string.
+// Map empty strings to nil.
+{
+    id obj = [DEF objectForKey:key];
+    NSString *res = obj ? nsprintf (@"%@", obj) : nil;
+    if ([res isEqualToString:@""]) {
+        res = nil;
+    }
+    return res;
+}
+
+
 @end

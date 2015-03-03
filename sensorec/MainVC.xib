@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVC">
             <connections>
+                <outlet property="lbSensor" destination="m1a-9R-JWP" id="aqR-xv-85z"/>
                 <outlet property="navBar" destination="pYg-3P-Bvh" id="H5m-dd-Y6Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,16 +21,22 @@
                     <rect key="frame" x="0.0" y="26" width="320" height="44"/>
                     <items>
                         <navigationItem title="Sensorec" id="oug-28-Qmt">
-                            <barButtonItem key="leftBarButtonItem" title="Connect" id="miT-Zh-o6b">
+                            <barButtonItem key="leftBarButtonItem" title="Scan" id="miT-Zh-o6b">
                                 <connections>
-                                    <action selector="btnConnect:" destination="-1" id="czZ-zz-aio"/>
+                                    <action selector="btnScan:" destination="-1" id="UuK-31-jua"/>
                                 </connections>
                             </barButtonItem>
                         </navigationItem>
                     </items>
                 </navigationBar>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&lt;disconnected&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1a-9R-JWP">
+                    <rect key="frame" x="8" y="82" width="304" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="myb-nQ-a3G">
-                    <rect key="frame" x="110" y="187" width="101" height="30"/>
+                    <rect key="frame" x="110" y="512" width="101" height="30"/>
                     <state key="normal" title="LED green">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>

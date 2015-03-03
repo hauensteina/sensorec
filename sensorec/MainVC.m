@@ -34,6 +34,7 @@
 // UI Elements
 //---------------
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
+@property (weak, nonatomic) IBOutlet UILabel *lbSensor;
 
 
 @end
@@ -53,6 +54,23 @@
 
 } // viewDidLoad()
 
+//-------------------------------------
+- (void)viewDidAppear:(BOOL)animated
+//-------------------------------------
+{
+    if (!g_app.connectVc.connected) {
+        [g_app.naviVc pushViewController:g_app.connectVc animated:YES];
+        return;
+    }
+    NSString *name = g_app.connectVc.mySensoName;
+    if (name) {
+        _lbSensor.text = name;
+        putStr (name, @"currentSenso");
+    }
+    else {
+        _lbSensor.text = @"<no_name>";
+    }
+} // viewDidAppear()
 
 //--------------------------
 - (void) playBadSound
@@ -73,10 +91,11 @@
 //==============================
 
 //------------------------------------
-- (IBAction)btnConnect:(id)sender
+- (IBAction)btnScan:(id)sender
 //------------------------------------
 {
-    [g_app.naviVc pushViewController:g_app.connectVc animated:YES];
+    putStr (@"",@"currentSenso");
+    [g_app.naviVc pushViewController:g_app.connectVc animated:YES];    
 }
 
 //------------------------------
@@ -119,45 +138,8 @@
     AudioServicesPlaySystemSound(soundID);
 }
 
-//==============================
-#pragma mark Userdefaults
-//==============================
 
-#define DEF [NSUserDefaults standardUserDefaults]
-
-//-----------------------------------------------------
-- (void) putNum:(NSString *)key val:(NSNumber *)val
-//-----------------------------------------------------
-// Store a number in UserDefaults
-{
-    [DEF setObject:val forKey:key];
-}
-
-//-----------------------------------------------------
-- (NSNumber *) getNum:(NSString *)key
-//-----------------------------------------------------
-// Get number from UserDefaults
-{
-    return [DEF objectForKey:key];
-}
-
-//-----------------------------------------------------
-- (int) getInt:(NSString *)key
-//-----------------------------------------------------
-// Get number from UserDefaults, return as int
-{
-    return [[DEF objectForKey:key] intValue];
-}
-
-//-----------------------------------------------------
-- (NSString *) getStr:(NSString *)key
-//-----------------------------------------------------
-// Get object from UserDefaults, return as string
-{
-    id obj = [DEF objectForKey:key];
-    return obj ? nsprintf (@"%@", [DEF objectForKey:key]) : @"" ;
-}
-
+//
 //==============================
 #pragma mark Json
 //==============================

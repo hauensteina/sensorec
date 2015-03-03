@@ -27,18 +27,7 @@
                 <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNf-gW-Ea3">
                     <rect key="frame" x="0.0" y="26" width="320" height="44"/>
                     <items>
-                        <navigationItem title="Choose Sensor" id="Chb-t1-HVd">
-                            <barButtonItem key="leftBarButtonItem" title="Back" id="Pxp-ha-IoC">
-                                <connections>
-                                    <action selector="btnBack:" destination="-1" id="tsj-hN-hzF"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem key="rightBarButtonItem" title="Scan" id="z70-3l-Uha">
-                                <connections>
-                                    <action selector="btnScan:" destination="-1" id="D0K-9p-fIN"/>
-                                </connections>
-                            </barButtonItem>
-                        </navigationItem>
+                        <navigationItem title="Choose Sensor" id="Chb-t1-HVd"/>
                     </items>
                 </navigationBar>
             </subviews>

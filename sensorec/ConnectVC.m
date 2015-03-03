@@ -43,20 +43,6 @@
     [self scanForSensos];
 }
 
-//------------------------------
-- (IBAction)btnBack:(id)sender
-//------------------------------
-{
-    [g_app.naviVc popViewControllerAnimated:YES];
-}
-
-//-------------------------------
-- (IBAction)btnScan:(id)sender
-//-------------------------------
-{
-    [self scanForSensos];
-}
-
 //==========================
 #pragma mark - SensoPlex
 //==========================
@@ -82,8 +68,7 @@
     if(self.sensoPlex.state == SensoPlexScanning)
         [self.sensoPlex stopScanningForBLEPeripherals];
     
-    // Sensoplex
-    // if we are not connected, then scan for our peripheral to connect to
+    // If we are not connected, then scan for our peripheral to connect to
     SensoPlexState state = self.sensoPlex.state;
     if ( state == SensoPlexDisconnected || state == SensoPlexFailedToConnect ) {
         [self.sensoPlex discoverBLEPeripherals];
@@ -143,8 +128,17 @@
                                    name:(NSString *)name
 //------------------------------------------------------------------
 {
+    // Populate the tableview. If we come across our last known
+    // sensor, connect immediately.
     [_discoveredSensos addObject:@[peripheral,name]];
     [_tbvSensos reloadData];
+    
+    NSString *currentSenso = getStr (@"currentSenso");
+    if ([name isEqualToString:currentSenso]) {
+        _mySenso = peripheral;
+        _mySensoName = currentSenso;
+        [self connectToSenso];
+    }
 }
 
 //---------------------------------------------------------------------
@@ -191,6 +185,9 @@
             break;
         }
         case SensoPlexDisconnected: {
+            if ([g_app.naviVc.viewControllers count] == 1) {
+                [g_app.naviVc pushViewController:g_app.connectVc animated:YES];
+            }
             [self scanForSensos];
             break;
         }
@@ -273,6 +270,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 //-----------------------------------------------------
 {
     _mySenso = _discoveredSensos[indexPath.row][0];
+    _mySensoName = _discoveredSensos[indexPath.row][1];
     [self connectToSenso];
 } // didSelectRowAtIndexPath
 
