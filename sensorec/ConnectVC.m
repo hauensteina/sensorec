@@ -8,6 +8,7 @@
 
 #import "ConnectVC.h"
 #import "common.h"
+#import "Utils.h"
 #import "../SensoPlexLibrary/SensoPlex.h"
 #import "BluetoothMasterCell.h"
 
@@ -38,6 +39,7 @@
 - (void)viewDidAppear:(BOOL)animated
 //-------------------------------------
 {
+    [self disconnectConnectedSenso];
     [self scanForSensos];
 }
 
@@ -75,7 +77,7 @@
 //----------------------
 {
     [_discoveredSensos removeAllObjects];
-    //[_devicesTableView reloadData];
+    [_tbvSensos reloadData];
     
     if(self.sensoPlex.state == SensoPlexScanning)
         [self.sensoPlex stopScanningForBLEPeripherals];
@@ -126,7 +128,8 @@
         [self.sensoPlex stopCapturingData];
     [self.sensoPlex stopScanningForBLEPeripherals];
     [self.sensoPlex cleanup];
-    
+    self.mySenso = nil;
+    self.connected = NO;
     //[self showConnectionState:self.sensoPlex.state];
 }
 
@@ -158,6 +161,55 @@
     }
     return NO;
 }
+
+// connection state callback
+//---------------------------------------
+- (void) onSensoPlexConnectStateChange
+//---------------------------------------
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SensoPlexState state = self.sensoPlex.state;
+        [self handleConnectionState:state];
+    });
+}
+
+//-----------------------------------------------------
+- (void) handleConnectionState:(SensoPlexState) state
+//-----------------------------------------------------
+// Not a delegate method. Called on main thread from
+// onSensoPlexConnectStateChange()
+{
+    switch (state) {
+        case SensoPlexConnecting: {
+            break;
+        }
+        case SensoPlexConnected: {
+            break;
+        }
+        case SensoPlexReady: {
+            [g_app.naviVc popViewControllerAnimated:YES];
+            break;
+        }
+        case SensoPlexDisconnected: {
+            [self scanForSensos];
+            break;
+        }
+        case SensoPlexFailedToConnect: {
+            break;
+        }
+        case SensoPlexScanning: {
+            break;
+        }
+        case SensoPlexBluetoothError: {
+        }
+        default: {
+            [self popup: nsprintf (@"unknown sensor state %d",state)
+                  title:@"Error"];
+        }
+            break;
+    }
+}  // handleConnectionState()
+
 
 //=========================================
 # pragma mark TableView delegate methods
@@ -249,6 +301,23 @@ heightForFooterInSection:(NSInteger)section
     return 0;
 }
 
+//==============================
+#pragma mark UI Helpers
+//==============================
+
+//-------------------------------
+- (void) popup:(NSString *)msg
+         title:(NSString *)title
+//-------------------------------
+{
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:title
+                               message:msg
+                              delegate:self
+                     cancelButtonTitle:@"OK"
+                     otherButtonTitles:nil];
+    [alert show];
+}
 
 
 @end
