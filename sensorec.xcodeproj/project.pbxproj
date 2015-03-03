@@ -7,16 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC1CB0D41A97E16300F72D83 /* backstraight.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AC1CB0D31A97E16300F72D83 /* backstraight.aiff */; };
 		AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = AC2E42BA1A898B9B004CB504 /* Icon-57.png */; };
-		AC60E56B1A8A6D0D00E73EC5 /* prm.c in Sources */ = {isa = PBXBuildFile; fileRef = AC60E5691A8A6D0D00E73EC5 /* prm.c */; };
 		AC60E56D1A8A6FFD00E73EC5 /* cfuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */; };
 		AC7D5A081A968E4D003FFB11 /* MenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7D5A061A968E4D003FFB11 /* MenuVC.m */; };
 		AC7D5A091A968E4D003FFB11 /* MenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC7D5A071A968E4D003FFB11 /* MenuVC.xib */; };
 		AC7D5A121A96A4A2003FFB11 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7D5A111A96A4A2003FFB11 /* Utils.m */; };
+		AC7EEBFB1AA51B4D009BB0A2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC7EEBFA1AA51B4D009BB0A2 /* Default-568h@2x.png */; };
 		AC855AB11AA110FA001D761C /* ConnectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC855AAF1AA110FA001D761C /* ConnectVC.m */; };
 		AC855AB21AA110FA001D761C /* ConnectVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC855AB01AA110FA001D761C /* ConnectVC.xib */; };
-		AC855AB51AA112E8001D761C /* Senso.m in Sources */ = {isa = PBXBuildFile; fileRef = AC855AB41AA112E8001D761C /* Senso.m */; };
 		AC855ACB1AA116FE001D761C /* SensoPlex.m in Sources */ = {isa = PBXBuildFile; fileRef = AC855AB91AA116FE001D761C /* SensoPlex.m */; };
 		AC855ACC1AA116FE001D761C /* SensorData.m in Sources */ = {isa = PBXBuildFile; fileRef = AC855ABB1AA116FE001D761C /* SensorData.m */; };
 		AC855ACD1AA116FE001D761C /* SensorDataAbstract.m in Sources */ = {isa = PBXBuildFile; fileRef = AC855ABD1AA116FE001D761C /* SensorDataAbstract.m */; };
@@ -27,12 +25,12 @@
 		AC855AD21AA116FE001D761C /* SSPacketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AC855AC81AA116FE001D761C /* SSPacketLogger.m */; };
 		AC855AD31AA116FE001D761C /* SSPacketParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AC855ACA1AA116FE001D761C /* SSPacketParser.m */; };
 		AC855AD81AA11ABD001D761C /* MoLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AC855AD71AA11ABD001D761C /* MoLogger.m */; };
+		AC9F59B51AA4E447007FDBDB /* BluetoothMasterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9F59B41AA4E447007FDBDB /* BluetoothMasterCell.m */; };
 		ACA43FFC1A65C4C2009C30C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA43FFB1A65C4C2009C30C0 /* main.m */; };
 		ACA43FFF1A65C4C2009C30C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA43FFE1A65C4C2009C30C0 /* AppDelegate.m */; };
 		ACA440161A65C4C2009C30C0 /* sensorecTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA440151A65C4C2009C30C0 /* sensorecTests.m */; };
 		ACA440221A65C683009C30C0 /* MainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA440201A65C683009C30C0 /* MainVC.m */; };
 		ACA440231A65C683009C30C0 /* MainVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACA440211A65C683009C30C0 /* MainVC.xib */; };
-		ACA440281A65CD04009C30C0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA440271A65CD04009C30C0 /* Default-568h@2x.png */; };
 		ACA4402E1A66E3DB009C30C0 /* green-led-on-md.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA4402C1A66E3DB009C30C0 /* green-led-on-md.png */; };
 		ACA4402F1A66E3DB009C30C0 /* led-red-control-md.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA4402D1A66E3DB009C30C0 /* led-red-control-md.png */; };
 		ACA4403D1A68A2CE009C30C0 /* amber-led-on-md.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA4403C1A68A2CE009C30C0 /* amber-led-on-md.png */; };
@@ -64,10 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AC1CB0D31A97E16300F72D83 /* backstraight.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = backstraight.aiff; path = sensorec/backstraight.aiff; sourceTree = "<group>"; };
 		AC2E42BA1A898B9B004CB504 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
-		AC60E5691A8A6D0D00E73EC5 /* prm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prm.c; sourceTree = "<group>"; };
-		AC60E56A1A8A6D0D00E73EC5 /* prm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prm.h; sourceTree = "<group>"; };
 		AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cfuncs.m; sourceTree = "<group>"; };
 		AC60E56E1A8A701600E73EC5 /* cfuncs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cfuncs.h; sourceTree = "<group>"; };
 		AC7D5A051A968E4D003FFB11 /* MenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuVC.h; sourceTree = "<group>"; };
@@ -76,11 +71,10 @@
 		AC7D5A0D1A969E14003FFB11 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		AC7D5A101A96A4A2003FFB11 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		AC7D5A111A96A4A2003FFB11 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		AC7EEBFA1AA51B4D009BB0A2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AC855AAE1AA110FA001D761C /* ConnectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectVC.h; sourceTree = "<group>"; };
 		AC855AAF1AA110FA001D761C /* ConnectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectVC.m; sourceTree = "<group>"; };
 		AC855AB01AA110FA001D761C /* ConnectVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConnectVC.xib; sourceTree = "<group>"; };
-		AC855AB31AA112E8001D761C /* Senso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Senso.h; sourceTree = "<group>"; };
-		AC855AB41AA112E8001D761C /* Senso.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Senso.m; sourceTree = "<group>"; };
 		AC855AB71AA116FE001D761C /* SensoPlex-Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SensoPlex-Constants.h"; sourceTree = "<group>"; };
 		AC855AB81AA116FE001D761C /* SensoPlex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensoPlex.h; sourceTree = "<group>"; };
 		AC855AB91AA116FE001D761C /* SensoPlex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensoPlex.m; sourceTree = "<group>"; };
@@ -104,6 +98,8 @@
 		AC855AD51AA11ABD001D761C /* MoConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoConstants.h; sourceTree = "<group>"; };
 		AC855AD61AA11ABD001D761C /* MoLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoLogger.h; sourceTree = "<group>"; };
 		AC855AD71AA11ABD001D761C /* MoLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoLogger.m; sourceTree = "<group>"; };
+		AC9F59B31AA4E447007FDBDB /* BluetoothMasterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BluetoothMasterCell.h; path = sensorec/BluetoothMasterCell.h; sourceTree = "<group>"; };
+		AC9F59B41AA4E447007FDBDB /* BluetoothMasterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BluetoothMasterCell.m; path = sensorec/BluetoothMasterCell.m; sourceTree = "<group>"; };
 		ACA43FF61A65C4C2009C30C0 /* sensorec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sensorec.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA43FFA1A65C4C2009C30C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACA43FFB1A65C4C2009C30C0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -115,7 +111,6 @@
 		ACA4401F1A65C683009C30C0 /* MainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainVC.h; sourceTree = "<group>"; };
 		ACA440201A65C683009C30C0 /* MainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainVC.m; sourceTree = "<group>"; };
 		ACA440211A65C683009C30C0 /* MainVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainVC.xib; sourceTree = "<group>"; };
-		ACA440271A65CD04009C30C0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		ACA4402C1A66E3DB009C30C0 /* green-led-on-md.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-led-on-md.png"; sourceTree = "<group>"; };
 		ACA4402D1A66E3DB009C30C0 /* led-red-control-md.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "led-red-control-md.png"; sourceTree = "<group>"; };
 		ACA4403C1A68A2CE009C30C0 /* amber-led-on-md.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "amber-led-on-md.png"; sourceTree = "<group>"; };
@@ -194,9 +189,10 @@
 		ACA43FED1A65C4C2009C30C0 = {
 			isa = PBXGroup;
 			children = (
+				AC7EEBFA1AA51B4D009BB0A2 /* Default-568h@2x.png */,
+				AC9F59B31AA4E447007FDBDB /* BluetoothMasterCell.h */,
+				AC9F59B41AA4E447007FDBDB /* BluetoothMasterCell.m */,
 				AC855AD41AA11ABD001D761C /* moLibrary */,
-				AC1CB0D31A97E16300F72D83 /* backstraight.aiff */,
-				ACA440271A65CD04009C30C0 /* Default-568h@2x.png */,
 				AC855AB61AA116FE001D761C /* SensoPlexLibrary */,
 				ACA43FF81A65C4C2009C30C0 /* sensorec */,
 				ACD0DB1F1A6D9B2A0038E94D /* Assets */,
@@ -218,32 +214,28 @@
 		ACA43FF81A65C4C2009C30C0 /* sensorec */ = {
 			isa = PBXGroup;
 			children = (
+				ACA43FFD1A65C4C2009C30C0 /* AppDelegate.h */,
+				ACA43FFE1A65C4C2009C30C0 /* AppDelegate.m */,
+				ACA4401F1A65C683009C30C0 /* MainVC.h */,
+				ACA440201A65C683009C30C0 /* MainVC.m */,
+				ACA440211A65C683009C30C0 /* MainVC.xib */,
+				AC855AAE1AA110FA001D761C /* ConnectVC.h */,
+				AC855AAF1AA110FA001D761C /* ConnectVC.m */,
+				AC855AB01AA110FA001D761C /* ConnectVC.xib */,
+				AC7D5A061A968E4D003FFB11 /* MenuVC.m */,
+				AC7D5A051A968E4D003FFB11 /* MenuVC.h */,
+				AC7D5A071A968E4D003FFB11 /* MenuVC.xib */,
+				AC7D5A101A96A4A2003FFB11 /* Utils.h */,
+				AC7D5A111A96A4A2003FFB11 /* Utils.m */,
+				AC60E56E1A8A701600E73EC5 /* cfuncs.h */,
+				AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */,
+				AC7D5A0D1A969E14003FFB11 /* common.h */,
 				ACD0DB1A1A6D92D60038E94D /* sensorec.png */,
 				ACA4403C1A68A2CE009C30C0 /* amber-led-on-md.png */,
 				ACA4402C1A66E3DB009C30C0 /* green-led-on-md.png */,
 				ACA4402D1A66E3DB009C30C0 /* led-red-control-md.png */,
 				ACF272081A71A95600595091 /* grey-led-md.png */,
 				ACF272071A71A95600595091 /* black-led-off-md.png */,
-				ACA43FFD1A65C4C2009C30C0 /* AppDelegate.h */,
-				ACA43FFE1A65C4C2009C30C0 /* AppDelegate.m */,
-				ACA4401F1A65C683009C30C0 /* MainVC.h */,
-				ACA440201A65C683009C30C0 /* MainVC.m */,
-				ACA440211A65C683009C30C0 /* MainVC.xib */,
-				AC60E5691A8A6D0D00E73EC5 /* prm.c */,
-				AC60E56A1A8A6D0D00E73EC5 /* prm.h */,
-				AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */,
-				AC60E56E1A8A701600E73EC5 /* cfuncs.h */,
-				AC7D5A051A968E4D003FFB11 /* MenuVC.h */,
-				AC7D5A061A968E4D003FFB11 /* MenuVC.m */,
-				AC7D5A071A968E4D003FFB11 /* MenuVC.xib */,
-				AC7D5A0D1A969E14003FFB11 /* common.h */,
-				AC7D5A101A96A4A2003FFB11 /* Utils.h */,
-				AC7D5A111A96A4A2003FFB11 /* Utils.m */,
-				AC855AAE1AA110FA001D761C /* ConnectVC.h */,
-				AC855AAF1AA110FA001D761C /* ConnectVC.m */,
-				AC855AB01AA110FA001D761C /* ConnectVC.xib */,
-				AC855AB31AA112E8001D761C /* Senso.h */,
-				AC855AB41AA112E8001D761C /* Senso.m */,
 			);
 			path = sensorec;
 			sourceTree = "<group>";
@@ -380,7 +372,6 @@
 				ACD0DB251A6D9B3B0038E94D /* Icon-120.png in Resources */,
 				ACD0DB1B1A6D92D60038E94D /* sensorec.png in Resources */,
 				ACA4402E1A66E3DB009C30C0 /* green-led-on-md.png in Resources */,
-				AC1CB0D41A97E16300F72D83 /* backstraight.aiff in Resources */,
 				AC855AB21AA110FA001D761C /* ConnectVC.xib in Resources */,
 				ACF272091A71A95600595091 /* black-led-off-md.png in Resources */,
 				ACA440231A65C683009C30C0 /* MainVC.xib in Resources */,
@@ -388,7 +379,6 @@
 				ACD0DB241A6D9B3B0038E94D /* Icon-76.png in Resources */,
 				ACD0DB391A6D9C5F0038E94D /* Icon-114.png in Resources */,
 				AC7D5A091A968E4D003FFB11 /* MenuVC.xib in Resources */,
-				ACA440281A65CD04009C30C0 /* Default-568h@2x.png in Resources */,
 				ACD0DB351A6D9C5F0038E94D /* Icon-58.png in Resources */,
 				ACA4402F1A66E3DB009C30C0 /* led-red-control-md.png in Resources */,
 				AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */,
@@ -396,6 +386,7 @@
 				ACD0DB321A6D9C5F0038E94D /* Icon-29.png in Resources */,
 				ACD0DB331A6D9C5F0038E94D /* Icon-40.png in Resources */,
 				ACD0DB261A6D9B3B0038E94D /* Icon-152.png in Resources */,
+				AC7EEBFB1AA51B4D009BB0A2 /* Default-568h@2x.png in Resources */,
 				ACF2720A1A71A95600595091 /* grey-led-md.png in Resources */,
 				ACD0DB371A6D9C5F0038E94D /* Icon-72.png in Resources */,
 				ACD0DB381A6D9C5F0038E94D /* Icon-80.png in Resources */,
@@ -420,14 +411,13 @@
 			files = (
 				AC855AD11AA116FE001D761C /* SensorLogData.m in Sources */,
 				ACA440221A65C683009C30C0 /* MainVC.m in Sources */,
+				AC9F59B51AA4E447007FDBDB /* BluetoothMasterCell.m in Sources */,
 				AC855ACB1AA116FE001D761C /* SensoPlex.m in Sources */,
 				AC855ACE1AA116FE001D761C /* SensorDataConfig.m in Sources */,
 				AC855AD31AA116FE001D761C /* SSPacketParser.m in Sources */,
 				AC855AD81AA11ABD001D761C /* MoLogger.m in Sources */,
 				AC855AB11AA110FA001D761C /* ConnectVC.m in Sources */,
 				AC855ACF1AA116FE001D761C /* SensorDataLogStatus.m in Sources */,
-				AC60E56B1A8A6D0D00E73EC5 /* prm.c in Sources */,
-				AC855AB51AA112E8001D761C /* Senso.m in Sources */,
 				ACA43FFF1A65C4C2009C30C0 /* AppDelegate.m in Sources */,
 				AC7D5A081A968E4D003FFB11 /* MenuVC.m in Sources */,
 				AC855ACD1AA116FE001D761C /* SensorDataAbstract.m in Sources */,

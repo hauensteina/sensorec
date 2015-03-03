@@ -1049,7 +1049,9 @@
     return [name hasPrefix:@"SP"];
 }
 
-- (void) didDiscoverPeripheral:(CBPeripheral*)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
+- (void) didDiscoverPeripheral:(CBPeripheral*)peripheral
+             advertisementData:(NSDictionary *)advertisementData
+                          RSSI:(NSNumber *)RSSI {
     // we check against the name
     NSString *name = peripheral.name;
     NSString *advertisedName = [advertisementData objectForKey:@"kCBAdvDataLocalName"];
@@ -1066,8 +1068,9 @@
     
     // if this is a SensoPlex peripheral, and we have a delegate that wants
     // the final say on whether we connect, then ask them
-    if ( connect && self.delegate && [self.delegate respondsToSelector:@selector(didDiscoverSensoplexPeripheral:)]) {
-        [self.delegate didDiscoverSensoplexPeripheral:peripheral];
+    if ( connect && self.delegate && [self.delegate respondsToSelector:@selector(didDiscoverSensoplexPeripheral:name:)]) {
+        [self.delegate didDiscoverSensoplexPeripheral:peripheral
+                                                 name:advertisedName];
     }
 }
 

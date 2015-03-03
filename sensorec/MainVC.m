@@ -9,7 +9,7 @@
 #import "MainVC.h"
 #import "common.h"
 #import "Utils.h"
-#import "prm.h"
+//#import "prm.h"
 #import <CoreMotion/CMMotionManager.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <math.h>
@@ -68,8 +68,9 @@
     [self playSystemSound:@"SIMToolkitPositiveACK"];
 }
 
-
+//==============================
 #pragma mark Button Callbacks
+//==============================
 
 //------------------------------------
 - (IBAction)btnConnect:(id)sender
@@ -78,7 +79,16 @@
     [g_app.naviVc pushViewController:g_app.connectVc animated:YES];
 }
 
+//------------------------------
+- (IBAction)btnLed:(id)sender
+//------------------------------
+{
+    [g_app.connectVc.sensoPlex setLED:LEDGreen];
+}
+
+//==============================
 #pragma mark UI Helpers
+//==============================
 
 //-------------------------------
 - (void) popup:(NSString *)msg
@@ -109,7 +119,9 @@
     AudioServicesPlaySystemSound(soundID);
 }
 
+//==============================
 #pragma mark Userdefaults
+//==============================
 
 #define DEF [NSUserDefaults standardUserDefaults]
 
@@ -146,7 +158,9 @@
     return obj ? nsprintf (@"%@", [DEF objectForKey:key]) : @"" ;
 }
 
-#pragma mark Json 
+//==============================
+#pragma mark Json
+//==============================
 
 //-----------------------------------------
 - (NSString*) generateJSON:(id)theObject

@@ -44,7 +44,8 @@
 -(BOOL) shouldConnectToSensoPlexPeripheral:(CBPeripheral*)peripheral;
 
 // optional callback that notifies the delegate of found sensoplex peripheral
--(void) didDiscoverSensoplexPeripheral:(CBPeripheral*)peripheral;
+-(void) didDiscoverSensoplexPeripheral:(CBPeripheral*)peripheral
+                                  name:(NSString *)name;
 
 // optional callback that gets called when the firmware version has
 // been retrieved.
