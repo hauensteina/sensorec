@@ -7,9 +7,11 @@
 //
 
 #import "ConnectVC.h"
+#import "MainVC.h"
 #import "common.h"
 #import "Utils.h"
 #import "../SensoPlexLibrary/SensoPlex.h"
+#import "../SensoPlexLibrary/SensorDataLogStatus.h"
 #import "BluetoothMasterCell.h"
 
 //=========================
@@ -206,6 +208,22 @@
             break;
     }
 }  // handleConnectionState()
+
+//------------------------------------------------------------
+- (void) onSensorLogStatusParsed:(SensorDataLogStatus *)data
+//------------------------------------------------------------
+// Callback when we retrieve log data status
+{
+    MainVC *mainVC = g_app.mainVc;
+    NSString *status = nsprintf(@"%@",data.enabled ? @"YES" : @"NO");
+    NSString *usedBytes = nsprintf (@"%.0f", data.logUsedBytes);
+    NSString *totalBytes = nsprintf (@"%.0f", data.logTotalBytes);
+    NSString *nRecords = nsprintf (@"%.0f", data.logNumberOfRecords);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [mainVC setLogStatus:status used:usedBytes total:totalBytes records:nRecords];
+    });
+}
 
 
 //=========================================

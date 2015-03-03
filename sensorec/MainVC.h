@@ -10,5 +10,9 @@
 
 @interface MainVC : UIViewController <NSStreamDelegate, UITextFieldDelegate>
 
+- (void) setLogStatus:(NSString *)status
+                 used:(NSString *)usedBytes
+                total:(NSString *)totalBytes
+              records:(NSString *)nRecords;
 
 @end

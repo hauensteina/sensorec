@@ -35,7 +35,15 @@
 //---------------
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UILabel *lbSensor;
+@property (weak, nonatomic) IBOutlet UILabel *lbRecording;
+@property (weak, nonatomic) IBOutlet UILabel *lbRecords;
+@property (weak, nonatomic) IBOutlet UILabel *lbBytes;
+@property (weak, nonatomic) IBOutlet UILabel *lbTotal;
+@property (weak, nonatomic) IBOutlet UIButton *btnLed;
+@property (weak, nonatomic) IBOutlet UIButton *btnRecord;
 
+@property BOOL ledOn;
+@property BOOL recording;
 
 @end
 
@@ -58,11 +66,12 @@
 - (void)viewDidAppear:(BOOL)animated
 //-------------------------------------
 {
-    if (!g_app.connectVc.connected) {
-        [g_app.naviVc pushViewController:g_app.connectVc animated:YES];
+    ConnectVC *connectVC = g_app.connectVc;
+    if (!connectVC.connected) {
+        [g_app.naviVc pushViewController:connectVC animated:YES];
         return;
     }
-    NSString *name = g_app.connectVc.mySensoName;
+    NSString *name = connectVC.mySensoName;
     if (name) {
         _lbSensor.text = name;
         putStr (name, @"currentSenso");
@@ -70,6 +79,10 @@
     else {
         _lbSensor.text = @"<no_name>";
     }
+    
+    // Get data logging space,used,records,...
+    // The callback is onSensorLogStatusParsed().
+    [connectVC.sensoPlex getLogStatus];
 } // viewDidAppear()
 
 //--------------------------
@@ -95,15 +108,64 @@
 //------------------------------------
 {
     putStr (@"",@"currentSenso");
-    [g_app.naviVc pushViewController:g_app.connectVc animated:YES];    
+    [g_app.naviVc pushViewController:g_app.connectVc animated:YES];
 }
 
 //------------------------------
 - (IBAction)btnLed:(id)sender
 //------------------------------
 {
-    [g_app.connectVc.sensoPlex setLED:LEDGreen];
+    if (!_ledOn) {
+        [g_app.connectVc.sensoPlex setLED:LEDGreen];
+        _ledOn = YES;
+        [_btnLed setTitle:@"LED off" forState:UIControlStateNormal];
+    }
+    else {
+        [g_app.connectVc.sensoPlex setLED:LEDSystemControl];
+        _ledOn = NO;
+        [_btnLed setTitle:@"LED green" forState:UIControlStateNormal];
+    }
 }
+
+//--------------------------------
+- (IBAction)btnRecord:(id)sender
+//--------------------------------
+{
+    ConnectVC *connectVC = g_app.connectVc;
+    if (_recording) {
+        [connectVC.sensoPlex stopLoggingData];
+    } else {
+        [connectVC.sensoPlex startLoggingData];
+    }
+    [connectVC.sensoPlex getLogStatus];
+}
+
+//======================================
+#pragma mark Senso info from ConnectVC
+//======================================
+
+//---------------------------------------------
+- (void) setLogStatus:(NSString *)status
+                 used:(NSString *)usedBytes
+                total:(NSString *)totalBytes
+              records:(NSString *)nRecords
+//---------------------------------------------
+{
+    _lbRecording.text = status;
+    _lbRecords.text = nRecords;
+    _lbBytes.text = usedBytes;
+    _lbTotal.text = totalBytes;
+    
+    if ([status isEqualToString:@"YES"]) {
+        [_btnRecord setTitle:@"Stop Recording" forState:UIControlStateNormal];
+        _recording = YES;
+    }
+    else {
+        [_btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
+        _recording = NO;
+    }
+}
+
 
 //==============================
 #pragma mark UI Helpers
