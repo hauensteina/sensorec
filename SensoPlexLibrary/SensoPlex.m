@@ -605,6 +605,28 @@
     }
 }
 
+// Clear sensor flash
+- (BOOL) clearLoggingData
+{
+    @try {
+        if ( !self.writeCharacteristic ) {
+            LogError(@"No Characteristic available to clear logging data.");
+            return NO;
+        }
+        
+        Log(@"* Clearing logging data ...");
+        Byte bytes[2] = {(Byte)BLE_CMD_LOGCLEAR, 0x0};
+        NSData *cmdData = [NSData dataWithBytes:&bytes length:2];
+        [self.blePeripheral writeValue:cmdData forCharacteristic:self.writeCharacteristic type:CBCharacteristicWriteWithResponse];
+        
+        return YES;
+    }
+    @catch (NSException *exception) {
+        LogError(@"Error trying to clear logging data. %@", exception.description);
+        return NO;
+    }
+}
+
 #pragma mark - Serialization of Sensor Data
 
 - (NSString *) getPathForSerializedData {

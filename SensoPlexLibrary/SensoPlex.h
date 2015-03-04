@@ -185,6 +185,9 @@ typedef enum {
 - (BOOL) getLogFirstRecord;
 // log record
 - (BOOL) getLogRecordWithNo:(Byte)num;
+// Clear sensor flash
+- (BOOL) clearLoggingData;
+
 
 // serialize the captured sensor data serialized in csv format to a file
 // (uses default "sensor-data.csv" for the filename

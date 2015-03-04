@@ -128,6 +128,15 @@
     }
 }
 
+//---------------------------------
+- (IBAction)btnClear:(id)sender
+//---------------------------------
+{
+    ConnectVC *connectVC = g_app.connectVc;
+    [connectVC.sensoPlex clearLoggingData];
+    [connectVC.sensoPlex getLogStatus];
+}
+
 //--------------------------------
 - (IBAction)btnRecord:(id)sender
 //--------------------------------
