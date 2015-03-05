@@ -177,6 +177,8 @@ typedef enum {
 // start / stop capturing sensor data
 - (BOOL) startLoggingData;
 - (BOOL) stopLoggingData;
+// Set the clock
+- (BOOL) setRTC;
 // get current logging status
 - (BOOL) getLogStatus;
 // get logging config

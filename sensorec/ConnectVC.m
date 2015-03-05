@@ -183,6 +183,7 @@
             break;
         }
         case SensoPlexReady: {
+            [self.sensoPlex setRTC];
             [g_app.naviVc popViewControllerAnimated:YES];
             break;
         }
