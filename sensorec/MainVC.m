@@ -104,6 +104,13 @@
 #pragma mark Button Callbacks
 //==============================
 
+//---------------------------------
+- (IBAction)btnConsole:(id)sender
+//---------------------------------
+{
+    [g_app.naviVc pushViewController:g_app.consoleVc animated:YES];
+}
+
 //------------------------------------
 - (IBAction)btnScan:(id)sender
 //------------------------------------

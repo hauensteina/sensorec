@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainVC.h"
 #import "ConnectVC.h"
+#import "ConsoleVC.h"
 #import "Utils.h"
 
 AppDelegate *g_app;
@@ -36,6 +37,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     self.mainVc = [MainVC new];
     self.menuVc = [MenuVC new];
     self.connectVc = [ConnectVC new];
+    self.consoleVc = [ConsoleVC new];
     
     // The Navigation Controller
     self.naviVc  = [UINavigationController alloc];

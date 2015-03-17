@@ -16,11 +16,24 @@ extern AppDelegate *g_app;
 
 #define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
+#define CLEAR [UIColor clearColor]
+#define WHITE [UIColor whiteColor]
+#define BLACK [UIColor blackColor]
+#define YELLOW [UIColor yellowColor]
+#define RED [UIColor redColor]
+#define BLUE [UIColor blueColor]
+#define GREEN [UIColor greenColor]
+#define GRAY [UIColor grayColor]
 
-#define RGB(rgbValue) [UIColor \
-colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
-blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+// Alpha is inverted. Use like
+// UIColor *c = RGB(0x707070)
+// for gray with alpha = 1 or
+// UIColor *c = RGB(0x80ff0000)
+// for red with alpha = 0.5
+#define RGB(HHH) [UIColor colorWithRed: (((HHH)>>16)&255)/255.f \
+green:(((HHH)>>8)&255)/255.f \
+blue: ((HHH)&255)/255.f \
+alpha:(255-(((HHH)>>24)&255))/255.f]
 
 #define RM_SUBVIEWS(x) \
   for(UIView *v in (x).subviews) { \

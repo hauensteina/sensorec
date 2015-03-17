@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = AC2E42BA1A898B9B004CB504 /* Icon-57.png */; };
+		AC2F53D31AB8B7DC0001C3CF /* ConsoleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */; };
+		AC2F53D41AB8B7DC0001C3CF /* ConsoleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */; };
 		AC60E56D1A8A6FFD00E73EC5 /* cfuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */; };
 		AC7D5A081A968E4D003FFB11 /* MenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7D5A061A968E4D003FFB11 /* MenuVC.m */; };
 		AC7D5A091A968E4D003FFB11 /* MenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC7D5A071A968E4D003FFB11 /* MenuVC.xib */; };
@@ -63,6 +65,9 @@
 
 /* Begin PBXFileReference section */
 		AC2E42BA1A898B9B004CB504 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		AC2F53D01AB8B7DC0001C3CF /* ConsoleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleVC.h; sourceTree = "<group>"; };
+		AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleVC.m; sourceTree = "<group>"; };
+		AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsoleVC.xib; sourceTree = "<group>"; };
 		AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cfuncs.m; sourceTree = "<group>"; };
 		AC60E56E1A8A701600E73EC5 /* cfuncs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cfuncs.h; sourceTree = "<group>"; };
 		AC7D5A051A968E4D003FFB11 /* MenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuVC.h; sourceTree = "<group>"; };
@@ -225,6 +230,9 @@
 				AC7D5A061A968E4D003FFB11 /* MenuVC.m */,
 				AC7D5A051A968E4D003FFB11 /* MenuVC.h */,
 				AC7D5A071A968E4D003FFB11 /* MenuVC.xib */,
+				AC2F53D01AB8B7DC0001C3CF /* ConsoleVC.h */,
+				AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */,
+				AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */,
 				AC7D5A101A96A4A2003FFB11 /* Utils.h */,
 				AC7D5A111A96A4A2003FFB11 /* Utils.m */,
 				AC60E56E1A8A701600E73EC5 /* cfuncs.h */,
@@ -379,6 +387,7 @@
 				ACD0DB241A6D9B3B0038E94D /* Icon-76.png in Resources */,
 				ACD0DB391A6D9C5F0038E94D /* Icon-114.png in Resources */,
 				AC7D5A091A968E4D003FFB11 /* MenuVC.xib in Resources */,
+				AC2F53D41AB8B7DC0001C3CF /* ConsoleVC.xib in Resources */,
 				ACD0DB351A6D9C5F0038E94D /* Icon-58.png in Resources */,
 				ACA4402F1A66E3DB009C30C0 /* led-red-control-md.png in Resources */,
 				AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */,
@@ -420,6 +429,7 @@
 				AC855ACF1AA116FE001D761C /* SensorDataLogStatus.m in Sources */,
 				ACA43FFF1A65C4C2009C30C0 /* AppDelegate.m in Sources */,
 				AC7D5A081A968E4D003FFB11 /* MenuVC.m in Sources */,
+				AC2F53D31AB8B7DC0001C3CF /* ConsoleVC.m in Sources */,
 				AC855ACD1AA116FE001D761C /* SensorDataAbstract.m in Sources */,
 				ACA43FFC1A65C4C2009C30C0 /* main.m in Sources */,
 				AC7D5A121A96A4A2003FFB11 /* Utils.m in Sources */,

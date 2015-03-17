@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MainVC.h"
 #import "ConnectVC.h"
+#import "ConsoleVC.h"
 #import "MenuVC.h"
 
 //================================================================
@@ -18,6 +19,7 @@
 @property MainVC *mainVc;
 @property MenuVC *menuVc;
 @property ConnectVC *connectVc;
+@property ConsoleVC *consoleVc;
 @property UINavigationController *naviVc;
 
 // Options
