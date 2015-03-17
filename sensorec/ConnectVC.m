@@ -183,7 +183,7 @@
             break;
         }
         case SensoPlexReady: {
-            //[self.sensoPlex setRTC];
+            [self.sensoPlex setRTC];
             if ([g_app.naviVc topViewController] == g_app.connectVc) {
                 [g_app.naviVc popViewControllerAnimated:YES];
             }

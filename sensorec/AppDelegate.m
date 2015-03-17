@@ -35,7 +35,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     self.window.backgroundColor = [UIColor whiteColor];
     
     self.mainVc = [MainVC new];
-    self.menuVc = [MenuVC new];
     self.connectVc = [ConnectVC new];
     self.consoleVc = [ConsoleVC new];
     

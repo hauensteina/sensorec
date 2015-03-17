@@ -10,14 +10,12 @@
 #import "MainVC.h"
 #import "ConnectVC.h"
 #import "ConsoleVC.h"
-#import "MenuVC.h"
 
 //================================================================
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 //================================================================
 
 @property MainVC *mainVc;
-@property MenuVC *menuVc;
 @property ConnectVC *connectVc;
 @property ConsoleVC *consoleVc;
 @property UINavigationController *naviVc;

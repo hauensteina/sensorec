@@ -11,7 +11,6 @@
 		AC2F53D31AB8B7DC0001C3CF /* ConsoleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */; };
 		AC2F53D41AB8B7DC0001C3CF /* ConsoleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */; };
 		AC60E56D1A8A6FFD00E73EC5 /* cfuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */; };
-		AC7D5A081A968E4D003FFB11 /* MenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7D5A061A968E4D003FFB11 /* MenuVC.m */; };
 		AC7D5A091A968E4D003FFB11 /* MenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC7D5A071A968E4D003FFB11 /* MenuVC.xib */; };
 		AC7D5A121A96A4A2003FFB11 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7D5A111A96A4A2003FFB11 /* Utils.m */; };
 		AC7EEBFB1AA51B4D009BB0A2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC7EEBFA1AA51B4D009BB0A2 /* Default-568h@2x.png */; };
@@ -70,8 +69,6 @@
 		AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsoleVC.xib; sourceTree = "<group>"; };
 		AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cfuncs.m; sourceTree = "<group>"; };
 		AC60E56E1A8A701600E73EC5 /* cfuncs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cfuncs.h; sourceTree = "<group>"; };
-		AC7D5A051A968E4D003FFB11 /* MenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuVC.h; sourceTree = "<group>"; };
-		AC7D5A061A968E4D003FFB11 /* MenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuVC.m; sourceTree = "<group>"; };
 		AC7D5A071A968E4D003FFB11 /* MenuVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuVC.xib; sourceTree = "<group>"; };
 		AC7D5A0D1A969E14003FFB11 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		AC7D5A101A96A4A2003FFB11 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
@@ -227,8 +224,6 @@
 				AC855AAE1AA110FA001D761C /* ConnectVC.h */,
 				AC855AAF1AA110FA001D761C /* ConnectVC.m */,
 				AC855AB01AA110FA001D761C /* ConnectVC.xib */,
-				AC7D5A061A968E4D003FFB11 /* MenuVC.m */,
-				AC7D5A051A968E4D003FFB11 /* MenuVC.h */,
 				AC7D5A071A968E4D003FFB11 /* MenuVC.xib */,
 				AC2F53D01AB8B7DC0001C3CF /* ConsoleVC.h */,
 				AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */,
@@ -428,7 +423,6 @@
 				AC855AB11AA110FA001D761C /* ConnectVC.m in Sources */,
 				AC855ACF1AA116FE001D761C /* SensorDataLogStatus.m in Sources */,
 				ACA43FFF1A65C4C2009C30C0 /* AppDelegate.m in Sources */,
-				AC7D5A081A968E4D003FFB11 /* MenuVC.m in Sources */,
 				AC2F53D31AB8B7DC0001C3CF /* ConsoleVC.m in Sources */,
 				AC855ACD1AA116FE001D761C /* SensorDataAbstract.m in Sources */,
 				ACA43FFC1A65C4C2009C30C0 /* main.m in Sources */,
