@@ -44,6 +44,13 @@
 #define BLE_CMD_VERSION 0x34 
 #define BLE_CMD_GETCONFIG 0x35 
 
+/* Communication with user code (PRM)  on sensor (AHN) */
+#define PDI_CMD_USER_GETCONFIG 0x40 
+#define PDI_CMD_USER_SETCONFIG 0x41 
+#define PDI_CMD_USER_SAVECONFIG 0x42 
+#define PDI_CMD_USER_ENABLE 0x43 
+#define PDI_CMD_USER_SAMPLECOMMAND 0x44
+
 /*---- Data Streaming Commands ----*/
 #define     BLE_CMD_STREAMGETCONFIG       0x61
 #define     BLE_CMD_STREAMSETCONFIG       0x62

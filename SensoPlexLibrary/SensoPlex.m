@@ -563,6 +563,48 @@
     }
 } // setRTC
 
+
+//#define PDI_CMD_USER_GETCONFIG 0x40
+//#define PDI_CMD_USER_SETCONFIG 0x41
+//#define PDI_CMD_USER_SAVECONFIG 0x42
+//#define PDI_CMD_USER_ENABLE 0x43
+//#define PDI_CMD_USER_SAMPLECOMMAND 0x44
+
+#define MAX_MSG_BYTES 15
+
+// Send any string to the sensor
+// AHN Mar 2015
+//-------------------------------------
+- (BOOL) sendString: (NSString *) str
+//-------------------------------------
+{
+    @try {
+        if ( !self.writeCharacteristic ) {
+            LogError(@"No Characteristic available to send string.");
+            return NO;
+        }
+        
+        Log(@"* Sending String ...");
+        
+        Byte bytes[MAX_MSG_BYTES+2];
+        bytes[0] = PDI_CMD_USER_SAMPLECOMMAND;
+        char *cstr = ((char *)bytes)+1;
+        strncpy (cstr,[str UTF8String],MAX_MSG_BYTES);
+        cstr[MAX_MSG_BYTES] = 0;
+
+        // Leading commmand byte plus terminating 0 => +2
+        int length = strlen(cstr) + 2;
+        NSData *cmdData = [NSData dataWithBytes:&bytes length:length];
+        [self.blePeripheral writeValue:cmdData forCharacteristic:self.writeCharacteristic type:CBCharacteristicWriteWithResponse];
+        return YES;
+    }
+    @catch (NSException *exception) {
+        LogError(@"Error trying to send string.  %@", exception.description);
+        return NO;
+    }
+} // sendString
+
+
 // get log status
 -(BOOL) getLogStatus {
     @try {
@@ -959,7 +1001,19 @@
     [packetData setLength:0];
 }
 
+//=======================================
 #pragma mark - SSPacketParserDelegate
+//=======================================
+
+//-------------------------------------------
+- (void) onUserMsgReceived:(Byte *)bytes
+                       len:(int)length
+//-------------------------------------------
+// Pass a PRM message through to the app.
+// Called from SSPacketParser.m
+{
+    [self.delegate onUserMsgReceived:bytes len:length];
+} // onUserMsgReceived
 
 - (void) onFirmwareVersionParsed:(NSString*)fwVersion {
     self.firmwareVersion = fwVersion;
@@ -1042,7 +1096,9 @@
     }
 }
 
+//===================
 #pragma mark - BLE
+//===================
 
 - (void) initializeBluetooth {
     self.logBLEStats = NO;
@@ -1165,8 +1221,9 @@
     [self notifyDelegateOfConnectStateChange];
 }
 
-
+//=========================================
 #pragma mark - Bluetooth Central Methods
+//=========================================
 
 // Scan for peripherals
 - (void)scan
@@ -1304,7 +1361,9 @@
     [self notifyDelegateOfConnectStateChange];
 }
 
+//===================================
 #pragma mark - CBPeripheralDelegate
+//===================================
 
 // A BLE Service was discovered
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error

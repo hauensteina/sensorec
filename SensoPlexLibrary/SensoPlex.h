@@ -72,6 +72,9 @@
 // optional callback when we retrieved all log data
 - (void) onSensorLogRecordComplete;
 
+// optional callback for user app message
+- (void) onUserMsgReceived:(Byte *)bytes len:(int)length;
+
 @end
 
 // SensoPlexSensorDataDelegate can be used to get a callback every time sensor
@@ -177,8 +180,11 @@ typedef enum {
 // start / stop capturing sensor data
 - (BOOL) startLoggingData;
 - (BOOL) stopLoggingData;
-// Set the clock
+// Set the clock (AHN)
 - (BOOL) setRTC;
+// Send any string to sensor (AHN)
+- (BOOL) sendString: (NSString *) str;
+
 // get current logging status
 - (BOOL) getLogStatus;
 // get logging config

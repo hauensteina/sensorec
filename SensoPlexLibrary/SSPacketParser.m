@@ -221,6 +221,11 @@ static Byte RxPacket[RXPKTSIZE];
                 [self processDataStreamConfigPacket:bytes length:length];
                 break;
             }
+            case PDI_CMD_USER_SAMPLECOMMAND: {
+                Log(@"Received PRM message");
+                [self.delegate onUserMsgReceived:bytes len:length];
+                break;
+            }
             default: {
                 NSData *bytesData = [NSData dataWithBytes:bytes length:length];
                 Log(@"Received Unknown Packet: %x of length: %i. Data: %@", cmd, length, bytesData);

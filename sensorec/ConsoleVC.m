@@ -9,6 +9,7 @@
 #import "ConsoleVC.h"
 #import "common.h"
 #import "Utils.h"
+#import "../SensoPlexLibrary/SensoPlex.h"
 
 //========================
 @interface ConsoleVC ()
@@ -144,6 +145,8 @@
     NSString *cmd = textField.text;
     [self pr:@"\n"];
     [self pr:cmd];
+    SensoPlex *senso = g_app.connectVc.sensoPlex;
+    [senso sendString:cmd];
     
     [textField resignFirstResponder];
     return YES;

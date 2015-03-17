@@ -39,6 +39,8 @@
 - (void) onSensorLogStatusParsed:(SensorDataLogStatus*)data;
 - (void) onSensorLogRecordParsed:(SensorLogData*)data;
 - (void) onSensorLogRecordComplete;
+- (void) onUserMsgReceived:(Byte *)bytes len:(int)length;
+
 @end
 
 @interface SSPacketParser : NSObject

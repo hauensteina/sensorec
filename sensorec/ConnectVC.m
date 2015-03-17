@@ -228,6 +228,16 @@
     });
 }
 
+//-------------------------------------------------------
+- (void) onUserMsgReceived:(Byte *)bytes
+                       len:(int)length
+//-------------------------------------------------------
+// Application (aka PRM) message from sensor.
+// Called from SensoPlex.m
+{
+    NSString *str = nsprintf(@"%s\n",bytes+1);
+    [g_app.consoleVc pr:str color:BLUE];
+} // onUserMsgReceived
 
 //=========================================
 # pragma mark TableView delegate methods
