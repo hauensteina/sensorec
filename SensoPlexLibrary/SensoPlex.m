@@ -570,7 +570,7 @@
 //#define PDI_CMD_USER_ENABLE 0x43
 //#define PDI_CMD_USER_SAMPLECOMMAND 0x44
 
-#define MAX_MSG_BYTES 15
+#define MAX_MSG_BYTES 18
 
 // Send any string to the sensor
 // AHN Mar 2015
