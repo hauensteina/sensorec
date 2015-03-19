@@ -235,7 +235,41 @@
 // Application (aka PRM) message from sensor.
 // Called from SensoPlex.m
 {
-    NSString *str = nsprintf(@"%s\n",bytes+1);
+    // Always send a handshake
+    SensoPlex *senso = g_app.connectVc.sensoPlex;
+    // Handle ayt
+    if (bytes[1] == 'a' && bytes[2] == 'y' && bytes[3] == 't' && bytes[4] == 0) {
+        [senso sendString:@"iah"]; // I am here
+    } else if (bytes[2] == 0) {
+        // one letter msgs for debugging
+        int tt = 42;
+    } else {
+        [senso sendString:@"ak"];
+    }
+    NSString *str = @"";
+    if (bytes[1] == '@') { // binary key/value message
+        int16_t val16;
+        int32_t val32;
+        for (unsigned char *p=bytes+2; *p; p++) {
+            if (*p == '@') { continue; }
+            if (*p >= 'a' && *p <= 'z') { // lower case, 16 bit
+                unsigned char c = *p;
+                val16 = *(int16_t *)(p+1);
+                str = nsprintf (@"%@%c:%d,",str,c,val16);
+                p += 2;
+            }
+            else { // upper case, 32 bit
+                unsigned char c = *p;
+                val32 = *(int16_t *)(p+1);
+                str = nsprintf (@"%@%c:%d,",str,c,val32);
+                p += 4;
+            }
+        } // for
+        str = nsprintf (@"%@\n",chop(str));
+    }
+    else { // string msg
+        str = nsprintf(@"%s\n",bytes+1);
+    }
     [g_app.consoleVc pr:str color:BLUE];
 } // onUserMsgReceived
 
