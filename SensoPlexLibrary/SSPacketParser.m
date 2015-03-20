@@ -157,7 +157,7 @@ static Byte RxPacket[RXPKTSIZE];
             [[SSPacketLogger packetLogger] logPacket:[NSString stringWithFormat:@"** PACKET: %@\n", bytesData]];
         }
         
-        NSData *bytesData = [NSData dataWithBytes:bytes length:length];
+        //NSData *bytesData = [NSData dataWithBytes:bytes length:length];
         //DLog(@"%@", [NSString stringWithFormat:@"** PACKET: %@\n", bytesData]);
         
         

@@ -593,7 +593,7 @@
         cstr[MAX_MSG_BYTES] = 0;
 
         // Leading commmand byte plus terminating 0 => +2
-        int length = strlen(cstr) + 2;
+        long length = strlen(cstr) + 2;
         NSData *cmdData = [NSData dataWithBytes:&bytes length:length];
         [self.blePeripheral writeValue:cmdData forCharacteristic:self.writeCharacteristic type:CBCharacteristicWriteWithResponse];
         return YES;
@@ -970,7 +970,7 @@
 // parse specified packet data
 - (void) parsePacketData:(NSMutableData*)packetData {
     // don't do anything if we don't have any data
-    int dataLength = packetData.length;
+    long dataLength = packetData.length;
     if ( !packetData || dataLength == 0 ) {
         Log(@"No Data to parse.");
         // we don't have data to parse - it must have already been parsed

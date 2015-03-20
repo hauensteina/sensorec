@@ -21,6 +21,7 @@
 @property NSMutableArray *logBuf; // Buffered lines while not scrolling
 @property UIFont *logFont;
 @property BOOL shouldScroll;
+@property NSString *strBuf;
 
 @end // ConsoleVC
 
@@ -128,7 +129,7 @@
 {
     dispatch_async (dispatch_get_main_queue(), ^{
         [self pr_impl:@"\n" color:RED];
-        for (int i = [keys count]-1; i>=0; i--) {
+        for (long i = [keys count]-1; i>=0; i--) {
             //[self pr_impl:values[i] color:RGB(0xc3741c)];
             //[self pr_impl:values[i] color:RGB(0x8c00ec)];
             [self pr_impl:values[i] color:RGB(0x0f7002)];
@@ -136,36 +137,45 @@
             [self pr_impl:keys[i] color:RED];
             [self pr_impl:@" " color:RED];
         }
+        if (_strBuf) { [self pr_impl:_strBuf color:BLUE]; }
+        _strBuf = nil;
         [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
     });
 } // pr:values:
 
 //----------------------------------------------------------------------
 - (void) pr:(NSString *)str
-      color:(UIColor *)color
         num:(int)num
 //----------------------------------------------------------------------
 // Print a string to the console, in the given color, with line num in green
 {
-    dispatch_async (dispatch_get_main_queue(), ^{
-        [self pr_impl:@"\n" color:RED];
-        [self pr_impl:nsprintf (@"%@",str) color:color];
+    if (_strBuf) {
+        dispatch_async (dispatch_get_main_queue(), ^{
+        [self pr_impl:@"\n" color:BLUE];
+        [self pr_impl:_strBuf color:BLUE];
         [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
-        
-    });
+        });
+    }
+    _strBuf = str;
+//    dispatch_async (dispatch_get_main_queue(), ^{
+//        [self pr_impl:@"\n" color:RED];
+//        [self pr_impl:nsprintf (@"%@",str) color:color];
+//        [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
+//        
+//    });
 } // pr:color:
 
-//----------------------------------------------------------------------
-- (void) pr:(NSString *)str
-      color:(UIColor *)color
-//----------------------------------------------------------------------
-// Print a string to the console, in the given color
-{
-    dispatch_async (dispatch_get_main_queue(), ^{
-        [self pr_impl:str color:color];
-    });
-} // pr:color:
-
+////----------------------------------------------------------------------
+//- (void) pr:(NSString *)str
+//      color:(UIColor *)color
+////----------------------------------------------------------------------
+//// Print a string to the console, in the given color
+//{
+//    dispatch_async (dispatch_get_main_queue(), ^{
+//        [self pr_impl:str color:color];
+//    });
+//} // pr:color:
+//
 //----------------------------------------------------------------------
 - (void) pr:(NSString *)str
 //----------------------------------------------------------------------

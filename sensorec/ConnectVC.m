@@ -236,7 +236,6 @@
 // Called from SensoPlex.m
 {
     static int msgNum = 0;
-    msgNum++;
 //    SensoPlex *senso = g_app.connectVc.sensoPlex;
     if (bytes[1] == '@') { // binary key/value message
         NSMutableArray *keys = [NSMutableArray new];
@@ -264,8 +263,9 @@
         [g_app.consoleVc pr:keys values:values num:msgNum];
     }
     else { // string msg
+        msgNum++;
         NSString *str = nsprintf(@"%s",bytes+1);
-        [g_app.consoleVc pr:str color:BLUE num:msgNum];
+        [g_app.consoleVc pr:str num:msgNum];
     }
     //[g_app.consoleVc pr:nsprintf (@"%ld ",msgNum) color:RGB(0x0f7002)];
 } // onUserMsgReceived
