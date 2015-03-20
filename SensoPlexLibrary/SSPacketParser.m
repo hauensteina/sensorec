@@ -158,7 +158,7 @@ static Byte RxPacket[RXPKTSIZE];
         }
         
         NSData *bytesData = [NSData dataWithBytes:bytes length:length];
-        DLog(@"%@", [NSString stringWithFormat:@"** PACKET: %@\n", bytesData]);
+        //DLog(@"%@", [NSString stringWithFormat:@"** PACKET: %@\n", bytesData]);
         
         
         
@@ -222,7 +222,7 @@ static Byte RxPacket[RXPKTSIZE];
                 break;
             }
             case PDI_CMD_USER_SAMPLECOMMAND: {
-                Log(@"Received PRM message");
+                //Log(@"Received PRM message");
                 [self.delegate onUserMsgReceived:bytes len:length];
                 break;
             }

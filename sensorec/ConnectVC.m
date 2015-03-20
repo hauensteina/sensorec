@@ -235,42 +235,39 @@
 // Application (aka PRM) message from sensor.
 // Called from SensoPlex.m
 {
-    // Always send a handshake
-    SensoPlex *senso = g_app.connectVc.sensoPlex;
-    // Handle ayt
-    if (bytes[1] == 'a' && bytes[2] == 'y' && bytes[3] == 't' && bytes[4] == 0) {
-        [senso sendString:@"iah"]; // I am here
-    } else if (bytes[2] == 0) {
-        // one letter msgs for debugging
-        int tt = 42;
-    } else {
-        [senso sendString:@"ak"];
-    }
-    NSString *str = @"";
+    static int msgNum = 0;
+    msgNum++;
+//    SensoPlex *senso = g_app.connectVc.sensoPlex;
     if (bytes[1] == '@') { // binary key/value message
+        NSMutableArray *keys = [NSMutableArray new];
+        NSMutableArray *values = [NSMutableArray new];
         int16_t val16;
         int32_t val32;
         for (unsigned char *p=bytes+2; *p; p++) {
             if (*p == '@') { continue; }
-            if (*p >= 'a' && *p <= 'z') { // lower case, 16 bit
-                unsigned char c = *p;
-                val16 = *(int16_t *)(p+1);
-                str = nsprintf (@"%@%c:%d,",str,c,val16);
-                p += 2;
+            unsigned char c = *p;
+            if (c >= 'a' && c <= 'z') { // lower case, 16 bit
+                ((char *)&val16)[0] = *++p;
+                ((char *)&val16)[1] = *++p;
+                [keys addObject:nsprintf(@"%c",c)];
+                [values addObject:nsprintf(@"%ld",val16)];
             }
             else { // upper case, 32 bit
-                unsigned char c = *p;
-                val32 = *(int16_t *)(p+1);
-                str = nsprintf (@"%@%c:%d,",str,c,val32);
-                p += 4;
+                ((char *)&val32)[0] = *++p;
+                ((char *)&val32)[1] = *++p;
+                ((char *)&val32)[2] = *++p;
+                ((char *)&val32)[3] = *++p;
+                [keys addObject:nsprintf(@"%c",c)];
+                [values addObject:nsprintf(@"%ld",val32)];
             }
         } // for
-        str = nsprintf (@"%@\n",chop(str));
+        [g_app.consoleVc pr:keys values:values num:msgNum];
     }
     else { // string msg
-        str = nsprintf(@"%s\n",bytes+1);
+        NSString *str = nsprintf(@"%s",bytes+1);
+        [g_app.consoleVc pr:str color:BLUE num:msgNum];
     }
-    [g_app.consoleVc pr:str color:BLUE];
+    //[g_app.consoleVc pr:nsprintf (@"%ld ",msgNum) color:RGB(0x0f7002)];
 } // onUserMsgReceived
 
 //=========================================

@@ -34,7 +34,7 @@
 {
     [super viewDidLoad];
     // The font we use for logging
-    _logFont = [UIFont fontWithName:@"TimesNewRomanPSMT" size:14];
+    _logFont = [UIFont fontWithName:@"TimesNewRomanPSMT" size:18];
     _shouldScroll = YES;
     _tfCmd.delegate = self;
 }
@@ -69,7 +69,7 @@
     //str = nsprintf(@"%@\n",str);
     UITextView *tv = self.tvConsole;
     if (!tv) {
-        NSLog(@"pr_impl:textView nil");
+        //NSLog(@"pr_impl:textView nil");
         return;
     }
     NSTextStorage *ts = tv.textStorage;
@@ -115,6 +115,45 @@
 } // pr_impl
 
 //=== Public print methods to make sure we log on the main thread
+
+#define LINE_NUM_COL RGB(0x404040)
+
+//----------------------------------------------------------------------
+- (void) pr:(NSArray *)keys
+     values:(NSArray *)values
+        num:(int)num
+//----------------------------------------------------------------------
+// Print keys and values color coded.
+// With the specified line number.
+{
+    dispatch_async (dispatch_get_main_queue(), ^{
+        [self pr_impl:@"\n" color:RED];
+        for (int i = [keys count]-1; i>=0; i--) {
+            //[self pr_impl:values[i] color:RGB(0xc3741c)];
+            //[self pr_impl:values[i] color:RGB(0x8c00ec)];
+            [self pr_impl:values[i] color:RGB(0x0f7002)];
+            [self pr_impl:@" " color:RED];
+            [self pr_impl:keys[i] color:RED];
+            [self pr_impl:@" " color:RED];
+        }
+        [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
+    });
+} // pr:values:
+
+//----------------------------------------------------------------------
+- (void) pr:(NSString *)str
+      color:(UIColor *)color
+        num:(int)num
+//----------------------------------------------------------------------
+// Print a string to the console, in the given color, with line num in green
+{
+    dispatch_async (dispatch_get_main_queue(), ^{
+        [self pr_impl:@"\n" color:RED];
+        [self pr_impl:nsprintf (@"%@",str) color:color];
+        [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
+        
+    });
+} // pr:color:
 
 //----------------------------------------------------------------------
 - (void) pr:(NSString *)str

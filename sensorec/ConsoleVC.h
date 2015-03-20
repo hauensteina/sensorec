@@ -11,8 +11,15 @@
 @interface ConsoleVC : UIViewController
 <UITextFieldDelegate, UITextViewDelegate>
 
+- (void) pr:(NSArray *)keys
+     values:(NSArray *)values
+        num:(int)num;
 - (void) pr:(NSString *)str
       color:(UIColor *)color;
+- (void) pr:(NSString *)str
+      color:(UIColor *)color
+        num:(int)num;
 - (void) pr:(NSString *)str;
+
 
 @end
