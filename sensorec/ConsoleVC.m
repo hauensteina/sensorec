@@ -21,7 +21,7 @@
 @property NSMutableArray *logBuf; // Buffered lines while not scrolling
 @property UIFont *logFont;
 @property BOOL shouldScroll;
-@property NSString *strBuf;
+//@property NSString *strBuf;
 
 @end // ConsoleVC
 
@@ -137,8 +137,8 @@
             [self pr_impl:keys[i] color:RED];
             [self pr_impl:@" " color:RED];
         }
-        if (_strBuf) { [self pr_impl:_strBuf color:BLUE]; }
-        _strBuf = nil;
+      //  if (_strBuf) { [self pr_impl:_strBuf color:BLUE]; }
+      //  _strBuf = nil;
         [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
     });
 } // pr:values:
@@ -149,14 +149,14 @@
 //----------------------------------------------------------------------
 // Print a string to the console, in the given color, with line num in green
 {
-    if (_strBuf) {
+    //if (_strBuf) {
         dispatch_async (dispatch_get_main_queue(), ^{
         [self pr_impl:@"\n" color:BLUE];
-        [self pr_impl:_strBuf color:BLUE];
+        [self pr_impl:str color:BLUE];
         [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
         });
-    }
-    _strBuf = str;
+    //}
+    //_strBuf = str;
 //    dispatch_async (dispatch_get_main_queue(), ^{
 //        [self pr_impl:@"\n" color:RED];
 //        [self pr_impl:nsprintf (@"%@",str) color:color];
