@@ -237,12 +237,13 @@
 {
     static int msgNum = 0;
     msgNum++;
-//    SensoPlex *senso = g_app.connectVc.sensoPlex;
+    //    SensoPlex *senso = g_app.connectVc.sensoPlex;
     if (bytes[1] == '@') { // binary key/value message
         NSMutableArray *keys = [NSMutableArray new];
         NSMutableArray *values = [NSMutableArray new];
         int16_t val16;
         int32_t val32;
+        long val;
         for (unsigned char *p=bytes+2; *p; p++) {
             if (*p == '@') { continue; }
             unsigned char c = *p;
@@ -250,7 +251,8 @@
                 ((char *)&val16)[0] = *++p;
                 ((char *)&val16)[1] = *++p;
                 [keys addObject:nsprintf(@"%c",c)];
-                [values addObject:nsprintf(@"%ld",val16)];
+                val = val16; // for 64-bit phones
+                [values addObject:nsprintf(@"%ld",val)];
             }
             else { // upper case, 32 bit
                 ((char *)&val32)[0] = *++p;
@@ -258,7 +260,8 @@
                 ((char *)&val32)[2] = *++p;
                 ((char *)&val32)[3] = *++p;
                 [keys addObject:nsprintf(@"%c",c)];
-                [values addObject:nsprintf(@"%ld",val32)];
+                val = val32; // for 64-bit phones
+                [values addObject:nsprintf(@"%ld",val)];
             }
         } // for
         [g_app.consoleVc pr:keys values:values num:msgNum];
