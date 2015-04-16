@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC160B7B1ACE062E002275D8 /* LBBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC160B7A1ACE062E002275D8 /* LBBarChartView.m */; };
 		AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = AC2E42BA1A898B9B004CB504 /* Icon-57.png */; };
 		AC2F53D31AB8B7DC0001C3CF /* ConsoleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */; };
 		AC2F53D41AB8B7DC0001C3CF /* ConsoleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */; };
@@ -63,6 +64,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC160B791ACE062D002275D8 /* LBBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBBarChartView.h; sourceTree = "<group>"; };
+		AC160B7A1ACE062E002275D8 /* LBBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBBarChartView.m; sourceTree = "<group>"; };
 		AC2E42BA1A898B9B004CB504 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
 		AC2F53D01AB8B7DC0001C3CF /* ConsoleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleVC.h; sourceTree = "<group>"; };
 		AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleVC.m; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 		ACA43FF81A65C4C2009C30C0 /* sensorec */ = {
 			isa = PBXGroup;
 			children = (
+				AC160B791ACE062D002275D8 /* LBBarChartView.h */,
+				AC160B7A1ACE062E002275D8 /* LBBarChartView.m */,
 				ACA43FFD1A65C4C2009C30C0 /* AppDelegate.h */,
 				ACA43FFE1A65C4C2009C30C0 /* AppDelegate.m */,
 				ACA4401F1A65C683009C30C0 /* MainVC.h */,
@@ -423,6 +428,7 @@
 				AC855AB11AA110FA001D761C /* ConnectVC.m in Sources */,
 				AC855ACF1AA116FE001D761C /* SensorDataLogStatus.m in Sources */,
 				ACA43FFF1A65C4C2009C30C0 /* AppDelegate.m in Sources */,
+				AC160B7B1ACE062E002275D8 /* LBBarChartView.m in Sources */,
 				AC2F53D31AB8B7DC0001C3CF /* ConsoleVC.m in Sources */,
 				AC855ACD1AA116FE001D761C /* SensorDataAbstract.m in Sources */,
 				ACA43FFC1A65C4C2009C30C0 /* main.m in Sources */,
