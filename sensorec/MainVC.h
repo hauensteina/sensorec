@@ -10,6 +10,8 @@
 
 @interface MainVC : UIViewController <NSStreamDelegate, UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *btnRecord;
+
 - (void) setLogStatus:(NSString *)status
                  used:(NSString *)usedBytes
                 total:(NSString *)totalBytes

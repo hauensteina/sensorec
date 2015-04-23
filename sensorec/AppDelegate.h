@@ -20,6 +20,10 @@
 @property ConsoleVC *consoleVc;
 @property UINavigationController *naviVc;
 
+@property NSString *sensoApp; // sensorun or sensolifting firmware
+@property NSTimer *secTimer; // Check various things once per second
+@property BOOL gotSensoApp;
+
 // Options
 @property NSMutableDictionary *options;
 

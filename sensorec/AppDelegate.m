@@ -60,8 +60,29 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     if (!_options[@"calib_sound_flag"]) { _options[@"calib_sound_flag"] = @"OFF"; }
     [self saveOptions];
     
+    self.sensoApp = @"sensorun";
+    _gotSensoApp = NO;
+    _secTimer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                 target:self
+                                               selector:@selector(secTimer:)
+                                               userInfo:nil
+                                                repeats:YES];
+    
     return YES;
 } // didFinishLaunchingWithOptions
+
+//-----------------------------
+- (void) secTimer:(id)sender
+//-----------------------------
+// Called once a sec to do periodic things
+{
+    static int count = 0;
+    count++;
+    if (!_gotSensoApp) {
+        SensoPlex *senso = g_app.connectVc.sensoPlex;
+        [senso sendString:@"app"];
+    }
+} // secTimer
 
 //-------------------
 - (void) saveOptions

@@ -270,9 +270,34 @@
         //msgNum++;
         NSString *str = nsprintf(@"%s",bytes+1);
         [g_app.consoleVc pr:str num:msgNum];
+        [self handleStrMsg:str];
     }
     //[g_app.consoleVc pr:nsprintf (@"%ld ",msgNum) color:RGB(0x0f7002)];
 } // onUserMsgReceived
+
+//-----------------------------------------
+- (void) handleStrMsg: (NSString *)msg
+//-----------------------------------------
+// A string message from the sensor came in. Deal with it.
+{
+    if ([msg isEqualToString:@"lifting"]) {
+        g_app.sensoApp = @"sensolifting";
+        g_app.gotSensoApp = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [g_app.mainVc.btnRecord setTitle:@"Lifting" forState:UIControlStateNormal];
+            g_app.mainVc.btnRecord.enabled = NO;
+            //@@@ cont here disable buttons, hide labels
+        });
+    }
+    else if ([msg isEqualToString:@"run"]) {
+        g_app.sensoApp = @"sensorun";
+        g_app.gotSensoApp = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [g_app.mainVc.btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
+            g_app.mainVc.btnRecord.enabled = YES;
+        });
+    }
+} // handleStrMsg
 
 //=========================================
 # pragma mark TableView delegate methods

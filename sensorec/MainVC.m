@@ -35,12 +35,11 @@
 //---------------
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UILabel *lbSensor;
-@property (weak, nonatomic) IBOutlet UILabel *lbRecording;
+//@property (weak, nonatomic) IBOutlet UILabel *lbRecording;
 @property (weak, nonatomic) IBOutlet UILabel *lbRecords;
 @property (weak, nonatomic) IBOutlet UILabel *lbBytes;
 @property (weak, nonatomic) IBOutlet UILabel *lbTotal;
 @property (weak, nonatomic) IBOutlet UIButton *btnLed;
-@property (weak, nonatomic) IBOutlet UIButton *btnRecord;
 
 @property BOOL ledOn;
 @property BOOL recording;
@@ -175,7 +174,7 @@
               records:(NSString *)nRecords
 //---------------------------------------------
 {
-    _lbRecording.text = status;
+    //_lbRecording.text = status;
     _lbRecords.text = nRecords;
     _lbBytes.text = usedBytes;
     _lbTotal.text = totalBytes;
