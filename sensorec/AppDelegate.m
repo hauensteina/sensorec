@@ -61,6 +61,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [self saveOptions];
     
     self.sensoApp = @"sensorun";
+    
+    NSURL *soundURL;
+    soundURL = [[NSBundle mainBundle] URLForResource:@"backstraight"
+                                       withExtension:@"aiff"];
+    AudioServicesCreateSystemSoundID ((__bridge CFURLRef)soundURL
+                                      ,&_backStraightSound);
+    
     _gotSensoApp = NO;
     _secTimer = [NSTimer scheduledTimerWithTimeInterval:1
                                                  target:self
@@ -80,6 +87,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     count++;
     if (!_gotSensoApp) {
         SensoPlex *senso = g_app.connectVc.sensoPlex;
+        [senso sendString:@"apon"];
         [senso sendString:@"app"];
     }
 } // secTimer

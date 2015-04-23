@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC069D471AE97AA200AFEBDA /* backstraight.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AC069D461AE97AA200AFEBDA /* backstraight.aiff */; };
 		AC160B7B1ACE062E002275D8 /* LBBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC160B7A1ACE062E002275D8 /* LBBarChartView.m */; };
 		AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = AC2E42BA1A898B9B004CB504 /* Icon-57.png */; };
 		AC2F53D31AB8B7DC0001C3CF /* ConsoleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */; };
@@ -64,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC069D461AE97AA200AFEBDA /* backstraight.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = backstraight.aiff; sourceTree = "<group>"; };
 		AC160B791ACE062D002275D8 /* LBBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBBarChartView.h; sourceTree = "<group>"; };
 		AC160B7A1ACE062E002275D8 /* LBBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBBarChartView.m; sourceTree = "<group>"; };
 		AC2E42BA1A898B9B004CB504 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 		ACD0DB1F1A6D9B2A0038E94D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				AC069D461AE97AA200AFEBDA /* backstraight.aiff */,
 				AC2E42BA1A898B9B004CB504 /* Icon-57.png */,
 				ACD0DB281A6D9C5F0038E94D /* Icon-29.png */,
 				ACD0DB291A6D9C5F0038E94D /* Icon-40.png */,
@@ -390,6 +393,7 @@
 				AC2F53D41AB8B7DC0001C3CF /* ConsoleVC.xib in Resources */,
 				ACD0DB351A6D9C5F0038E94D /* Icon-58.png in Resources */,
 				ACA4402F1A66E3DB009C30C0 /* led-red-control-md.png in Resources */,
+				AC069D471AE97AA200AFEBDA /* backstraight.aiff in Resources */,
 				AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */,
 				ACD0DB3A1A6D9C5F0038E94D /* Icon-144.png in Resources */,
 				ACD0DB321A6D9C5F0038E94D /* Icon-29.png in Resources */,

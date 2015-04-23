@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import "MainVC.h"
 #import "ConnectVC.h"
 #import "ConsoleVC.h"
@@ -15,6 +16,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 //================================================================
 
+@property (strong, nonatomic) UIWindow *window;
 @property MainVC *mainVc;
 @property ConnectVC *connectVc;
 @property ConsoleVC *consoleVc;
@@ -27,7 +29,9 @@
 // Options
 @property NSMutableDictionary *options;
 
-@property (strong, nonatomic) UIWindow *window;
+// Sounds
+@property SystemSoundID backStraightSound;
+
 
 - (void) saveOptions;
 

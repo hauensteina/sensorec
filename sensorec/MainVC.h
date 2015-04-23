@@ -11,6 +11,14 @@
 @interface MainVC : UIViewController <NSStreamDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *btnRecord;
+@property (weak, nonatomic) IBOutlet UILabel *lbRecords;
+@property (weak, nonatomic) IBOutlet UILabel *lbBytes;
+@property (weak, nonatomic) IBOutlet UILabel *lbTotal;
+@property (weak, nonatomic) IBOutlet UIButton *btnLed;
+@property (weak, nonatomic) IBOutlet UILabel *lbRecordsUsed;
+@property (weak, nonatomic) IBOutlet UILabel *lbBytesUsed;
+@property (weak, nonatomic) IBOutlet UILabel *lbTotlab;
+@property (weak, nonatomic) IBOutlet UIButton *btnClear;
 
 - (void) setLogStatus:(NSString *)status
                  used:(NSString *)usedBytes

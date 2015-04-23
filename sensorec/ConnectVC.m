@@ -217,6 +217,26 @@
 //------------------------------------------------------------
 // Callback when we retrieve log data status
 {
+    // Firmware unknown
+    if (!g_app.gotSensoApp) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [g_app.mainVc.btnRecord setTitle:@"Wait..." forState:UIControlStateNormal];
+            g_app.mainVc.btnRecord.enabled = NO;
+            g_app.mainVc.lbRecords.hidden = YES;
+            g_app.mainVc.lbBytes.hidden = YES;
+            g_app.mainVc.lbTotal.hidden = YES;
+            g_app.mainVc.btnLed.hidden = YES;
+            g_app.mainVc.lbRecordsUsed.hidden = YES;
+            g_app.mainVc.lbBytesUsed.hidden = YES;
+            g_app.mainVc.lbTotlab.hidden = YES;
+            g_app.mainVc.btnClear.hidden = YES;
+        });
+    }
+    
+    // Lifting demo
+    if ([g_app.sensoApp isEqualToString:@"sensolifting"]) return;
+
+    // Any other firmware
     MainVC *mainVC = g_app.mainVc;
     NSString *status = nsprintf(@"%@",data.enabled ? @"YES" : @"NO");
     NSString *usedBytes = nsprintf (@"%.0f", data.logUsedBytes);
@@ -287,6 +307,14 @@
             [g_app.mainVc.btnRecord setTitle:@"Lifting" forState:UIControlStateNormal];
             g_app.mainVc.btnRecord.enabled = NO;
             //@@@ cont here disable buttons, hide labels
+            g_app.mainVc.lbRecords.hidden = YES;
+            g_app.mainVc.lbBytes.hidden = YES;
+            g_app.mainVc.lbTotal.hidden = YES;
+            g_app.mainVc.btnLed.hidden = NO;
+            g_app.mainVc.lbRecordsUsed.hidden = YES;
+            g_app.mainVc.lbBytesUsed.hidden = YES;
+            g_app.mainVc.lbTotlab.hidden = YES;
+            g_app.mainVc.btnClear.hidden = YES;
         });
     }
     else if ([msg isEqualToString:@"run"]) {
@@ -295,9 +323,71 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [g_app.mainVc.btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
             g_app.mainVc.btnRecord.enabled = YES;
+            g_app.mainVc.lbRecords.hidden = NO;
+            g_app.mainVc.lbBytes.hidden = NO;
+            g_app.mainVc.lbTotal.hidden = NO;
+            g_app.mainVc.btnLed.hidden = NO;
+            g_app.mainVc.lbRecordsUsed.hidden = NO;
+            g_app.mainVc.lbBytesUsed.hidden = NO;
+            g_app.mainVc.lbTotlab.hidden = NO;
+            g_app.mainVc.btnClear.hidden = NO;
         });
     }
+    else if ([msg hasPrefix:@"gl:"]) {
+        int minangle = [[msg componentsSeparatedByString:@":"][1] intValue];
+        if (minangle > 50) {
+            [self playGoodSound];
+        } else {
+            [self playStraightSound];
+        }
+    }
+    else if ([msg hasPrefix:@"bl:"]) {
+        [self playBadSound];
+    }
+    else if ([msg hasPrefix:@"calib"]) {
+        [self playCalibSound];
+    }
 } // handleStrMsg
+
+//--------------------------
+- (void) playBadSound
+//--------------------------
+{
+    [self playSystemSound:@"low_power"];
+}
+//--------------------------
+- (void) playGoodSound
+//--------------------------
+{
+    [self playSystemSound:@"SIMToolkitPositiveACK"];
+}
+//--------------------------
+- (void) playCalibSound
+//--------------------------
+{
+    [self playSystemSound:@"photoShutter"];
+}
+//--------------------------
+- (void) playStraightSound
+//--------------------------
+{
+    AudioServicesPlaySystemSound (g_app.backStraightSound);
+}
+
+//---------------------------------------------
+- (void) playSystemSound:(NSString *)soundName
+//---------------------------------------------
+// Play an iOS system sound.
+// List can be found at
+// https://github.com/TUNER88/iOSSystemSoundsLibrary
+{
+    NSString *fullPath =
+    nsprintf (@"/System/Library/Audio/UISounds/%@.caf",soundName);
+    NSURL *fileURL = [NSURL URLWithString:fullPath];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)fileURL,&soundID);
+    AudioServicesPlaySystemSound(soundID);
+}
 
 //=========================================
 # pragma mark TableView delegate methods
