@@ -56,8 +56,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     }
     
     // Set option defaults if not there
-    if (!_options[@"sounds"]) { _options[@"sounds"] = @"System"; }
-    if (!_options[@"calib_sound_flag"]) { _options[@"calib_sound_flag"] = @"OFF"; }
+    if (!_options[@"calib_sound_flag"]) { _options[@"calib_sound_flag"] = @"ON"; }
     [self saveOptions];
     
     self.sensoApp = @"sensorun";
@@ -75,8 +74,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                                                userInfo:nil
                                                 repeats:YES];
     
+    
+    
     return YES;
 } // didFinishLaunchingWithOptions
+
 
 //-----------------------------
 - (void) secTimer:(id)sender

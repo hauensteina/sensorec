@@ -180,6 +180,7 @@
             break;
         }
         case SensoPlexConnected: {
+            g_app.gotSensoApp = NO;
             break;
         }
         case SensoPlexReady: {
@@ -315,6 +316,7 @@
             g_app.mainVc.lbBytesUsed.hidden = YES;
             g_app.mainVc.lbTotlab.hidden = YES;
             g_app.mainVc.btnClear.hidden = YES;
+            g_app.mainVc.btnShutter.hidden = NO;
         });
     }
     else if ([msg isEqualToString:@"run"]) {
@@ -331,6 +333,7 @@
             g_app.mainVc.lbBytesUsed.hidden = NO;
             g_app.mainVc.lbTotlab.hidden = NO;
             g_app.mainVc.btnClear.hidden = NO;
+            g_app.mainVc.btnShutter.hidden = YES;
         });
     }
     else if ([msg hasPrefix:@"gl:"]) {
@@ -345,7 +348,10 @@
         [self playBadSound];
     }
     else if ([msg hasPrefix:@"calib"]) {
-        [self playCalibSound];
+        NSString *opt = g_app.options[@"calib_sound_flag"];
+        if ([opt isEqualToString:@"ON"]) {
+            [self playCalibSound];
+        }
     }
 } // handleStrMsg
 

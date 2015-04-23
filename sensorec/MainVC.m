@@ -75,6 +75,17 @@
     else {
         _lbSensor.text = @"<no_name>";
     }
+
+    // Set title for shutter sound button
+    NSString *opt = g_app.options[@"calib_sound_flag"];
+    if ([opt isEqualToString:@"ON"]) {
+        [_btnShutter setTitle:@"Turn Off Shutter Sound"
+                     forState:UIControlStateNormal];
+    } else {
+        [_btnShutter setTitle:@"Turn On Shutter Sound"
+                     forState:UIControlStateNormal];
+    }
+    
     
     // Get data logging space,used,records,...
     // The callback is onSensorLogStatusParsed().
@@ -129,6 +140,28 @@
         [_btnLed setTitle:@"LED green" forState:UIControlStateNormal];
     }
 }
+
+//------------------------------------
+- (IBAction)btnShutter:(id)sender
+//------------------------------------
+{
+    NSString *opt = g_app.options[@"calib_sound_flag"];
+    if ([opt isEqualToString:@"ON"]) {
+        opt = @"OFF";
+    }
+    else {
+        opt = @"ON";
+    }
+    if ([opt isEqualToString:@"ON"]) {
+        [_btnShutter setTitle:@"Turn Off Shutter Sound"
+                     forState:UIControlStateNormal];
+    } else {
+        [_btnShutter setTitle:@"Turn On Shutter Sound"
+                     forState:UIControlStateNormal];
+    }
+    g_app.options[@"calib_sound_flag"] = opt;
+    [g_app saveOptions];
+} // btnShutter
 
 //---------------------------------
 - (IBAction)btnClear:(id)sender

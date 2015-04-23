@@ -10,6 +10,7 @@
                 <outlet property="btnClear" destination="dOt-Fp-aQ2" id="2sA-u9-aVl"/>
                 <outlet property="btnLed" destination="myb-nQ-a3G" id="b6t-Lr-4Rd"/>
                 <outlet property="btnRecord" destination="QOg-rD-uHJ" id="rFR-Wx-P5U"/>
+                <outlet property="btnShutter" destination="bn2-25-Kii" id="8jd-ew-Dnt"/>
                 <outlet property="lbBytes" destination="rgI-e5-KFd" id="atP-QP-jvf"/>
                 <outlet property="lbBytesUsed" destination="Th3-JN-95E" id="uLJ-hR-hge"/>
                 <outlet property="lbRecords" destination="Ngj-so-MTM" id="lEA-TL-Ab4"/>
@@ -115,10 +116,20 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bn2-25-Kii">
+                    <rect key="frame" x="32" y="466" width="257" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Turn Off Shutter Sound">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnShutter:" destination="-1" eventType="touchUpInside" id="z5V-Qj-GVB"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="23" y="35"/>
+            <point key="canvasLocation" x="-492" y="-1683"/>
         </view>
     </objects>
 </document>
