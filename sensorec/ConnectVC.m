@@ -307,7 +307,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [g_app.mainVc.btnRecord setTitle:@"Lifting" forState:UIControlStateNormal];
             g_app.mainVc.btnRecord.enabled = NO;
-            //@@@ cont here disable buttons, hide labels
             g_app.mainVc.lbRecords.hidden = YES;
             g_app.mainVc.lbBytes.hidden = YES;
             g_app.mainVc.lbTotal.hidden = YES;
@@ -338,7 +337,8 @@
     }
     else if ([msg hasPrefix:@"gl:"]) {
         int minangle = [[msg componentsSeparatedByString:@":"][1] intValue];
-        if (minangle > 50) {
+        //if (minangle > 50) {
+        if (minangle > 45) {
             [self playGoodSound];
         } else {
             [self playStraightSound];
