@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrickVC">
             <connections>
+                <outlet property="btnFU" destination="glI-kx-kZz" id="Xc4-SU-Ux7"/>
+                <outlet property="btnOS" destination="ixa-c9-WAE" id="cLx-xT-gUH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -27,10 +29,37 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glI-kx-kZz">
+                    <rect key="frame" x="85" y="84" width="46" height="30"/>
+                    <state key="normal" title="FU">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnFU:" destination="-1" eventType="touchUpInside" id="oZ6-md-wGN"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixa-c9-WAE">
+                    <rect key="frame" x="176" y="84" width="46" height="30"/>
+                    <state key="normal" title="OS">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnOS:" destination="-1" eventType="touchUpInside" id="HE1-62-xsC"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rU5-Xh-XAX">
+                    <rect key="frame" x="111" y="521" width="98" height="30"/>
+                    <state key="normal" title="Look At Me">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnCorr:" destination="-1" eventType="touchUpInside" id="EAE-x3-OvI"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="279" y="537"/>
+            <point key="canvasLocation" x="189" y="-920"/>
         </view>
     </objects>
 </document>

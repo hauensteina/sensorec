@@ -13,6 +13,15 @@
 //--------------------------------------
 
 - (void) animateQuaternion:(NSArray*)p_q;
+- (void) fusionOS;
+- (void) fusionFU;
+// State properties
+@property enum {NONE,OS,FU} fusionType;
+@property float corrAngle;
+
+// UI properties
+@property (weak, nonatomic) IBOutlet UIButton *btnFU;
+@property (weak, nonatomic) IBOutlet UIButton *btnOS;
 
 @end // BrickVC
 

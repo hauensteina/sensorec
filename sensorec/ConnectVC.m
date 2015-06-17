@@ -285,10 +285,14 @@
                 [values addObject:nsprintf(@"%ld",val)];
             }
         } // for
-        if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) { // Quaternion
+        // Hardware Sensor Fusion  Quaternion
+        if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) {
+            [g_app.brickVc fusionFU];
             [g_app.brickVc animateQuaternion:values];
         }
-        else if ([keys isEqualToArray:@[@"v",@"x",@"y",@"z"]]) { // Quaternion
+        // Software Open Source Quaternion
+        else if ([keys isEqualToArray:@[@"v",@"x",@"y",@"z"]]) {
+            [g_app.brickVc fusionOS];
             [g_app.brickVc animateQuaternion:values];
         } else {
             [g_app.consoleVc pr:keys values:values num:msgNum];
@@ -340,6 +344,25 @@
             g_app.mainVc.lbTotlab.hidden = NO;
             g_app.mainVc.btnClear.hidden = NO;
             g_app.mainVc.btnShutter.hidden = YES;
+            g_app.mainVc.btnAnimation.hidden = YES;
+        });
+    }
+    else if ([msg isEqualToString:@"dev"]) {
+        g_app.sensoApp = @"sensodev";
+        g_app.gotSensoApp = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [g_app.mainVc.btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
+            g_app.mainVc.btnRecord.enabled = YES;
+            g_app.mainVc.lbRecords.hidden = NO;
+            g_app.mainVc.lbBytes.hidden = NO;
+            g_app.mainVc.lbTotal.hidden = NO;
+            g_app.mainVc.btnLed.hidden = NO;
+            g_app.mainVc.lbRecordsUsed.hidden = NO;
+            g_app.mainVc.lbBytesUsed.hidden = NO;
+            g_app.mainVc.lbTotlab.hidden = NO;
+            g_app.mainVc.btnClear.hidden = NO;
+            g_app.mainVc.btnShutter.hidden = YES;
+            g_app.mainVc.btnAnimation.hidden = NO;
         });
     }
     else if ([msg hasPrefix:@"gl:"]) {

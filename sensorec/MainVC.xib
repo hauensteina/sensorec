@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVC">
             <connections>
+                <outlet property="btnAnimation" destination="rzf-Ey-oHI" id="cJX-UX-hD5"/>
                 <outlet property="btnClear" destination="dOt-Fp-aQ2" id="2sA-u9-aVl"/>
                 <outlet property="btnLed" destination="myb-nQ-a3G" id="b6t-Lr-4Rd"/>
                 <outlet property="btnRecord" destination="QOg-rD-uHJ" id="rFR-Wx-P5U"/>
@@ -126,8 +127,9 @@
                         <action selector="btnShutter:" destination="-1" eventType="touchUpInside" id="z5V-Qj-GVB"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzf-Ey-oHI">
-                    <rect key="frame" x="95" y="423" width="116" height="30"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzf-Ey-oHI">
+                    <rect key="frame" x="102" y="423" width="116" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="Animation">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -138,7 +140,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="-420" y="-3090"/>
+            <point key="canvasLocation" x="-530" y="-3120"/>
         </view>
     </objects>
 </document>
