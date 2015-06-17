@@ -37,6 +37,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     self.mainVc = [MainVC new];
     self.connectVc = [ConnectVC new];
     self.consoleVc = [ConsoleVC new];
+    self.brickVc = [BrickVC new];
     
     // The Navigation Controller
     self.naviVc  = [UINavigationController alloc];

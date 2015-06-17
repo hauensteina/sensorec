@@ -285,7 +285,14 @@
                 [values addObject:nsprintf(@"%ld",val)];
             }
         } // for
-        [g_app.consoleVc pr:keys values:values num:msgNum];
+        if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) { // Quaternion
+            [g_app.brickVc animateQuaternion:values];
+        }
+        else if ([keys isEqualToArray:@[@"v",@"x",@"y",@"z"]]) { // Quaternion
+            [g_app.brickVc animateQuaternion:values];
+        } else {
+            [g_app.consoleVc pr:keys values:values num:msgNum];
+        }
     }
     else { // string msg
         //msgNum++;

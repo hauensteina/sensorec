@@ -126,10 +126,19 @@
                         <action selector="btnShutter:" destination="-1" eventType="touchUpInside" id="z5V-Qj-GVB"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzf-Ey-oHI">
+                    <rect key="frame" x="95" y="423" width="116" height="30"/>
+                    <state key="normal" title="Animation">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnAnimation:" destination="-1" eventType="touchUpInside" id="MoX-kl-wxG"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="-492" y="-1683"/>
+            <point key="canvasLocation" x="-420" y="-3090"/>
         </view>
     </objects>
 </document>

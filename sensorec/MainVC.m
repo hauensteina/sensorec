@@ -185,6 +185,13 @@
     [connectVC.sensoPlex getLogStatus];
 }
 
+//--------------------------------------
+- (IBAction)btnAnimation:(id)sender
+//--------------------------------------
+{
+    [g_app.naviVc pushViewController:g_app.brickVc animated:YES];
+}
+
 //-----------------------------
 - (void) tmStatus:(id)sender
 //-----------------------------
