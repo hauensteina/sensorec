@@ -174,9 +174,9 @@
 //------------------------------------------
 {
     GLKQuaternion glkq;
-    glkq.q[0] = [p_q[2] intValue] / (float) (1L<<14); // x
-    glkq.q[1] = [p_q[3] intValue] / (float) (1L<<14); // y
-    glkq.q[2] = [p_q[1] intValue] / (float) (1L<<14); // z
+    glkq.q[0] = [p_q[3] intValue] / (float) (1L<<14); // x
+    glkq.q[1] = [p_q[1] intValue] / (float) (1L<<14); // y
+    glkq.q[2] = [p_q[2] intValue] / (float) (1L<<14); // z
     glkq.q[3] = [p_q[0] intValue] / (float) (1L<<14); // w
 
     SCNQuaternion newOri = glk2SCN(glkq);
