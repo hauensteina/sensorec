@@ -76,10 +76,10 @@
     c4Material.diffuse.contents     = c4;
     
     SCNMaterial *frontMaterial      = [SCNMaterial material];
-    frontMaterial.diffuse.contents  = iphoneFront;
+    frontMaterial.diffuse.contents  = iphoneBack;
     
     SCNMaterial *backMaterial       = [SCNMaterial material];
-    backMaterial.diffuse.contents   = iphoneBack;
+    backMaterial.diffuse.contents   = iphoneFront;
     
     _brickNode.geometry.materials =
     @[c1Material,  c2Material, c3Material,
@@ -115,7 +115,7 @@
 {
     SensoPlex *senso = g_app.connectVc.sensoPlex;
     [senso sendString:@"qhon"];
-    _corrAngle = 0;
+    //_corrAngle = 0;
 }
 
 //-----------------------------
@@ -124,15 +124,15 @@
 {
     SensoPlex *senso = g_app.connectVc.sensoPlex;
     [senso sendString:@"qson"];
-    _corrAngle = 0;
+    //_corrAngle = 0;
 }
 
 //-----------------------------
 - (IBAction)btnCorr:(id)sender
 //-----------------------------
 {
-    float rot = DEG(eulerPhi(_brickNode.rotation)) - _corrAngle;
-    _corrAngle = 90.0 - rot;
+    //float rot = DEG(eulerPhi(_brickNode.rotation)) - _corrAngle;
+    //_corrAngle = 90.0 - rot;
 }
 
 // Set sensor fusion button colors
@@ -188,6 +188,7 @@
 //-------------------------------------------------
 {
     SCNQuaternion corr = SCNVector4Make (0, 1, 0, RAD(_corrAngle));
+    //SCNQuaternion corr = SCNVector4Make (0, 0, 1, RAD(180));
     return SCNQuaternionMultiply (corr,ori);
 } // correct
 
