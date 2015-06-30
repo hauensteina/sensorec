@@ -192,6 +192,13 @@
     [g_app.naviVc pushViewController:g_app.brickVc animated:YES];
 }
 
+//---------------------------------
+- (IBAction)btnBlurp:(id)sender
+//---------------------------------
+{
+    [g_app.naviVc pushViewController:g_app.blurpVc animated:YES];
+}
+
 //-----------------------------
 - (void) tmStatus:(id)sender
 //-----------------------------

@@ -7,13 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC050A001B431363004FA68F /* SparklineContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0509FF1B431363004FA68F /* SparklineContainerView.m */; };
+		AC050A031B43151A004FA68F /* BlurpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A021B43151A004FA68F /* BlurpVC.m */; };
+		AC050A071B431705004FA68F /* BrickVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A051B431705004FA68F /* BrickVC.m */; };
+		AC050A081B431705004FA68F /* BrickVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC050A061B431705004FA68F /* BrickVC.xib */; };
+		AC050A0B1B4317B0004FA68F /* SparklineTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A0A1B4317B0004FA68F /* SparklineTileView.m */; };
+		AC050A0F1B43185D004FA68F /* SparklineView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A0E1B43185D004FA68F /* SparklineView.m */; };
+		AC050A121B4318A3004FA68F /* AutolayoutUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A111B4318A3004FA68F /* AutolayoutUtils.m */; };
 		AC069D471AE97AA200AFEBDA /* backstraight.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AC069D461AE97AA200AFEBDA /* backstraight.aiff */; };
 		AC160B7B1ACE062E002275D8 /* LBBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC160B7A1ACE062E002275D8 /* LBBarChartView.m */; };
 		AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = AC2E42BA1A898B9B004CB504 /* Icon-57.png */; };
 		AC2F53D31AB8B7DC0001C3CF /* ConsoleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */; };
 		AC2F53D41AB8B7DC0001C3CF /* ConsoleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */; };
-		AC438EE51B30B61F00B1C0F5 /* BrickVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC438EE31B30B61F00B1C0F5 /* BrickVC.m */; };
-		AC438EE61B30B61F00B1C0F5 /* BrickVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC438EE41B30B61F00B1C0F5 /* BrickVC.xib */; };
 		AC438EE91B30D05500B1C0F5 /* iphone_back.png in Resources */ = {isa = PBXBuildFile; fileRef = AC438EE71B30D05500B1C0F5 /* iphone_back.png */; };
 		AC438EEA1B30D05500B1C0F5 /* iphone_front.png in Resources */ = {isa = PBXBuildFile; fileRef = AC438EE81B30D05500B1C0F5 /* iphone_front.png */; };
 		AC60E56D1A8A6FFD00E73EC5 /* cfuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */; };
@@ -69,6 +74,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC0509FE1B431363004FA68F /* SparklineContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparklineContainerView.h; sourceTree = "<group>"; };
+		AC0509FF1B431363004FA68F /* SparklineContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparklineContainerView.m; sourceTree = "<group>"; };
+		AC050A011B43151A004FA68F /* BlurpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurpVC.h; sourceTree = "<group>"; };
+		AC050A021B43151A004FA68F /* BlurpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurpVC.m; sourceTree = "<group>"; };
+		AC050A041B431705004FA68F /* BrickVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrickVC.h; sourceTree = "<group>"; };
+		AC050A051B431705004FA68F /* BrickVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrickVC.m; sourceTree = "<group>"; };
+		AC050A061B431705004FA68F /* BrickVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrickVC.xib; sourceTree = "<group>"; };
+		AC050A091B4317B0004FA68F /* SparklineTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparklineTileView.h; sourceTree = "<group>"; };
+		AC050A0A1B4317B0004FA68F /* SparklineTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparklineTileView.m; sourceTree = "<group>"; };
+		AC050A0D1B43185D004FA68F /* SparklineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparklineView.h; sourceTree = "<group>"; };
+		AC050A0E1B43185D004FA68F /* SparklineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparklineView.m; sourceTree = "<group>"; };
+		AC050A101B4318A3004FA68F /* AutolayoutUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutolayoutUtils.h; sourceTree = "<group>"; };
+		AC050A111B4318A3004FA68F /* AutolayoutUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutolayoutUtils.m; sourceTree = "<group>"; };
 		AC069D461AE97AA200AFEBDA /* backstraight.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = backstraight.aiff; sourceTree = "<group>"; };
 		AC160B791ACE062D002275D8 /* LBBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBBarChartView.h; sourceTree = "<group>"; };
 		AC160B7A1ACE062E002275D8 /* LBBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBBarChartView.m; sourceTree = "<group>"; };
@@ -76,9 +94,6 @@
 		AC2F53D01AB8B7DC0001C3CF /* ConsoleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleVC.h; sourceTree = "<group>"; };
 		AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleVC.m; sourceTree = "<group>"; };
 		AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsoleVC.xib; sourceTree = "<group>"; };
-		AC438EE21B30B61F00B1C0F5 /* BrickVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrickVC.h; sourceTree = "<group>"; };
-		AC438EE31B30B61F00B1C0F5 /* BrickVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrickVC.m; sourceTree = "<group>"; };
-		AC438EE41B30B61F00B1C0F5 /* BrickVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrickVC.xib; sourceTree = "<group>"; };
 		AC438EE71B30D05500B1C0F5 /* iphone_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_back.png; sourceTree = "<group>"; };
 		AC438EE81B30D05500B1C0F5 /* iphone_front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_front.png; sourceTree = "<group>"; };
 		AC60E56C1A8A6FFD00E73EC5 /* cfuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cfuncs.m; sourceTree = "<group>"; };
@@ -165,6 +180,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC050A0C1B4317F9004FA68F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AC050A101B4318A3004FA68F /* AutolayoutUtils.h */,
+				AC050A111B4318A3004FA68F /* AutolayoutUtils.m */,
+				AC050A0D1B43185D004FA68F /* SparklineView.h */,
+				AC050A0E1B43185D004FA68F /* SparklineView.m */,
+				AC0509FE1B431363004FA68F /* SparklineContainerView.h */,
+				AC0509FF1B431363004FA68F /* SparklineContainerView.m */,
+				AC050A091B4317B0004FA68F /* SparklineTileView.h */,
+				AC050A0A1B4317B0004FA68F /* SparklineTileView.m */,
+				AC160B791ACE062D002275D8 /* LBBarChartView.h */,
+				AC160B7A1ACE062E002275D8 /* LBBarChartView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		AC855AB61AA116FE001D761C /* SensoPlexLibrary */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,13 +262,16 @@
 		ACA43FF81A65C4C2009C30C0 /* sensorec */ = {
 			isa = PBXGroup;
 			children = (
-				AC160B791ACE062D002275D8 /* LBBarChartView.h */,
-				AC160B7A1ACE062E002275D8 /* LBBarChartView.m */,
 				ACA43FFD1A65C4C2009C30C0 /* AppDelegate.h */,
 				ACA43FFE1A65C4C2009C30C0 /* AppDelegate.m */,
 				ACA4401F1A65C683009C30C0 /* MainVC.h */,
 				ACA440201A65C683009C30C0 /* MainVC.m */,
 				ACA440211A65C683009C30C0 /* MainVC.xib */,
+				AC050A011B43151A004FA68F /* BlurpVC.h */,
+				AC050A021B43151A004FA68F /* BlurpVC.m */,
+				AC050A041B431705004FA68F /* BrickVC.h */,
+				AC050A051B431705004FA68F /* BrickVC.m */,
+				AC050A061B431705004FA68F /* BrickVC.xib */,
 				AC855AAE1AA110FA001D761C /* ConnectVC.h */,
 				AC855AAF1AA110FA001D761C /* ConnectVC.m */,
 				AC855AB01AA110FA001D761C /* ConnectVC.xib */,
@@ -244,9 +279,6 @@
 				AC2F53D01AB8B7DC0001C3CF /* ConsoleVC.h */,
 				AC2F53D11AB8B7DC0001C3CF /* ConsoleVC.m */,
 				AC2F53D21AB8B7DC0001C3CF /* ConsoleVC.xib */,
-				AC438EE21B30B61F00B1C0F5 /* BrickVC.h */,
-				AC438EE31B30B61F00B1C0F5 /* BrickVC.m */,
-				AC438EE41B30B61F00B1C0F5 /* BrickVC.xib */,
 				AC7D5A101A96A4A2003FFB11 /* Utils.h */,
 				AC7D5A111A96A4A2003FFB11 /* Utils.m */,
 				AC60E56E1A8A701600E73EC5 /* cfuncs.h */,
@@ -258,6 +290,7 @@
 				ACA4402D1A66E3DB009C30C0 /* led-red-control-md.png */,
 				ACF272081A71A95600595091 /* grey-led-md.png */,
 				ACF272071A71A95600595091 /* black-led-off-md.png */,
+				AC050A0C1B4317F9004FA68F /* Views */,
 			);
 			path = sensorec;
 			sourceTree = "<group>";
@@ -406,9 +439,9 @@
 				ACD0DB241A6D9B3B0038E94D /* Icon-76.png in Resources */,
 				ACD0DB391A6D9C5F0038E94D /* Icon-114.png in Resources */,
 				AC7D5A091A968E4D003FFB11 /* MenuVC.xib in Resources */,
+				AC050A081B431705004FA68F /* BrickVC.xib in Resources */,
 				AC2F53D41AB8B7DC0001C3CF /* ConsoleVC.xib in Resources */,
 				ACD0DB351A6D9C5F0038E94D /* Icon-58.png in Resources */,
-				AC438EE61B30B61F00B1C0F5 /* BrickVC.xib in Resources */,
 				ACA4402F1A66E3DB009C30C0 /* led-red-control-md.png in Resources */,
 				AC069D471AE97AA200AFEBDA /* backstraight.aiff in Resources */,
 				AC2E42BB1A898B9B004CB504 /* Icon-57.png in Resources */,
@@ -439,15 +472,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC438EE51B30B61F00B1C0F5 /* BrickVC.m in Sources */,
 				AC855AD11AA116FE001D761C /* SensorLogData.m in Sources */,
 				ACA440221A65C683009C30C0 /* MainVC.m in Sources */,
 				AC9F59B51AA4E447007FDBDB /* BluetoothMasterCell.m in Sources */,
 				AC855ACB1AA116FE001D761C /* SensoPlex.m in Sources */,
+				AC050A0B1B4317B0004FA68F /* SparklineTileView.m in Sources */,
 				AC855ACE1AA116FE001D761C /* SensorDataConfig.m in Sources */,
+				AC050A001B431363004FA68F /* SparklineContainerView.m in Sources */,
 				AC855AD31AA116FE001D761C /* SSPacketParser.m in Sources */,
 				AC855AD81AA11ABD001D761C /* MoLogger.m in Sources */,
 				AC855AB11AA110FA001D761C /* ConnectVC.m in Sources */,
+				AC050A031B43151A004FA68F /* BlurpVC.m in Sources */,
+				AC050A071B431705004FA68F /* BrickVC.m in Sources */,
 				AC855ACF1AA116FE001D761C /* SensorDataLogStatus.m in Sources */,
 				ACA43FFF1A65C4C2009C30C0 /* AppDelegate.m in Sources */,
 				AC160B7B1ACE062E002275D8 /* LBBarChartView.m in Sources */,
@@ -458,6 +494,8 @@
 				AC60E56D1A8A6FFD00E73EC5 /* cfuncs.m in Sources */,
 				AC855AD21AA116FE001D761C /* SSPacketLogger.m in Sources */,
 				AC855AD01AA116FE001D761C /* SensorDataLogStreamConfig.m in Sources */,
+				AC050A0F1B43185D004FA68F /* SparklineView.m in Sources */,
+				AC050A121B4318A3004FA68F /* AutolayoutUtils.m in Sources */,
 				AC855ACC1AA116FE001D761C /* SensorData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

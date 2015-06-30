@@ -12,6 +12,7 @@
 #import "ConnectVC.h"
 #import "ConsoleVC.h"
 #import "BrickVC.h"
+#import "BlurpVC.h"
 
 //================================================================
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -22,6 +23,7 @@
 @property ConnectVC *connectVc;
 @property ConsoleVC *consoleVc;
 @property BrickVC *brickVc;
+@property BlurpVC *blurpVc;
 @property UINavigationController *naviVc;
 
 @property NSString *sensoApp; // sensorun or sensolifting firmware

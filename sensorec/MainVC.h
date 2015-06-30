@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnClear;
 @property (weak, nonatomic) IBOutlet UIButton *btnShutter;
 @property (weak, nonatomic) IBOutlet UIButton *btnAnimation;
+@property (weak, nonatomic) IBOutlet UIButton *btnBlurp;
 
 - (void) setLogStatus:(NSString *)status
                  used:(NSString *)usedBytes

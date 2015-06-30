@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVC">
             <connections>
                 <outlet property="btnAnimation" destination="rzf-Ey-oHI" id="cJX-UX-hD5"/>
+                <outlet property="btnBlurp" destination="lLe-vF-QzF" id="4rJ-VJ-FAh"/>
                 <outlet property="btnClear" destination="dOt-Fp-aQ2" id="2sA-u9-aVl"/>
                 <outlet property="btnLed" destination="myb-nQ-a3G" id="b6t-Lr-4Rd"/>
                 <outlet property="btnRecord" destination="QOg-rD-uHJ" id="rFR-Wx-P5U"/>
@@ -128,7 +129,7 @@
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzf-Ey-oHI">
-                    <rect key="frame" x="102" y="423" width="116" height="30"/>
+                    <rect key="frame" x="19" y="423" width="116" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="Animation">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -137,10 +138,20 @@
                         <action selector="btnAnimation:" destination="-1" eventType="touchUpInside" id="MoX-kl-wxG"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLe-vF-QzF">
+                    <rect key="frame" x="182" y="423" width="116" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Sparklines">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnBlurp:" destination="-1" eventType="touchUpInside" id="CCT-DR-GF4"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="-530" y="-3120"/>
+            <point key="canvasLocation" x="-592" y="-3602"/>
         </view>
     </objects>
 </document>

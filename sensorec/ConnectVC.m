@@ -257,6 +257,7 @@
 // Called from SensoPlex.m
 {
     static int msgNum = 0;
+    static NSArray *currentBlurp;
     msgNum++;
     //    SensoPlex *senso = g_app.connectVc.sensoPlex;
     if (bytes[1] == '@') { // binary key/value message
@@ -294,7 +295,25 @@
         else if ([keys isEqualToArray:@[@"v",@"x",@"y",@"z"]]) {
             [g_app.brickVc fusionOS];
             [g_app.brickVc animateQuaternion:values];
-        } else {
+        }
+        // Cadence, Bounce, Lurch, Plod
+        else if ([keys isEqualToArray:@[@"c",@"b",@"l",@"p"]]) {
+            [g_app.consoleVc pr:keys values:values num:msgNum];
+            // Remember blurp values until rotations come in
+            currentBlurp = values;
+        }
+        // Rotation around x,y,z
+        else if ([keys isEqualToArray:@[@"r",@"y",@"z"]]) {
+            [g_app.consoleVc pr:keys values:values num:msgNum];
+            [g_app.blurpVc cadence:currentBlurp[0]
+                            bounce:currentBlurp[1]
+                             lurch:currentBlurp[2]
+                              plod:currentBlurp[3]
+                              rotx:values[0]
+                              roty:values[1]
+                              rotz:values[2]];
+        }
+        else {
             [g_app.consoleVc pr:keys values:values num:msgNum];
         }
     }
@@ -327,6 +346,8 @@
             g_app.mainVc.lbTotlab.hidden = YES;
             g_app.mainVc.btnClear.hidden = YES;
             g_app.mainVc.btnShutter.hidden = NO;
+            g_app.mainVc.btnAnimation.hidden = YES;
+            g_app.mainVc.btnBlurp.hidden = YES;
         });
     }
     else if ([msg isEqualToString:@"run"]) {
@@ -345,6 +366,7 @@
             g_app.mainVc.btnClear.hidden = NO;
             g_app.mainVc.btnShutter.hidden = YES;
             g_app.mainVc.btnAnimation.hidden = YES;
+            g_app.mainVc.btnBlurp.hidden = YES;
         });
     }
     else if ([msg isEqualToString:@"dev"]) {
@@ -363,6 +385,7 @@
             g_app.mainVc.btnClear.hidden = NO;
             g_app.mainVc.btnShutter.hidden = YES;
             g_app.mainVc.btnAnimation.hidden = NO;
+            g_app.mainVc.btnBlurp.hidden = NO;
         });
     }
     else if ([msg hasPrefix:@"gl:"]) {
