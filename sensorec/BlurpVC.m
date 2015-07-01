@@ -105,7 +105,7 @@
                                             , NSDictionaryOfVariableBindings(navbar))];
     [self.view addConstraints:VF_CONSTRAINT(@"H:|[scv]|", nil
                                             , NSDictionaryOfVariableBindings(scv))];
-    [self.view addConstraints:VF_CONSTRAINT(@"V:|[navbar][scv]|", nil
+    [self.view addConstraints:VF_CONSTRAINT(@"V:|-20-[navbar][scv]|", nil
                                             , NSDictionaryOfVariableBindings(navbar, scv))];
 } // loadView()
 
