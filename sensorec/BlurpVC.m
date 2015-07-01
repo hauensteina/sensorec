@@ -9,6 +9,7 @@
 #import "BlurpVC.h"
 #import "SparklineContainerView.h"
 #import "common.h"
+#import "AutolayoutUtils.h"
 
 @interface BlurpVC ()
 @property SparklineContainerView* sparklinesView;
@@ -71,17 +72,21 @@
                                                maxValue:@(45)
                                                   color:[UIColor blueColor]];
     
-    SparklineContainerView* view =
+    SparklineContainerView* scv =
     [[SparklineContainerView alloc] initWithPlotTypes:plotTypes];
-    view.backgroundColor = [UIColor whiteColor];
-    [view doLayout:self];
-    self.sparklinesView = view;
-    self.view = view;
+    scv.translatesAutoresizingMaskIntoConstraints = NO;
+    scv.backgroundColor = [UIColor whiteColor];
+    [scv doLayout:self];
+    self.sparklinesView = scv;
+    self.view = [UIView new];
+    [self.view addSubview:scv];
     
     // Add a navigation bar at the top
     //--------------------------------
-    UINavigationBar *navbar =
-    [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 26, 320, 44)];
+//    UINavigationBar *navbar =
+//    [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 26, 320, 44)];
+    UINavigationBar* navbar = [UINavigationBar new];
+    navbar.translatesAutoresizingMaskIntoConstraints = NO;
     navbar.delegate = self;
     // Add title to bar
     UINavigationItem *navitem = [UINavigationItem new];
@@ -96,6 +101,12 @@
     
     navbar.items = @[navitem];
     [self.view addSubview:navbar];
+    [self.view addConstraints:VF_CONSTRAINT(@"H:|[navbar]|", nil
+                                            , NSDictionaryOfVariableBindings(navbar))];
+    [self.view addConstraints:VF_CONSTRAINT(@"H:|[scv]|", nil
+                                            , NSDictionaryOfVariableBindings(scv))];
+    [self.view addConstraints:VF_CONSTRAINT(@"V:|[navbar][scv]|", nil
+                                            , NSDictionaryOfVariableBindings(navbar, scv))];
 } // loadView()
 
 // Pass in values to update the sparklines

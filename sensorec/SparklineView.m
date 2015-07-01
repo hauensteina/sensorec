@@ -64,7 +64,7 @@
                     CGRect lf = self.label.frame;
                     lf.origin.x = 5;
                     lf = [self convertRect:lf fromView:self.containerView];
-                    lf.origin.y = 10;
+                    lf.origin.y = 0;
                     self.label.frame = lf;
                 });
 
@@ -73,6 +73,12 @@
     }//end for loop
     CGContextSetLineWidth(ref, 1);
     CGContextSetStrokeColorWithColor(ref, self.plotType.color.CGColor);
+    CGContextStrokePath(ref);
+
+    CGContextSetLineWidth(ref, 1);
+    CGContextSetStrokeColorWithColor(ref, self.plotType.color.CGColor);
+    CGContextMoveToPoint(ref, 0, height);
+    CGContextAddLineToPoint(ref, x, height);
     CGContextStrokePath(ref);
 }
 
