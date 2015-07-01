@@ -24,7 +24,7 @@
 
 @interface SparklineContainerView : UIView
 
-//@property(strong, nonatomic) NSMutableArray* currValueLabels;//array of UILabelView objects
+@property(strong, nonatomic) NSMutableArray* tileViews;
 
 -(instancetype) initWithPlotTypes:(NSArray*) plotTypes;
 

@@ -29,7 +29,6 @@
 @interface SparklineContainerView()
 @property(assign, nonatomic) long numViews;
 @property(weak, nonatomic) UIScrollView* scrollView;
-@property(strong, nonatomic) NSMutableArray* tileViews;
 @property(strong, nonatomic) NSArray* rightEdgeConstraints;
 @property(strong, nonatomic) NSArray* plotTypes;
 @end

@@ -10,6 +10,8 @@
 #import "SparklineContainerView.h"
 #import "common.h"
 #import "AutolayoutUtils.h"
+#import "SparklineTileView.h"
+#import "SparklineView.h"
 
 @interface BlurpVC ()
 @property SparklineContainerView* sparklinesView;
@@ -142,6 +144,19 @@
         [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0)];
         
     }
-    
+    CGFloat width = self.sparklinesView.bounds.size.width;
+    if(self.sparklinesView.tileViews.count >0){
+        CGPoint rightEdge = ((SparklineView*)((SparklineTileView*)self.sparklinesView
+                                              .tileViews[0])
+                             .sparklineViews[0]).lastPoint;
+        rightEdge = [scrollView convertPoint:rightEdge
+                                    fromView:((SparklineView*)
+                                              ((SparklineTileView*)self
+                                               .sparklinesView.tileViews[0])
+                                              .sparklineViews[0])];
+        if(scrollView.contentOffset.x > rightEdge.x){
+            [scrollView setContentOffset:CGPointMake(rightEdge.x, 0)];
+        }
+    }
 }
 @end // BlurpVC
