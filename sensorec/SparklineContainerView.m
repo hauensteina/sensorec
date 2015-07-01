@@ -9,6 +9,7 @@
 #import "SparklineContainerView.h"
 #import "AutolayoutUtils.h"
 #import "SparklineTileView.h"
+#import "SparklineView.h"
 
 @implementation SparklinePlotType
 
@@ -47,10 +48,11 @@
     self = [[SparklineContainerView alloc]
             initWithFrame:CGRectMake(0, 0, 0, 0)];
     if(self){
-        _numViews = (int)plotTypes.count;
+        _numViews = plotTypes.count;
         _plotTypes = plotTypes;
         _tileViews = [NSMutableArray new];
         _rightEdgeConstraints = [NSMutableArray new];
+ //       _currValueLabels = [NSMutableArray new];
     }
     return self;
 }
@@ -81,15 +83,13 @@
 }
 
 -(void) addTile{
-//    SparklineTileView* newTile = [[SparklineTileView alloc]
-//                               initWithNumGraphs:self.numViews];
     SparklineTileView* newTile = [[SparklineTileView alloc]
                                   initWithPlotTypes:self.plotTypes
-                                  withTileIdx: (int)self.tileViews.count];
+                                  withTileIdx:self.tileViews.count];
     newTile.translatesAutoresizingMaskIntoConstraints = NO;
     newTile.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:newTile];
-    [newTile doLayout:self.scrollView];
+    [newTile doLayout:self.scrollView withContainerView:self];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:newTile
                                                      attribute:NSLayoutAttributeHeight
                                                      relatedBy:0
@@ -100,30 +100,44 @@
                                                   NSDictionaryOfVariableBindings(newTile))];
     NSUInteger currSize = self.tileViews.count;
     if(currSize){
-        [self.scrollView removeConstraints:self.rightEdgeConstraints];
-        //[NSLayoutConstraint deactivateConstraints:self.rightEdgeConstraints];
+        //hide labels old tile
         SparklineTileView* lastTile = self.tileViews[currSize-1];
+        for(SparklineView* slv in lastTile.sparklineViews){
+            slv.label.hidden = YES;
+        }
+        //Now go ahead and layout new tile
+        [self.scrollView removeConstraints:self.rightEdgeConstraints];
         [self.scrollView addConstraints:VF_CONSTRAINT(@"H:[lastTile][newTile]", nil,
                                                       NSDictionaryOfVariableBindings(newTile, lastTile))];
-        //[self.scrollView addConstraints:self.rightEdgeConstraints];
     }
     else{
+        //first tile
         [self.scrollView addConstraints:VF_CONSTRAINT(@"H:|[newTile]", nil
                                                       , NSDictionaryOfVariableBindings(newTile))];
+
+//        int plotIdx=-1;
+//        for(SparklinePlotType* type in self.plotTypes){
+//            plotIdx++;
+//            UILabel* label = [UILabel new];
+//            label.backgroundColor = [UIColor clearColor];
+//            [self.currValueLabels addObject:label];
+//            [self addSubview:label];
+//            [self addConstraints:VF_CONSTRAINT(@"H:[label]|", nil,
+//                                               NSDictionaryOfVariableBindings(label))];
+//            SparklineView* sv = ((SparklineView*)newTile.sparklineViews[plotIdx]);
+//            [self addConstraint: [NSLayoutConstraint constraintWithItem:label
+//                                                              attribute:NSLayoutAttributeTop
+//                                                              relatedBy:0
+//                                                                 toItem:sv
+//                                                              attribute:NSLayoutAttributeTop
+//                                                             multiplier:1 constant:0]];
+//
+//        }
     }
     self.rightEdgeConstraints = VF_CONSTRAINT(@"H:[newTile]|", nil
                                               , NSDictionaryOfVariableBindings(newTile));
     [self.scrollView addConstraints:self.rightEdgeConstraints];
     [self.tileViews addObject:newTile];
 }
-
-
-
-
-
-
-
-
-
 
 @end

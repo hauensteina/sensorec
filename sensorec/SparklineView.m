@@ -10,11 +10,12 @@
 #import "AutolayoutUtils.h"
 
 @interface SparklineView ()
-@property(strong, nonatomic) NSString* label;
+@property(strong, nonatomic) NSString* plotName;
 @property(strong, nonatomic) SparklinePlotType* plotType;
 @property(strong, nonatomic, readwrite) NSMutableArray* dataPoints;
 @property(weak, nonatomic) UIScrollView* scrollView;
 @property(assign, nonatomic) int plotIdx;
+@property(weak, nonatomic) SparklineContainerView* containerView;
 @end
 
 @implementation SparklineView
@@ -25,7 +26,7 @@
     self = [SparklineView new];
     if(self){
         _plotType = plotType;
-        _label = plotType.metricName;
+        _plotName = plotType.metricName;
         _dataPoints = [NSMutableArray new];
         _lastPoint = CGPointZero;
         _plotIdx =idx;
@@ -52,14 +53,24 @@
             CGFloat screenWidth = screenRect.size.width;
             self.lastPoint = CGPointMake(x-screenWidth, 0);
             dispatch_async(dispatch_get_main_queue(), ^{
-//                NSLog(@"scrolling to plot:%d x:%f y:%f", self.plotIdx,
-//                      self.lastPoint.x, self.lastPoint.y);
                 [self.scrollView setContentOffset:[self.scrollView
                                                    convertPoint:self.lastPoint
                                                    fromView:self] animated:NO];
-            });
-        }
-    }
+                dispatch_async(dispatch_get_main_queue(), ^{
+//                    ((UILabel*)self.containerView.currValueLabels[self.plotIdx]).text
+//                    = [val stringValue];
+                    self.label.text = [NSString stringWithFormat:@"%@: %f",
+                                       self.plotName, val.floatValue];
+                    CGRect lf = self.label.frame;
+                    lf.origin.x = 5;
+                    lf = [self convertRect:lf fromView:self.containerView];
+                    lf.origin.y = 10;
+                    self.label.frame = lf;
+                });
+
+            });//end dispatch async
+        } //end if last point
+    }//end for loop
     CGContextSetLineWidth(ref, 1);
     CGContextSetStrokeColorWithColor(ref, self.plotType.color.CGColor);
     CGContextStrokePath(ref);
@@ -68,10 +79,6 @@
 -(CGFloat)calculateY:(NSNumber*) value{
     if(value.floatValue == 0.0)
         return 0;
-//    if(value.floatValue >= self.plotType.maxValue.floatValue)
-//        return (self.bounds.size.height-5)/self.plotType.maxValue.floatValue;
-//    else
-//        return (self.bounds.size.height-5)/value.floatValue;
     if(value.floatValue >= self.plotType.maxValue.floatValue)
         return (self.bounds.size.height-5);
     else
@@ -86,25 +93,30 @@
     [self setNeedsDisplay];
 }
 
--(void)doLayout:(UIScrollView*) sv{
+-(void)doLayout:(UIScrollView*) sv
+  withContainer:(SparklineContainerView*) containerView{
     self.scrollView = sv;
+    self.containerView = containerView;
     UILabel* label= [UILabel new];
     label.translatesAutoresizingMaskIntoConstraints = NO;
     label.backgroundColor = [UIColor clearColor];
-    label.text = [NSString stringWithFormat:@"%@:%d",self.label, self.plotIdx];
+//    label.text = [NSString stringWithFormat:@"%@:%d",self.plotName, self.plotIdx];
     [self addSubview:label];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:label
-                                                     attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:0
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:label
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:0
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1 constant:0]];
+//    [self addConstraint:[NSLayoutConstraint constraintWithItem:label
+//                                                     attribute:NSLayoutAttributeCenterX
+//                                                     relatedBy:0
+//                                                        toItem:self
+//                                                     attribute:NSLayoutAttributeCenterX
+//                                                    multiplier:1 constant:0]];
+//    [self addConstraint:[NSLayoutConstraint constraintWithItem:label
+//                                                     attribute:NSLayoutAttributeCenterY
+//                                                     relatedBy:0
+//                                                        toItem:self
+//                                                     attribute:NSLayoutAttributeCenterY
+//                                                    multiplier:1 constant:0]];
+//    [self addConstraints:VF_CONSTRAINT(@"V:|-5-[label]", nil, NSDictionaryOfVariableBindings(label))];
+  
+    self.label = label;
 }
 
 

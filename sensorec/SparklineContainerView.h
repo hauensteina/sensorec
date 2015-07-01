@@ -14,6 +14,7 @@
 @property(strong, nonatomic) NSNumber* maxValue;
 @property(strong, nonatomic) UIColor* color;
 
+
 +(instancetype) newWithMetricName:(NSString*) name
                          maxValue:(NSNumber*) maxValue
                             color:(UIColor*) color;
@@ -22,6 +23,8 @@
 
 
 @interface SparklineContainerView : UIView
+
+//@property(strong, nonatomic) NSMutableArray* currValueLabels;//array of UILabelView objects
 
 -(instancetype) initWithPlotTypes:(NSArray*) plotTypes;
 

@@ -17,11 +17,13 @@
 -(instancetype) initWithPlotType:(SparklinePlotType*) plotType
                      withPlotIdx:(int)idx;
 
--(void) doLayout:(UIScrollView*) sv;
+-(void) doLayout:(UIScrollView*) sv
+   withContainer:(SparklineContainerView*) containerView;
 
 -(void) plotDataPointWithValue:(NSNumber*) value;
 
 @property(strong, nonatomic, readonly) NSMutableArray* dataPoints;
 @property(assign, nonatomic) CGPoint lastPoint;
+@property(weak, nonatomic) UILabel* label;
 
 @end

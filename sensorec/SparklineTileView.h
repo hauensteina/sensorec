@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SparklineContainerView.h"
 
 @interface SparklineTileView : UIView
 
 @property(strong, nonatomic, readonly) NSMutableArray* dataPoints;
+@property(strong, nonatomic) NSMutableArray* sparklineViews;
 
--(void) doLayout:(UIScrollView*) sv;
+-(void) doLayout:(UIScrollView*) sv
+withContainerView:(SparklineContainerView*) containerView;
 
 -(instancetype) initWithPlotTypes:(NSArray*) plotTypes
                       withTileIdx:(int) tileIdx;

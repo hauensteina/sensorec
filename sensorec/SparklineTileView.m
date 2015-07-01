@@ -14,10 +14,10 @@
 
 @property(assign, nonatomic) int numGraphs;
 @property(strong, nonatomic) NSArray* plotTypes;
-//@property(strong, nonatomic) NSMutableArray* sparklineViews;
 @property(strong, nonatomic) NSMutableDictionary* viewMap;
 @property(strong, nonatomic, readwrite) NSMutableArray* dataPoints;
 @property(weak, nonatomic) UIScrollView* scrollView;
+@property(weak, nonatomic) SparklineContainerView* containerView;
 @property(assign, nonatomic) int tileIdx;
 @end
 
@@ -35,9 +35,9 @@
                       withTileIdx:(int) tileIdx{
     self = [SparklineTileView new];
     if(self){
-        _numGraphs = (int)plotTypes.count;
+        _numGraphs = plotTypes.count;
         _plotTypes = plotTypes;
-//        _sparklineViews = [NSMutableArray new];
+        _sparklineViews = [NSMutableArray new];
         _viewMap =  [NSMutableDictionary new];
         _dataPoints = [NSMutableArray new];
         _tileIdx = tileIdx;
@@ -65,17 +65,19 @@
         return YES;
 }
 
--(void) doLayout:(UIScrollView*) sv{
+-(void) doLayout:(UIScrollView*) sv
+withContainerView:(SparklineContainerView*) containerView{
     self.scrollView = sv;
+    self.containerView = containerView;
     SparklineView* firstView = [[SparklineView alloc]
                                 initWithPlotType:(SparklinePlotType*)self.plotTypes[0]
                                 withPlotIdx:self.tileIdx];
-    //[self.sparklineViews addObject:firstView];
+    [self.sparklineViews addObject:firstView];
     self.viewMap[((SparklinePlotType*)self.plotTypes[0]).metricName] = firstView;
     firstView.translatesAutoresizingMaskIntoConstraints = NO;
     firstView.backgroundColor = [UIColor clearColor];
     [self addSubview:firstView];
-    [firstView doLayout:sv];
+    [firstView doLayout:sv withContainer:containerView];
     [self addConstraints:
      VF_CONSTRAINT([NSString stringWithFormat:@"H:|[firstView(%d)]|", PLOT_WIDTH],
                    nil,
@@ -88,12 +90,12 @@
             SparklineView* nextView = [[SparklineView alloc]
                                        initWithPlotType:(SparklinePlotType*)self.plotTypes[i-1]
                                        withPlotIdx:self.tileIdx];
-//            [self.sparklineViews addObject:nextView];
-                self.viewMap[((SparklinePlotType*)self.plotTypes[i-1]).metricName] = nextView;
+            [self.sparklineViews addObject:nextView];
+            self.viewMap[((SparklinePlotType*)self.plotTypes[i-1]).metricName] = nextView;
             nextView.translatesAutoresizingMaskIntoConstraints = NO;
             nextView.backgroundColor = [UIColor clearColor];
             [self addSubview:nextView];
-            [nextView doLayout:self.scrollView];
+            [nextView doLayout:self.scrollView withContainer:self.containerView];
             [self addConstraints:
              VF_CONSTRAINT([NSString stringWithFormat:@"H:|[nextView(%d)]|", PLOT_WIDTH], nil,
                                                NSDictionaryOfVariableBindings(nextView))];
