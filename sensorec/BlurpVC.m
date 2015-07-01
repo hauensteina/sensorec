@@ -133,4 +133,15 @@
     });
 } // [cadence ...]
 
+#pragma mark UiScrollView delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.frame.size.height) {
+//        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, scrollView.contentSize.height - scrollView.frame.size.height)];
+//    }
+    if(scrollView.contentOffset.y != 0){
+        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0)];
+        
+    }
+    
+}
 @end // BlurpVC
