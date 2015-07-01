@@ -60,7 +60,7 @@
                                                maxValue:@(120)
                                                   color:[UIColor blueColor]];
     plotTypes[3] = [SparklinePlotType newWithMetricName:@"Plod"
-                                               maxValue:@(10)
+                                               maxValue:@(15)
                                                   color:[UIColor yellowColor]];
     plotTypes[4] = [SparklinePlotType newWithMetricName:@"Rotx"
                                                maxValue:@(45)
