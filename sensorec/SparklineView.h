@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SparklineContainerView.h"
-#define PLOT_WIDTH 600
+//#define PLOT_WIDTH 600
 #define PITCH 5
 
 
@@ -21,6 +21,8 @@
    withContainer:(SparklineContainerView*) containerView;
 
 -(void) plotDataPointWithValue:(NSNumber*) value;
+
++(long) maxWidth;
 
 @property(strong, nonatomic, readonly) NSMutableArray* dataPoints;
 @property(assign, nonatomic) CGPoint lastPoint;

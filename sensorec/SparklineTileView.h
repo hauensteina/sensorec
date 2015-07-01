@@ -18,10 +18,10 @@
 withContainerView:(SparklineContainerView*) containerView;
 
 -(instancetype) initWithPlotTypes:(NSArray*) plotTypes
-                      withTileIdx:(int) tileIdx;
+                      withTileIdx:(long) tileIdx;
 
 -(void) plotPoints:(NSDictionary*) points;
 
--(BOOL) isAtMaxCapacity;
+//-(BOOL) isAtMaxCapacity;
 
 @end

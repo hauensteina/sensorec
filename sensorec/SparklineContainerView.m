@@ -27,7 +27,7 @@
 
 
 @interface SparklineContainerView()
-@property(assign, nonatomic) int numViews;
+@property(assign, nonatomic) long numViews;
 @property(weak, nonatomic) UIScrollView* scrollView;
 @property(strong, nonatomic) NSMutableArray* tileViews;
 @property(strong, nonatomic) NSArray* rightEdgeConstraints;
@@ -73,12 +73,12 @@
     if(self.tileViews.count == 0){
         [self addTile];
     }
-    else if(((SparklineTileView*)self.tileViews.lastObject).isAtMaxCapacity){
-        NSDictionary* lastPoint = ((SparklineTileView*)self.tileViews.lastObject)
-        .dataPoints.lastObject;
-        [self addTile];
-        [(SparklineTileView*)self.tileViews.lastObject plotPoints:lastPoint];
-    }
+//    else if(((SparklineTileView*)self.tileViews.lastObject).isAtMaxCapacity){
+//        NSDictionary* lastPoint = ((SparklineTileView*)self.tileViews.lastObject)
+//        .dataPoints.lastObject;
+//        [self addTile];
+//        [(SparklineTileView*)self.tileViews.lastObject plotPoints:lastPoint];
+//    }
     [(SparklineTileView*)self.tileViews.lastObject plotPoints:points];
 }
 

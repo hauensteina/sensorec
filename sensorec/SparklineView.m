@@ -57,16 +57,15 @@
                                                    convertPoint:self.lastPoint
                                                    fromView:self] animated:NO];
                 dispatch_async(dispatch_get_main_queue(), ^{
-//                    ((UILabel*)self.containerView.currValueLabels[self.plotIdx]).text
-//                    = [val stringValue];
-                    self.label.text = [NSString stringWithFormat:@"%@: %f",
+                     self.label.text = [NSString stringWithFormat:@"%@: %f",
                                        self.plotName, val.floatValue];
-                    CGRect lf = self.label.frame;
-                    lf.origin.x = 5;
-                    lf = [self convertRect:lf fromView:self.containerView];
-                    lf.origin.y = 0;
-                    self.label.frame = lf;
                 });
+//                //label respositioning
+//                CGRect lf = self.label.frame;
+//                lf.origin.x = 5;
+//                lf = [self convertRect:lf fromView:self.containerView];
+//                lf.origin.y = 10;
+//                self.label.frame = lf;
 
             });//end dispatch async
         } //end if last point
@@ -95,8 +94,17 @@
 
 -(void) plotDataPointWithValue:(NSNumber*) value{
     NSLog(@"plot:%d plotDataPointWithValue:%@", self.plotIdx, value);
+    long width = [SparklineView maxWidth];
+    long cnt = width/PITCH;
+    while (self.dataPoints.count>=cnt) {
+        [self.dataPoints removeObjectAtIndex:0];
+    }
     [_dataPoints addObject:value];
     [self setNeedsDisplay];
+}
+
++(long) maxWidth{
+    return (long)UIScreen.mainScreen.bounds.size.width*3;
 }
 
 -(void)doLayout:(UIScrollView*) sv
@@ -106,7 +114,6 @@
     UILabel* label= [UILabel new];
     label.translatesAutoresizingMaskIntoConstraints = NO;
     label.backgroundColor = [UIColor clearColor];
-//    label.text = [NSString stringWithFormat:@"%@:%d",self.plotName, self.plotIdx];
     [self addSubview:label];
 //    [self addConstraint:[NSLayoutConstraint constraintWithItem:label
 //                                                     attribute:NSLayoutAttributeCenterX
@@ -120,8 +127,15 @@
 //                                                        toItem:self
 //                                                     attribute:NSLayoutAttributeCenterY
 //                                                    multiplier:1 constant:0]];
-//    [self addConstraints:VF_CONSTRAINT(@"V:|-5-[label]", nil, NSDictionaryOfVariableBindings(label))];
+
   
+    [self.containerView addConstraint:[NSLayoutConstraint constraintWithItem:label
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                   relatedBy:0
+                                                                      toItem:self.containerView
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                  multiplier:1 constant:5]];
+    [self addConstraints:VF_CONSTRAINT(@"V:|-5-[label]", nil, NSDictionaryOfVariableBindings(label))];
     self.label = label;
 }
 

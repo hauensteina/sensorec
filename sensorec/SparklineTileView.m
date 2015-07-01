@@ -12,7 +12,7 @@
 
 @interface SparklineTileView ()
 
-@property(assign, nonatomic) int numGraphs;
+@property(assign, nonatomic) long numGraphs;
 @property(strong, nonatomic) NSArray* plotTypes;
 @property(strong, nonatomic) NSMutableDictionary* viewMap;
 @property(strong, nonatomic, readwrite) NSMutableArray* dataPoints;
@@ -32,7 +32,7 @@
 */
 
 -(instancetype) initWithPlotTypes:(NSArray*) plotTypes
-                      withTileIdx:(int) tileIdx{
+                      withTileIdx:(long) tileIdx{
     self = [SparklineTileView new];
     if(self){
         _numGraphs = plotTypes.count;
@@ -57,13 +57,13 @@
     [self.dataPoints addObject:points];
 }
 
--(BOOL) isAtMaxCapacity{
-    SparklineView* v = (SparklineView*)self.viewMap[self.viewMap.allKeys[0]];
-    if(v.dataPoints.count <= PLOT_WIDTH/PITCH)
-        return NO;
-    else
-        return YES;
-}
+//-(BOOL) isAtMaxCapacity{
+//    SparklineView* v = (SparklineView*)self.viewMap[self.viewMap.allKeys[0]];
+//    if(v.dataPoints.count <= PLOT_WIDTH/PITCH)
+//        return NO;
+//    else
+//        return YES;
+//}
 
 -(void) doLayout:(UIScrollView*) sv
 withContainerView:(SparklineContainerView*) containerView{
@@ -79,7 +79,7 @@ withContainerView:(SparklineContainerView*) containerView{
     [self addSubview:firstView];
     [firstView doLayout:sv withContainer:containerView];
     [self addConstraints:
-     VF_CONSTRAINT([NSString stringWithFormat:@"H:|[firstView(%d)]|", PLOT_WIDTH],
+     VF_CONSTRAINT([NSString stringWithFormat:@"H:|[firstView(%ld)]|", [SparklineView maxWidth]],
                    nil,
                    NSDictionaryOfVariableBindings(firstView))];
     [self addConstraints:VF_CONSTRAINT(@"V:|[firstView]", nil,
@@ -97,7 +97,7 @@ withContainerView:(SparklineContainerView*) containerView{
             [self addSubview:nextView];
             [nextView doLayout:self.scrollView withContainer:self.containerView];
             [self addConstraints:
-             VF_CONSTRAINT([NSString stringWithFormat:@"H:|[nextView(%d)]|", PLOT_WIDTH], nil,
+             VF_CONSTRAINT([NSString stringWithFormat:@"H:|[nextView(%ld)]|", [SparklineView maxWidth]], nil,
                                                NSDictionaryOfVariableBindings(nextView))];
             [self addConstraints:VF_CONSTRAINT(@"V:[lastView][nextView]", nil,
                                                NSDictionaryOfVariableBindings(lastView, nextView))];
