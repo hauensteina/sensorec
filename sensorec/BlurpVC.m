@@ -52,27 +52,28 @@
 //-----------------------
 {
     NSMutableArray* plotTypes = [NSMutableArray new];
+    // Colors are 'Dashing Color Palette' from www.color-hex.com
     plotTypes[0] = [SparklinePlotType newWithMetricName:@"Cadence"
                                                maxValue:@(300)
-                                                  color:[UIColor greenColor]];
+                                                  color:RGB(0xf04245)];
     plotTypes[1] = [SparklinePlotType newWithMetricName:@"Bounce"
                                                maxValue:@(150)
-                                                  color:[UIColor redColor]];
+                                                  color:RGB(0xf3bb33)];
     plotTypes[2] = [SparklinePlotType newWithMetricName:@"Lurch"
                                                maxValue:@(120)
-                                                  color:[UIColor blueColor]];
+                                                  color:RGB(0x63bd4e)];
     plotTypes[3] = [SparklinePlotType newWithMetricName:@"Plod"
-                                               maxValue:@(15)
-                                                  color:[UIColor yellowColor]];
+                                               maxValue:@(40)
+                                                  color:RGB(0x1d99d4)];
     plotTypes[4] = [SparklinePlotType newWithMetricName:@"Rotx"
-                                               maxValue:@(45)
-                                                  color:[UIColor greenColor]];
+                                               maxValue:@(30)
+                                                  color:RGB(0x673089)];
     plotTypes[5] = [SparklinePlotType newWithMetricName:@"Roty"
-                                               maxValue:@(45)
-                                                  color:[UIColor redColor]];
+                                               maxValue:@(30)
+                                                  color:RGB(0xf04245)];
     plotTypes[6] = [SparklinePlotType newWithMetricName:@"Rotz"
-                                               maxValue:@(45)
-                                                  color:[UIColor blueColor]];
+                                               maxValue:@(30)
+                                                  color:RGB(0xf3bb33)];
     
     SparklineContainerView* scv =
     [[SparklineContainerView alloc] initWithPlotTypes:plotTypes];
