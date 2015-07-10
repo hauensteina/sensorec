@@ -57,22 +57,22 @@
                                                maxValue:@(300)
                                                   color:RGB(0xf04245)];
     plotTypes[1] = [SparklinePlotType newWithMetricName:@"Bounce"
-                                               maxValue:@(150)
+                                               maxValue:@(15)
                                                   color:RGB(0xf3bb33)];
     plotTypes[2] = [SparklinePlotType newWithMetricName:@"Lurch"
-                                               maxValue:@(120)
+                                               maxValue:@(1.2)
                                                   color:RGB(0x63bd4e)];
     plotTypes[3] = [SparklinePlotType newWithMetricName:@"Plod"
-                                               maxValue:@(40)
+                                               maxValue:@(600)
                                                   color:RGB(0x1d99d4)];
     plotTypes[4] = [SparklinePlotType newWithMetricName:@"Rotx"
-                                               maxValue:@(30)
+                                               maxValue:@(40)
                                                   color:RGB(0x673089)];
     plotTypes[5] = [SparklinePlotType newWithMetricName:@"Roty"
-                                               maxValue:@(30)
+                                               maxValue:@(40)
                                                   color:RGB(0xf04245)];
     plotTypes[6] = [SparklinePlotType newWithMetricName:@"Rotz"
-                                               maxValue:@(30)
+                                               maxValue:@(40)
                                                   color:RGB(0xf3bb33)];
     
     SparklineContainerView* scv =
@@ -125,9 +125,9 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary* point = @{@"Cadence":cadence
-                                ,@"Bounce":bounce
-                                ,@"Lurch":lurch
-                                ,@"Plod":plod
+                                ,@"Bounce":@([bounce floatValue] / 10)
+                                ,@"Lurch":@([lurch floatValue] / 100)
+                                ,@"Plod":@([plod floatValue] * 20)
                                 ,@"Rotx":rotx
                                 ,@"Roty":roty
                                 ,@"Rotz":rotz

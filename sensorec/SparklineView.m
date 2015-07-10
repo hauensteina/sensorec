@@ -57,7 +57,7 @@
                                                    convertPoint:self.lastPoint
                                                    fromView:self] animated:NO];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                     self.label.text = [NSString stringWithFormat:@"%@: %f",
+                     self.label.text = [NSString stringWithFormat:@"%@: %.2f",
                                        self.plotName, val.floatValue];
                 });
 //                //label respositioning
