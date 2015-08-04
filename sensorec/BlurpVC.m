@@ -199,16 +199,16 @@
 -(NSArray*) getCoachingTips:(NSDictionary*) dataPoint
 {
     NSMutableArray* tips = [NSMutableArray new];
-    while(self.cadenceValues.count>=AVG_SAMPLE_SIZE){
-        [self.cadenceValues removeObjectAtIndex:0];
-        [self.bounceValues removeObjectAtIndex:0];
-        [self.lurchValues removeObjectAtIndex:0];
-        [self.plodValues removeObjectAtIndex:0];
-        [self.rotxValues removeObjectAtIndex:0];
-        [self.rotyValues removeObjectAtIndex:0];
-        [self.rotzValues removeObjectAtIndex:0];
-    }
-    
+//    while(self.cadenceValues.count>=AVG_SAMPLE_SIZE){
+//        [self.cadenceValues removeObjectAtIndex:0];
+//        [self.bounceValues removeObjectAtIndex:0];
+//        [self.lurchValues removeObjectAtIndex:0];
+//        [self.plodValues removeObjectAtIndex:0];
+//        [self.rotxValues removeObjectAtIndex:0];
+//        [self.rotyValues removeObjectAtIndex:0];
+//        [self.rotzValues removeObjectAtIndex:0];
+//    }
+//    
     [self.cadenceValues addObject:dataPoint[CADENCE]];
     [self.bounceValues addObject:dataPoint[BOUNCE]];
     [self.lurchValues addObject:dataPoint[LURCH]];
@@ -216,6 +216,8 @@
     [self.rotxValues addObject:dataPoint[ROTX]];
     [self.rotyValues addObject:dataPoint[ROTY]];
     [self.rotzValues addObject:dataPoint[ROTZ]];
+    if(self.cadenceValues.count< AVG_SAMPLE_SIZE)
+        return nil;
     
     self.avgCadence = [self calculateAvg:self.cadenceValues];
     self.avgBounce = [self calculateAvg:self.bounceValues];
@@ -238,13 +240,23 @@
     if(BOUNCE_MIN != BOUNCE_MAX){
         if(self.avgBounce < BOUNCE_MIN){
             [tips addObject:[NSString stringWithFormat:@"Your bounce %d is too low."
-                             @"Increase bounce", (int)self.avgBounce]];
+                             @"Increase bounce!", (int)self.avgBounce]];
         }
         else if(self.avgBounce > BOUNCE_MAX){
             [tips addObject:[NSString stringWithFormat:@"Your bounce %d is too high."
-                             @"Decrease bounce", (int)self.avgBounce]];
+                             @"Decrease bounce!", (int)self.avgBounce]];
         }
     }
+    
+    //clear out samples
+    [self.cadenceValues removeAllObjects];
+    [self.bounceValues removeAllObjects];
+    [self.lurchValues removeAllObjects];
+    [self.plodValues removeAllObjects];
+    [self.rotxValues removeAllObjects];
+    [self.rotyValues removeAllObjects];
+    [self.rotzValues removeAllObjects];
+    
     return tips;
 }
 

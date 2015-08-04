@@ -65,6 +65,8 @@
 -(void) doLayout:(id<UIScrollViewDelegate>) delegate{
     UILabel* tipLabel = [UIView labelForAutoLayoutAsSubViewOf:self];
     tipLabel.text = @"You are doing great";
+    tipLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    tipLabel.numberOfLines = 0;
     tipLabel.textAlignment = NSTextAlignmentCenter;
     self.tipLabel = tipLabel;
     [self addConstraints:VF_CONSTRAINT(@"H:|[tipLabel]|", nil,
@@ -91,6 +93,8 @@
 
 -(void) postTips:(NSArray*) tips
       withColor:(UIColor*) tipColor{
+    if(!tips)
+        return;
     self.tipLabel.textColor = tipColor;
     [self.tipsToSpeak addObjectsFromArray:tips];
     [self speak];
