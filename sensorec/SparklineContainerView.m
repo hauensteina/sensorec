@@ -10,6 +10,7 @@
 #import "AutolayoutUtils.h"
 #import "SparklineTileView.h"
 #import "SparklineView.h"
+@import AVFoundation;
 
 @implementation SparklinePlotType
 
@@ -26,11 +27,14 @@
 @end
 
 
-@interface SparklineContainerView()
+@interface SparklineContainerView()<AVSpeechSynthesizerDelegate>
 @property(assign, nonatomic) long numViews;
 @property(weak, nonatomic) UIScrollView* scrollView;
 @property(strong, nonatomic) NSArray* rightEdgeConstraints;
 @property(strong, nonatomic) NSArray* plotTypes;
+@property(weak, nonatomic) UILabel* tipLabel;
+@property (nonatomic, strong) AVSpeechSynthesizer *speechSynthesizer;
+@property(nonatomic, strong) NSMutableArray* tipsToSpeak;
 @end
 
 @implementation SparklineContainerView
@@ -51,19 +55,29 @@
         _plotTypes = plotTypes;
         _tileViews = [NSMutableArray new];
         _rightEdgeConstraints = [NSMutableArray new];
- //       _currValueLabels = [NSMutableArray new];
+        _speechSynthesizer = [AVSpeechSynthesizer new];
+        _speechSynthesizer.delegate = self;
+        _tipsToSpeak = [NSMutableArray new];
     }
     return self;
 }
 
 -(void) doLayout:(id<UIScrollViewDelegate>) delegate{
+    UILabel* tipLabel = [UIView labelForAutoLayoutAsSubViewOf:self];
+    tipLabel.text = @"You are doing great";
+    tipLabel.textAlignment = NSTextAlignmentCenter;
+    self.tipLabel = tipLabel;
+    [self addConstraints:VF_CONSTRAINT(@"H:|[tipLabel]|", nil,
+                                       NSDictionaryOfVariableBindings(tipLabel))];
     UIScrollView* sv = [UIScrollView new];
     sv.delegate =  delegate;
     sv.translatesAutoresizingMaskIntoConstraints = NO;
     sv.backgroundColor = [UIColor clearColor];
     [self addSubview:sv];
-    [self addConstraints:VF_CONSTRAINT(@"H:|[sv]|", nil, NSDictionaryOfVariableBindings(sv))];
-    [self addConstraints:VF_CONSTRAINT(@"V:|[sv]|", nil, NSDictionaryOfVariableBindings(sv))];
+    [self addConstraints:VF_CONSTRAINT(@"H:|[sv]|", nil,
+                                       NSDictionaryOfVariableBindings(sv))];
+    [self addConstraints:VF_CONSTRAINT(@"V:|[tipLabel][sv]|", nil,
+                                       NSDictionaryOfVariableBindings(sv, tipLabel))];
     self.scrollView = sv;
 }
 
@@ -72,13 +86,31 @@
     if(self.tileViews.count == 0){
         [self addTile];
     }
-//    else if(((SparklineTileView*)self.tileViews.lastObject).isAtMaxCapacity){
-//        NSDictionary* lastPoint = ((SparklineTileView*)self.tileViews.lastObject)
-//        .dataPoints.lastObject;
-//        [self addTile];
-//        [(SparklineTileView*)self.tileViews.lastObject plotPoints:lastPoint];
-//    }
     [(SparklineTileView*)self.tileViews.lastObject plotPoints:points];
+}
+
+-(void) postTips:(NSArray*) tips
+      withColor:(UIColor*) tipColor{
+    self.tipLabel.textColor = tipColor;
+    [self.tipsToSpeak addObjectsFromArray:tips];
+    [self speak];
+}
+
+-(void) speak{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(self.tipsToSpeak.count == 0)
+            return;
+        NSString* tip = self.tipsToSpeak[0];
+        self.tipLabel.text = tip;
+        [self.tipLabel setNeedsDisplay];
+        [self.tipsToSpeak removeObjectAtIndex:0];
+        AVSpeechUtterance* utterance = [[AVSpeechUtterance alloc] initWithString:tip];
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
+        utterance.rate = AVSpeechUtteranceMinimumSpeechRate;
+        utterance.preUtteranceDelay = 0.2f;
+        utterance.postUtteranceDelay = 0.2f;
+        [self.speechSynthesizer speakUtterance:utterance];
+    });
 }
 
 -(void) addTile{
@@ -114,24 +146,6 @@
         [self.scrollView addConstraints:VF_CONSTRAINT(@"H:|[newTile]", nil
                                                       , NSDictionaryOfVariableBindings(newTile))];
 
-//        int plotIdx=-1;
-//        for(SparklinePlotType* type in self.plotTypes){
-//            plotIdx++;
-//            UILabel* label = [UILabel new];
-//            label.backgroundColor = [UIColor clearColor];
-//            [self.currValueLabels addObject:label];
-//            [self addSubview:label];
-//            [self addConstraints:VF_CONSTRAINT(@"H:[label]|", nil,
-//                                               NSDictionaryOfVariableBindings(label))];
-//            SparklineView* sv = ((SparklineView*)newTile.sparklineViews[plotIdx]);
-//            [self addConstraint: [NSLayoutConstraint constraintWithItem:label
-//                                                              attribute:NSLayoutAttributeTop
-//                                                              relatedBy:0
-//                                                                 toItem:sv
-//                                                              attribute:NSLayoutAttributeTop
-//                                                             multiplier:1 constant:0]];
-//
-//        }
     }
     self.rightEdgeConstraints = VF_CONSTRAINT(@"H:[newTile]|", nil
                                               , NSDictionaryOfVariableBindings(newTile));
@@ -139,4 +153,9 @@
     [self.tileViews addObject:newTile];
 }
 
+#pragma mark - AVSpeechSynthesizerDelegate
+-(void) speechSynthesizer:(AVSpeechSynthesizer *)synthesizer
+ didFinishSpeechUtterance:(AVSpeechUtterance *)utterance{
+    [self speak];
+}
 @end

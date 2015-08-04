@@ -13,14 +13,71 @@
 #import "SparklineTileView.h"
 #import "SparklineView.h"
 
+#define CADENCE @"Cadence"
+#define BOUNCE @"Bounce"
+#define LURCH @"Lurch"
+#define PLOD @"Plod"
+#define ROTX @"Rotx"
+#define ROTY @"Roty"
+#define ROTZ @"Rotz"
+
+#define AVG_SAMPLE_SIZE 5
+#define CADENCE_MIN 0
+#define CADENCE_MAX 0
+#define BOUNCE_MIN 0
+#define BOUNCE_MAX 20
+#define LURCH_MIN 0
+#define LURCH_MAX 0
+#define PLOD_MIN 0
+#define PLOD_MAX 0
+#define ROTX_MIN 0
+#define ROTX_MAX 0
+#define ROTY_MIN 0
+#define ROTY_MAX 0
+#define ROTZ_MIN 0
+#define ROTZ_MAX 0
+
 @interface BlurpVC ()
 @property SparklineContainerView* sparklinesView;
 @property NSArray* plotTypes;
+
+//Data structures to store historical and avergage values of sensor properties
+@property(strong, nonatomic) NSMutableArray* cadenceValues;
+@property(strong, nonatomic) NSMutableArray* bounceValues;
+@property(strong, nonatomic) NSMutableArray* lurchValues;
+@property(strong, nonatomic) NSMutableArray* plodValues;
+@property(strong, nonatomic) NSMutableArray* rotxValues;
+@property(strong, nonatomic) NSMutableArray* rotyValues;
+@property(strong, nonatomic) NSMutableArray* rotzValues;
+
+@property(assign, nonatomic) double avgCadence;
+@property(assign, nonatomic) double avgBounce;
+@property(assign, nonatomic) double avgLurch;
+@property(assign, nonatomic) double avgPlod;
+@property(assign, nonatomic) double avgRotx;
+@property(assign, nonatomic) double avgRoty;
+@property(assign, nonatomic) double avgRotz;
 @end
 
 //========================
 @implementation BlurpVC
 //========================
+
+//-----------------------
+-(instancetype) init
+{
+    self = [super init];
+    if(self){
+        _cadenceValues = [NSMutableArray new];
+        _bounceValues = [NSMutableArray new];
+        _lurchValues = [NSMutableArray new];
+        _plodValues = [NSMutableArray new];
+        _rotxValues = [NSMutableArray new];
+        _rotyValues = [NSMutableArray new];
+        _rotzValues = [NSMutableArray new];
+    }
+    return self;
+}
 
 //-----------------------
 - (void)viewDidLoad
@@ -124,28 +181,91 @@
 //----------------------------------
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSDictionary* point = @{@"Cadence":cadence
-                                ,@"Bounce":@([bounce floatValue] / 10)
-                                ,@"Lurch":@([lurch floatValue] / 100)
-                                ,@"Plod":@([plod floatValue] * 20)
-                                ,@"Rotx":rotx
-                                ,@"Roty":roty
-                                ,@"Rotz":rotz
+        NSDictionary* point = @{CADENCE:cadence
+                                ,BOUNCE:@([bounce floatValue] / 10)
+                                ,LURCH:@([lurch floatValue] / 100)
+                                ,PLOD:@([plod floatValue] * 20)
+                                ,ROTX:rotx
+                                ,ROTY:roty
+                                ,ROTZ:rotz
                                 };
         [self.sparklinesView plotPoints:point];
+        [self.sparklinesView postTips:[self getCoachingTips:point]
+                            withColor:[UIColor redColor]];
     });
 } // [cadence ...]
 
+
+-(NSArray*) getCoachingTips:(NSDictionary*) dataPoint
+{
+    NSMutableArray* tips = [NSMutableArray new];
+    while(self.cadenceValues.count>=AVG_SAMPLE_SIZE){
+        [self.cadenceValues removeObjectAtIndex:0];
+        [self.bounceValues removeObjectAtIndex:0];
+        [self.lurchValues removeObjectAtIndex:0];
+        [self.plodValues removeObjectAtIndex:0];
+        [self.rotxValues removeObjectAtIndex:0];
+        [self.rotyValues removeObjectAtIndex:0];
+        [self.rotzValues removeObjectAtIndex:0];
+    }
+    
+    [self.cadenceValues addObject:dataPoint[CADENCE]];
+    [self.bounceValues addObject:dataPoint[BOUNCE]];
+    [self.lurchValues addObject:dataPoint[LURCH]];
+    [self.plodValues addObject:dataPoint[PLOD]];
+    [self.rotxValues addObject:dataPoint[ROTX]];
+    [self.rotyValues addObject:dataPoint[ROTY]];
+    [self.rotzValues addObject:dataPoint[ROTZ]];
+    
+    self.avgCadence = [self calculateAvg:self.cadenceValues];
+    self.avgBounce = [self calculateAvg:self.bounceValues];
+    self.avgLurch = [self calculateAvg:self.lurchValues];
+    self.avgPlod = [self calculateAvg:self.plodValues];
+    self.avgRotx = [self calculateAvg:self.rotxValues];
+    self.avgRoty = [self calculateAvg:self.rotyValues];
+    self.avgRotz = [self calculateAvg:self.rotzValues];
+    //if the min and max are the same that means that there is threshold for this parameter
+    if(CADENCE_MAX != CADENCE_MIN){
+        if(self.avgCadence < CADENCE_MIN){
+            [tips addObject:[NSString stringWithFormat:@"Your cadence %d is too low. "
+                             @"Increase cadence", (int)self.avgCadence]];
+        }
+        else if(self.avgCadence > CADENCE_MAX){
+            [tips addObject:[NSString stringWithFormat:@"Your cadence %d is too high. "
+                             @"Decrease cadence", (int)self.avgCadence]];
+        }
+    }
+    if(BOUNCE_MIN != BOUNCE_MAX){
+        if(self.avgBounce < BOUNCE_MIN){
+            [tips addObject:[NSString stringWithFormat:@"Your bounce %d is too low."
+                             @"Increase bounce", (int)self.avgBounce]];
+        }
+        else if(self.avgBounce > BOUNCE_MAX){
+            [tips addObject:[NSString stringWithFormat:@"Your bounce %d is too high."
+                             @"Decrease bounce", (int)self.avgBounce]];
+        }
+    }
+    return tips;
+}
+
+-(double) calculateAvg:(NSArray*) dataPoints
+{
+    if(dataPoints.count==0)
+        return 0;
+    double total = 0;
+    for(NSNumber* value in dataPoints){
+        total += value.floatValue;
+    }
+    return total/dataPoints.count;
+}
+
 #pragma mark UiScrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.frame.size.height) {
-//        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, scrollView.contentSize.height - scrollView.frame.size.height)];
-//    }
     if(scrollView.contentOffset.y != 0){
         [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0)];
         
     }
-    CGFloat width = self.sparklinesView.bounds.size.width;
+//    CGFloat width = self.sparklinesView.bounds.size.width;
     if(self.sparklinesView.tileViews.count >0){
         CGPoint rightEdge = ((SparklineView*)((SparklineTileView*)self.sparklinesView
                                               .tileViews[0])
