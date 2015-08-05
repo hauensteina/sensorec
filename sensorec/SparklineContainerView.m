@@ -64,7 +64,7 @@
 
 -(void) doLayout:(id<UIScrollViewDelegate>) delegate{
     UILabel* tipLabel = [UIView labelForAutoLayoutAsSubViewOf:self];
-    tipLabel.text = @"You are doing great";
+    tipLabel.text = @"You are doing great. Keep running.";
     tipLabel.lineBreakMode = NSLineBreakByWordWrapping;
     tipLabel.numberOfLines = 0;
     tipLabel.textAlignment = NSTextAlignmentCenter;
@@ -78,7 +78,7 @@
     [self addSubview:sv];
     [self addConstraints:VF_CONSTRAINT(@"H:|[sv]|", nil,
                                        NSDictionaryOfVariableBindings(sv))];
-    [self addConstraints:VF_CONSTRAINT(@"V:|[tipLabel][sv]|", nil,
+    [self addConstraints:VF_CONSTRAINT(@"V:|[tipLabel(60)][sv]|", nil,
                                        NSDictionaryOfVariableBindings(sv, tipLabel))];
     self.scrollView = sv;
 }
@@ -125,14 +125,27 @@
     newTile.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:newTile];
     [newTile doLayout:self.scrollView withContainerView:self];
+//    [self addConstraint:[NSLayoutConstraint constraintWithItem:newTile
+//                                                     attribute:NSLayoutAttributeHeight
+//                                                     relatedBy:0
+//                                                        toItem:self
+//                                                     attribute:NSLayoutAttributeHeight
+//                                                    multiplier:1 constant:-20/*top margin*/]];
+
+    [self.scrollView addConstraints:VF_CONSTRAINT(@"V:|[newTile]|", nil,
+                                                  NSDictionaryOfVariableBindings(newTile))];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:newTile
-                                                     attribute:NSLayoutAttributeHeight
+                                                     attribute:NSLayoutAttributeBottom
                                                      relatedBy:0
                                                         toItem:self
-                                                     attribute:NSLayoutAttributeHeight
-                                                    multiplier:1 constant:-20/*top margin*/]];
-    [self.scrollView addConstraints:VF_CONSTRAINT(@"V:|-20-[newTile]|", nil,
-                                                  NSDictionaryOfVariableBindings(newTile))];
+                                                     attribute:NSLayoutAttributeBottom
+                                                    multiplier:1 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:newTile
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:0
+                                                        toItem:self.tipLabel
+                                                     attribute:NSLayoutAttributeBottom
+                                                    multiplier:1 constant:0]];
     NSUInteger currSize = self.tileViews.count;
     if(currSize){
         //hide labels old tile

@@ -120,6 +120,12 @@ withContainerView:(SparklineContainerView*) containerView{
     }
     [self addConstraints:VF_CONSTRAINT(@"V:[lastView]|", nil,
                                        NSDictionaryOfVariableBindings(lastView))];
+//    [sv.superview addConstraint:[NSLayoutConstraint constraintWithItem:lastView
+//                                                             attribute:NSLayoutAttributeBottom
+//                                                             relatedBy:0
+//                                                                toItem:sv.superview
+//                                                             attribute:NSLayoutAttributeBottom
+//                                                            multiplier:1 constant:0]];
 }
 
 
