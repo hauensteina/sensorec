@@ -8,7 +8,7 @@
 
 #import "Coach.h"
 
-#define AVG_SAMPLE_SIZE 25
+#define AVG_SAMPLE_SIZE 15
 #define CADENCE_MIN 120
 #define CADENCE_MAX 200
 #define BOUNCE_MIN 0
@@ -97,60 +97,75 @@
     self.avgRoty = [self calculateAvg:self.rotyValues];
     self.avgRotz = [self calculateAvg:self.rotzValues];
     //if the min and max are the same that means that there is threshold for this parameter
-    if(CADENCE_MAX != CADENCE_MIN){
-        if(self.avgCadence < CADENCE_MIN){
-            Tip* tip = [Tip new];
-            tip.visualTip = [NSString stringWithFormat:@"Your avg. cadence %d is too low. "
-                             @"Increase cadence", (int)self.avgCadence];
-            tip.audioTip = @"Increase cadence";
-            tip.tipColor = [UIColor redColor];
-            [tips addObject:tip];
+    @try {
+        if(BOUNCE_MIN != BOUNCE_MAX){
+            if(self.avgBounce < BOUNCE_MIN){
+                Tip* tip = [Tip new];
+                tip.visualTip = [NSString stringWithFormat:@"Your avg. bounce %d is too low."
+                                 @"Increase bounce!", (int)self.avgBounce];
+                tip.audioTip = @"Increase bounce.";
+                tip.tipColor = [UIColor redColor];
+                [tips addObject:tip];
+            }
+            else if(self.avgBounce > BOUNCE_MAX){
+                Tip* tip = [Tip new];
+                tip.visualTip = [NSString stringWithFormat:@"Your avg. bounce %d is too high."
+                                 @"Decrease bounce!", (int)self.avgBounce];
+                tip.audioTip = @"Decrease bounce.";
+                tip.tipColor = [UIColor redColor];
+                [tips addObject:tip];
+            }
+            if(tips.count > 0)
+                return tips;
         }
-        else if(self.avgCadence > CADENCE_MAX){
-            Tip* tip = [Tip new];
-            tip.visualTip = [NSString stringWithFormat:@"Your avg. cadence %d is too high. "
-                             @"Decrease cadence", (int)self.avgCadence];
-            tip.audioTip = @"Decrease cadence";
-            tip.tipColor = [UIColor redColor];
-            [tips addObject:tip];
+        
+        if(CADENCE_MAX != CADENCE_MIN){
+            if(self.avgCadence < CADENCE_MIN){
+                Tip* tip = [Tip new];
+                tip.visualTip = [NSString stringWithFormat:@"Your avg. cadence %d is too low. "
+                                 @"Increase cadence", (int)self.avgCadence];
+                tip.audioTip = @"Increase cadence";
+                tip.tipColor = [UIColor redColor];
+                [tips addObject:tip];
+            }
+            else if(self.avgCadence > CADENCE_MAX){
+                Tip* tip = [Tip new];
+                tip.visualTip = [NSString stringWithFormat:@"Your avg. cadence %d is too high. "
+                                 @"Decrease cadence", (int)self.avgCadence];
+                tip.audioTip = @"Decrease cadence";
+                tip.tipColor = [UIColor redColor];
+                [tips addObject:tip];
+            }
+            if(tips.count > 0)
+                return tips;
+            
         }
+        
+        if(tips.count == 0){
+            Tip* tip = [Tip new];
+            tip.tipColor = [UIColor greenColor];
+            tip.visualTip = @"You are doing great";
+            [tips addObject:tip];
+            return tips;
+        }
+        
     }
-    if(BOUNCE_MIN != BOUNCE_MAX){
-        if(self.avgBounce < BOUNCE_MIN){
-            Tip* tip = [Tip new];
-            tip.visualTip = [NSString stringWithFormat:@"Your avg. bounce %d is too low."
-                             @"Increase bounce!", (int)self.avgBounce];
-            tip.audioTip = @"Increase bounce.";
-            tip.tipColor = [UIColor redColor];
-            [tips addObject:tip];
-        }
-        else if(self.avgBounce > BOUNCE_MAX){
-            Tip* tip = [Tip new];
-            tip.visualTip = [NSString stringWithFormat:@"Your avg. bounce %d is too high."
-                             @"Decrease bounce!", (int)self.avgBounce];
-            tip.audioTip = @"Decrease bounce.";
-            tip.tipColor = [UIColor redColor];
-            [tips addObject:tip];
-        }
+//    @catch (NSException *exception) {
+//        <#Handle an exception thrown in the @try block#>
+//    }
+    @finally {
+        //clear out samples
+        [self.cadenceValues removeAllObjects];
+        [self.bounceValues removeAllObjects];
+        [self.lurchValues removeAllObjects];
+        [self.plodValues removeAllObjects];
+        [self.rotxValues removeAllObjects];
+        [self.rotyValues removeAllObjects];
+        [self.rotzValues removeAllObjects];
     }
     
-    if(tips.count == 0){
-        Tip* tip = [Tip new];
-        tip.tipColor = [UIColor greenColor];
-        tip.visualTip = @"You are doing great";
-        [tips addObject:tip];
-    }
     
-    //clear out samples
-    [self.cadenceValues removeAllObjects];
-    [self.bounceValues removeAllObjects];
-    [self.lurchValues removeAllObjects];
-    [self.plodValues removeAllObjects];
-    [self.rotxValues removeAllObjects];
-    [self.rotyValues removeAllObjects];
-    [self.rotzValues removeAllObjects];
-    
-    return tips;
+
 }
 
 -(double) calculateAvg:(NSArray*) dataPoints
