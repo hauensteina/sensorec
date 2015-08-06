@@ -10,6 +10,8 @@
 #import "AutolayoutUtils.h"
 #import "SparklineTileView.h"
 #import "SparklineView.h"
+#import "Coach.h"
+
 @import AVFoundation;
 
 @implementation SparklinePlotType
@@ -64,7 +66,8 @@
 
 -(void) doLayout:(id<UIScrollViewDelegate>) delegate{
     UILabel* tipLabel = [UIView labelForAutoLayoutAsSubViewOf:self];
-    tipLabel.text = @"You are doing great. Keep running.";
+    tipLabel.text = @"You are doing great.";
+    tipLabel.textColor = [UIColor greenColor];
     tipLabel.lineBreakMode = NSLineBreakByWordWrapping;
     tipLabel.numberOfLines = 0;
     tipLabel.textAlignment = NSTextAlignmentCenter;
@@ -91,24 +94,28 @@
     [(SparklineTileView*)self.tileViews.lastObject plotPoints:points];
 }
 
--(void) postTips:(NSArray*) tips
-      withColor:(UIColor*) tipColor{
+-(void) postTips:(NSArray*) tips{
     if(!tips)
         return;
-    self.tipLabel.textColor = tipColor;
     [self.tipsToSpeak addObjectsFromArray:tips];
     [self speak];
 }
 
 -(void) speak{
     dispatch_async(dispatch_get_main_queue(), ^{
-        if(self.tipsToSpeak.count == 0)
+        if(self.tipsToSpeak.count == 0){
+//            self.tipLabel.text = @"Your are doing great.";
+//            self.tipLabel.textColor = [UIColor greenColor];
             return;
-        NSString* tip = self.tipsToSpeak[0];
-        self.tipLabel.text = tip;
+        }
+        //NSString* tip = self.tipsToSpeak[0];
+        Tip* tip = self.tipsToSpeak[0];
+        self.tipLabel.text = tip.visualTip;
+        self.tipLabel.textColor = tip.tipColor;
         [self.tipLabel setNeedsDisplay];
         [self.tipsToSpeak removeObjectAtIndex:0];
-        AVSpeechUtterance* utterance = [[AVSpeechUtterance alloc] initWithString:tip];
+        AVSpeechUtterance* utterance = [[AVSpeechUtterance alloc]
+                                        initWithString:tip.audioTip];
         utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
         utterance.rate = AVSpeechUtteranceMinimumSpeechRate;
         utterance.preUtteranceDelay = 0.2f;
@@ -134,18 +141,19 @@
 
     [self.scrollView addConstraints:VF_CONSTRAINT(@"V:|[newTile]|", nil,
                                                   NSDictionaryOfVariableBindings(newTile))];
+
     [self addConstraint:[NSLayoutConstraint constraintWithItem:newTile
                                                      attribute:NSLayoutAttributeBottom
                                                      relatedBy:0
                                                         toItem:self
                                                      attribute:NSLayoutAttributeBottom
                                                     multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:newTile
-                                                     attribute:NSLayoutAttributeTop
-                                                     relatedBy:0
-                                                        toItem:self.tipLabel
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:1 constant:0]];
+//    [self addConstraint:[NSLayoutConstraint constraintWithItem:newTile
+//                                                     attribute:NSLayoutAttributeTop
+//                                                     relatedBy:0
+//                                                        toItem:self.tipLabel
+//                                                     attribute:NSLayoutAttributeBottom
+//                                                    multiplier:1 constant:0]];
     NSUInteger currSize = self.tileViews.count;
     if(currSize){
         //hide labels old tile
@@ -173,6 +181,11 @@
 #pragma mark - AVSpeechSynthesizerDelegate
 -(void) speechSynthesizer:(AVSpeechSynthesizer *)synthesizer
  didFinishSpeechUtterance:(AVSpeechUtterance *)utterance{
+    if(self.tipsToSpeak.count == 0){
+//        self.tipLabel.text = @"Your are doing great.";
+//        self.tipLabel.textColor = [UIColor greenColor];
+        return;
+    }
     [self speak];
 }
 @end

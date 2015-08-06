@@ -34,7 +34,6 @@
 
 -(void) plotPoints:(NSDictionary*) points;
 
--(void) postTips:(NSArray*) tips
-      withColor:(UIColor*) tipColor;
+-(void) postTips:(NSArray*) tips;
 
 @end

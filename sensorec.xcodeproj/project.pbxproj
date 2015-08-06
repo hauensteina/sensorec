@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		381E2D0A1B73D1F900171763 /* Coach.m in Sources */ = {isa = PBXBuildFile; fileRef = 381E2D091B73D1F900171763 /* Coach.m */; };
 		AC050A001B431363004FA68F /* SparklineContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0509FF1B431363004FA68F /* SparklineContainerView.m */; };
 		AC050A031B43151A004FA68F /* BlurpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A021B43151A004FA68F /* BlurpVC.m */; };
 		AC050A071B431705004FA68F /* BrickVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A051B431705004FA68F /* BrickVC.m */; };
@@ -74,6 +75,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		381E2D081B73D1F900171763 /* Coach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coach.h; sourceTree = "<group>"; };
+		381E2D091B73D1F900171763 /* Coach.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coach.m; sourceTree = "<group>"; };
 		AC0509FE1B431363004FA68F /* SparklineContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparklineContainerView.h; sourceTree = "<group>"; };
 		AC0509FF1B431363004FA68F /* SparklineContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparklineContainerView.m; sourceTree = "<group>"; };
 		AC050A011B43151A004FA68F /* BlurpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurpVC.h; sourceTree = "<group>"; };
@@ -291,6 +294,8 @@
 				ACF272081A71A95600595091 /* grey-led-md.png */,
 				ACF272071A71A95600595091 /* black-led-off-md.png */,
 				AC050A0C1B4317F9004FA68F /* Views */,
+				381E2D081B73D1F900171763 /* Coach.h */,
+				381E2D091B73D1F900171763 /* Coach.m */,
 			);
 			path = sensorec;
 			sourceTree = "<group>";
@@ -484,6 +489,7 @@
 				AC855AB11AA110FA001D761C /* ConnectVC.m in Sources */,
 				AC050A031B43151A004FA68F /* BlurpVC.m in Sources */,
 				AC050A071B431705004FA68F /* BrickVC.m in Sources */,
+				381E2D0A1B73D1F900171763 /* Coach.m in Sources */,
 				AC855ACF1AA116FE001D761C /* SensorDataLogStatus.m in Sources */,
 				ACA43FFF1A65C4C2009C30C0 /* AppDelegate.m in Sources */,
 				AC160B7B1ACE062E002275D8 /* LBBarChartView.m in Sources */,
@@ -600,24 +606,24 @@
 		ACA4401A1A65C4C2009C30C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iOS Development: Niladri Bora (SD8XWR3VUL)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = sensorec/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fd6550b4-3e14-4a64-b749-e03c3b13bb4a";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		ACA4401B1A65C4C2009C30C0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iOS Development: Niladri Bora (SD8XWR3VUL)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = sensorec/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fd6550b4-3e14-4a64-b749-e03c3b13bb4a";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

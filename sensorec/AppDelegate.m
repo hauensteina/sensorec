@@ -12,6 +12,8 @@
 #import "ConsoleVC.h"
 #import "Utils.h"
 
+@import AVFoundation;
+
 AppDelegate *g_app;
 
 @interface AppDelegate ()
@@ -75,12 +77,42 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                                                selector:@selector(secTimer:)
                                                userInfo:nil
                                                 repeats:YES];
-    
+    [self configureAVAudioSession];
     
     
     return YES;
 } // didFinishLaunchingWithOptions
 
+
+
+- (void) configureAVAudioSession
+{
+    //get your app's audioSession singleton object
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+    
+    //error handling
+    BOOL success;
+    NSError* error;
+    
+    //set the audioSession category.
+    //Needs to be Record or PlayAndRecord to use audioRouteOverride:
+    
+    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                             error:&error];
+    
+    if (!success)  NSLog(@"AVAudioSession error setting category:%@",error);
+    
+    //set the audioSession override
+    success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+                                         error:&error];
+    if (!success)  NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+    
+    //activate the audio session
+    success = [session setActive:YES error:&error];
+    if (!success) NSLog(@"AVAudioSession error activating: %@",error);
+    else NSLog(@"audioSession active");
+    
+}
 
 //-----------------------------
 - (void) secTimer:(id)sender
