@@ -8,7 +8,7 @@
 
 #import "Coach.h"
 
-#define AVG_SAMPLE_SIZE 5
+#define AVG_SAMPLE_SIZE 25
 #define CADENCE_MIN 120
 #define CADENCE_MAX 200
 #define BOUNCE_MIN 0
@@ -100,7 +100,7 @@
     if(CADENCE_MAX != CADENCE_MIN){
         if(self.avgCadence < CADENCE_MIN){
             Tip* tip = [Tip new];
-            tip.visualTip = [NSString stringWithFormat:@"Your cadence %d is too low. "
+            tip.visualTip = [NSString stringWithFormat:@"Your avg. cadence %d is too low. "
                              @"Increase cadence", (int)self.avgCadence];
             tip.audioTip = @"Increase cadence";
             tip.tipColor = [UIColor redColor];
@@ -108,7 +108,7 @@
         }
         else if(self.avgCadence > CADENCE_MAX){
             Tip* tip = [Tip new];
-            tip.visualTip = [NSString stringWithFormat:@"Your cadence %d is too high. "
+            tip.visualTip = [NSString stringWithFormat:@"Your avg. cadence %d is too high. "
                              @"Decrease cadence", (int)self.avgCadence];
             tip.audioTip = @"Decrease cadence";
             tip.tipColor = [UIColor redColor];
@@ -118,7 +118,7 @@
     if(BOUNCE_MIN != BOUNCE_MAX){
         if(self.avgBounce < BOUNCE_MIN){
             Tip* tip = [Tip new];
-            tip.visualTip = [NSString stringWithFormat:@"Your bounce %d is too low."
+            tip.visualTip = [NSString stringWithFormat:@"Your avg. bounce %d is too low."
                              @"Increase bounce!", (int)self.avgBounce];
             tip.audioTip = @"Increase bounce.";
             tip.tipColor = [UIColor redColor];
@@ -126,7 +126,7 @@
         }
         else if(self.avgBounce > BOUNCE_MAX){
             Tip* tip = [Tip new];
-            tip.visualTip = [NSString stringWithFormat:@"Your bounce %d is too high."
+            tip.visualTip = [NSString stringWithFormat:@"Your avg. bounce %d is too high."
                              @"Decrease bounce!", (int)self.avgBounce];
             tip.audioTip = @"Decrease bounce.";
             tip.tipColor = [UIColor redColor];
@@ -138,6 +138,7 @@
         Tip* tip = [Tip new];
         tip.tipColor = [UIColor greenColor];
         tip.visualTip = @"You are doing great";
+        [tips addObject:tip];
     }
     
     //clear out samples
