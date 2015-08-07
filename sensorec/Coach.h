@@ -26,8 +26,17 @@
 
 @interface Coach : NSObject
 
+@property(assign, nonatomic) NSInteger bounceMin;
+@property(assign, nonatomic) NSInteger bounceMax;
+@property(assign, nonatomic) NSInteger cadenceMin;
+@property(assign, nonatomic) NSInteger cadenceMax;
+
 +(instancetype) sharedInstance;
 
 -(NSArray*) getCoachingTips:(NSDictionary*) dataPoint;
+
+-(void) readSettings;
+
+-(void) writeSettings;
 
 @end

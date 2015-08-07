@@ -9,6 +9,8 @@
 #import "Coach.h"
 
 #define AVG_SAMPLE_SIZE 15
+
+//default thresholds
 #define CADENCE_MIN 120
 #define CADENCE_MAX 200
 #define BOUNCE_MIN 0
@@ -23,6 +25,14 @@
 #define ROTY_MAX 0
 #define ROTZ_MIN 0
 #define ROTZ_MAX 0
+
+//user defaults keys
+#define CADENCE_MIN_KEY @"CADENCE_MIN_KEY"
+#define CADENCE_MAX_KEY @"CADENCE_MAX_KEY"
+#define BOUNCE_MIN_KEY @"BOUNCE_MIN_KEY"
+#define BOUNCE_MAX_KEY @"BOUNCE_MAX_KEY"
+
+
 
 @interface Coach ()
 
@@ -56,6 +66,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [Coach new];
+        [sharedInstance readSettings];
     });
     return sharedInstance;
 }
@@ -98,8 +109,8 @@
     self.avgRotz = [self calculateAvg:self.rotzValues];
     //if the min and max are the same that means that there is threshold for this parameter
     @try {
-        if(BOUNCE_MIN != BOUNCE_MAX){
-            if(self.avgBounce < BOUNCE_MIN){
+        if(self.bounceMin != self.bounceMax){
+            if(self.avgBounce < self.bounceMin){
                 Tip* tip = [Tip new];
                 tip.visualTip = [NSString stringWithFormat:@"Your avg. bounce %d is too low."
                                  @"Increase bounce!", (int)self.avgBounce];
@@ -107,7 +118,7 @@
                 tip.tipColor = [UIColor redColor];
                 [tips addObject:tip];
             }
-            else if(self.avgBounce > BOUNCE_MAX){
+            else if(self.avgBounce > self.bounceMax){
                 Tip* tip = [Tip new];
                 tip.visualTip = [NSString stringWithFormat:@"Your avg. bounce %d is too high."
                                  @"Decrease bounce!", (int)self.avgBounce];
@@ -119,8 +130,8 @@
                 return tips;
         }
         
-        if(CADENCE_MAX != CADENCE_MIN){
-            if(self.avgCadence < CADENCE_MIN){
+        if(self.cadenceMin != self.cadenceMax){
+            if(self.avgCadence < self.cadenceMin){
                 Tip* tip = [Tip new];
                 tip.visualTip = [NSString stringWithFormat:@"Your avg. cadence %d is too low. "
                                  @"Increase cadence", (int)self.avgCadence];
@@ -128,7 +139,7 @@
                 tip.tipColor = [UIColor redColor];
                 [tips addObject:tip];
             }
-            else if(self.avgCadence > CADENCE_MAX){
+            else if(self.avgCadence > self.cadenceMax){
                 Tip* tip = [Tip new];
                 tip.visualTip = [NSString stringWithFormat:@"Your avg. cadence %d is too high. "
                                  @"Decrease cadence", (int)self.avgCadence];
@@ -150,9 +161,6 @@
         }
         
     }
-//    @catch (NSException *exception) {
-//        <#Handle an exception thrown in the @try block#>
-//    }
     @finally {
         //clear out samples
         [self.cadenceValues removeAllObjects];
@@ -178,5 +186,43 @@
     }
     return total/dataPoints.count;
 }
+
+-(void) readSettings{
+    self.bounceMin = [[NSUserDefaults standardUserDefaults] integerForKey:BOUNCE_MIN_KEY];
+    if(self.bounceMin == 0)
+        self.bounceMin = BOUNCE_MIN;
+
+    self.bounceMax = [[NSUserDefaults standardUserDefaults] integerForKey:BOUNCE_MAX_KEY];
+    if(self.bounceMax == 0)
+        self.bounceMax = BOUNCE_MAX;
+    
+    self.cadenceMin = [[NSUserDefaults standardUserDefaults] integerForKey:CADENCE_MIN_KEY];
+    if(self.cadenceMin == 0)
+        self.cadenceMin = CADENCE_MIN;
+
+    self.cadenceMax = [[NSUserDefaults standardUserDefaults] integerForKey:CADENCE_MAX_KEY];
+    if(self.cadenceMax == 0)
+        self.cadenceMax = CADENCE_MAX;
+
+}
+
+-(void) writeSettings{
+    [[NSUserDefaults standardUserDefaults] setInteger:self.bounceMin forKey:BOUNCE_MIN_KEY];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.bounceMax forKey:BOUNCE_MAX_KEY];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.cadenceMin forKey:CADENCE_MIN_KEY];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.cadenceMax forKey:CADENCE_MAX_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
+
+
+
+
+
+
+
+
+
 
 @end
