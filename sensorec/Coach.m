@@ -31,7 +31,7 @@
 #define CADENCE_MAX_KEY @"CADENCE_MAX_KEY"
 #define BOUNCE_MIN_KEY @"BOUNCE_MIN_KEY"
 #define BOUNCE_MAX_KEY @"BOUNCE_MAX_KEY"
-
+#define SAMPLE_SIZE_KEY @"SAMPLE_SIZE_KEY"
 
 
 @interface Coach ()
@@ -97,7 +97,7 @@
     [self.rotxValues addObject:dataPoint[ROTX]];
     [self.rotyValues addObject:dataPoint[ROTY]];
     [self.rotzValues addObject:dataPoint[ROTZ]];
-    if(self.cadenceValues.count< AVG_SAMPLE_SIZE)
+    if(self.cadenceValues.count< self.sampleSize)
         return nil;
     
     self.avgCadence = [self calculateAvg:self.cadenceValues];
@@ -203,7 +203,10 @@
     self.cadenceMax = [[NSUserDefaults standardUserDefaults] integerForKey:CADENCE_MAX_KEY];
     if(self.cadenceMax == 0)
         self.cadenceMax = CADENCE_MAX;
-
+    
+    self.sampleSize= [[NSUserDefaults standardUserDefaults] integerForKey:SAMPLE_SIZE_KEY];
+    if(self.sampleSize == 0)
+        self.sampleSize = AVG_SAMPLE_SIZE;
 }
 
 -(void) writeSettings{
@@ -211,6 +214,7 @@
     [[NSUserDefaults standardUserDefaults] setInteger:self.bounceMax forKey:BOUNCE_MAX_KEY];
     [[NSUserDefaults standardUserDefaults] setInteger:self.cadenceMin forKey:CADENCE_MIN_KEY];
     [[NSUserDefaults standardUserDefaults] setInteger:self.cadenceMax forKey:CADENCE_MAX_KEY];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.sampleSize forKey:SAMPLE_SIZE_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

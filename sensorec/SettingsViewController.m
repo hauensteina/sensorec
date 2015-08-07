@@ -22,14 +22,19 @@
     self.maxBounceLabel.text= @(coach.bounceMax).description;
     self.minCadenceLabel.text= @(coach.cadenceMin).description;
     self.maxCadenceLabel.text= @(coach.cadenceMax).description;
+    self.sampleSizeLabel.text = @(coach.sampleSize).description;
+    
     [self.minBounceLabel setReturnKeyType:UIReturnKeyDone];
     [self.maxBounceLabel setReturnKeyType:UIReturnKeyDone];
     [self.minCadenceLabel setReturnKeyType:UIReturnKeyDone];
     [self.maxCadenceLabel setReturnKeyType:UIReturnKeyDone];
+    [self.sampleSizeLabel setReturnKeyType:UIReturnKeyDone];
+    
     self.minBounceLabel.delegate = self;
     self.maxBounceLabel.delegate = self;
     self.minCadenceLabel.delegate = self;
     self.maxCadenceLabel.delegate = self;
+    self.sampleSizeLabel.delegate = self;
 //    self.minBounceLabel.keyboardType = UIKeyboardTypeDecimalPad;
 //    self.maxBounceLabel.keyboardType = UIKeyboardTypeDecimalPad;
 //    self.minCadenceLabel.keyboardType = UIKeyboardTypeDecimalPad;
@@ -59,6 +64,7 @@
     coach.bounceMax = self.maxBounceLabel.text.integerValue;
     coach.cadenceMin = self.minCadenceLabel.text.integerValue;
     coach.cadenceMax = self.maxCadenceLabel.text.integerValue;
+    coach.sampleSize = self.sampleSizeLabel.text.integerValue;
     [coach writeSettings];
 }
 

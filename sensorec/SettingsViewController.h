@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *maxBounceLabel;
 @property (weak, nonatomic) IBOutlet UITextField *minCadenceLabel;
 @property (weak, nonatomic) IBOutlet UITextField *maxCadenceLabel;
+@property (weak, nonatomic) IBOutlet UITextField *sampleSizeLabel;
 
 -(IBAction)onSave:(id)sender;
 

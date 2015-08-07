@@ -30,6 +30,7 @@
 @property(assign, nonatomic) NSInteger bounceMax;
 @property(assign, nonatomic) NSInteger cadenceMin;
 @property(assign, nonatomic) NSInteger cadenceMax;
+@property(assign, nonatomic) NSInteger sampleSize;
 
 +(instancetype) sharedInstance;
 
