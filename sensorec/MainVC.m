@@ -14,6 +14,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <math.h>
 #import <stdint.h>
+#import "SettingsViewController.h"
 
 // Vertical displacement with time and length in ticks
 //================================
@@ -273,6 +274,16 @@
     AudioServicesPlaySystemSound(soundID);
 }
 
+
+-(IBAction)coachButtonClicked:(id)sender{
+    UIStoryboard* sb = [UIStoryboard
+                        storyboardWithName:@"SettingsStoryboard"
+                        bundle:nil];
+    SettingsViewController* svc = (SettingsViewController*)[sb instantiateInitialViewController];
+    [self presentViewController:svc animated:YES completion:^{
+        
+    }];
+}
 
 //
 //==============================

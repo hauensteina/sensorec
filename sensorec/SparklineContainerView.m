@@ -66,8 +66,8 @@
 
 -(void) doLayout:(id<UIScrollViewDelegate>) delegate{
     UILabel* tipLabel = [UIView labelForAutoLayoutAsSubViewOf:self];
-    tipLabel.text = @"You are doing great.";
-    tipLabel.textColor = [UIColor greenColor];
+//    tipLabel.text = @"You are doing great.";
+//    tipLabel.textColor = [UIColor greenColor];
     tipLabel.lineBreakMode = NSLineBreakByWordWrapping;
     tipLabel.numberOfLines = 0;
     tipLabel.textAlignment = NSTextAlignmentCenter;
@@ -90,6 +90,11 @@
     //figure out how whether we need a new tile to plot the latest points
     if(self.tileViews.count == 0){
         [self addTile];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.tipLabel.text = @"You are doing great.";
+            self.tipLabel.textColor = [UIColor greenColor];
+            [self.tipLabel setNeedsDisplay];
+        });
     }
     [(SparklineTileView*)self.tileViews.lastObject plotPoints:points];
 }

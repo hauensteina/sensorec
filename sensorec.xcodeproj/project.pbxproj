@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		381E2D0A1B73D1F900171763 /* Coach.m in Sources */ = {isa = PBXBuildFile; fileRef = 381E2D091B73D1F900171763 /* Coach.m */; };
+		38D4861F1B75123500810602 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */; };
+		38D486251B753C7600810602 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D486241B753C7600810602 /* SettingsViewController.m */; };
 		AC050A001B431363004FA68F /* SparklineContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0509FF1B431363004FA68F /* SparklineContainerView.m */; };
 		AC050A031B43151A004FA68F /* BlurpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A021B43151A004FA68F /* BlurpVC.m */; };
 		AC050A071B431705004FA68F /* BrickVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AC050A051B431705004FA68F /* BrickVC.m */; };
@@ -77,6 +79,9 @@
 /* Begin PBXFileReference section */
 		381E2D081B73D1F900171763 /* Coach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coach.h; sourceTree = "<group>"; };
 		381E2D091B73D1F900171763 /* Coach.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coach.m; sourceTree = "<group>"; };
+		38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
+		38D486231B753C7600810602 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		38D486241B753C7600810602 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		AC0509FE1B431363004FA68F /* SparklineContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparklineContainerView.h; sourceTree = "<group>"; };
 		AC0509FF1B431363004FA68F /* SparklineContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparklineContainerView.m; sourceTree = "<group>"; };
 		AC050A011B43151A004FA68F /* BlurpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurpVC.h; sourceTree = "<group>"; };
@@ -196,6 +201,9 @@
 				AC050A0A1B4317B0004FA68F /* SparklineTileView.m */,
 				AC160B791ACE062D002275D8 /* LBBarChartView.h */,
 				AC160B7A1ACE062E002275D8 /* LBBarChartView.m */,
+				38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */,
+				38D486231B753C7600810602 /* SettingsViewController.h */,
+				38D486241B753C7600810602 /* SettingsViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -458,6 +466,7 @@
 				ACF2720A1A71A95600595091 /* grey-led-md.png in Resources */,
 				ACD0DB371A6D9C5F0038E94D /* Icon-72.png in Resources */,
 				ACD0DB381A6D9C5F0038E94D /* Icon-80.png in Resources */,
+				38D4861F1B75123500810602 /* SettingsStoryboard.storyboard in Resources */,
 				ACD0DB271A6D9B3B0038E94D /* Icon-180.png in Resources */,
 				ACA4403D1A68A2CE009C30C0 /* amber-led-on-md.png in Resources */,
 			);
@@ -480,6 +489,7 @@
 				AC855AD11AA116FE001D761C /* SensorLogData.m in Sources */,
 				ACA440221A65C683009C30C0 /* MainVC.m in Sources */,
 				AC9F59B51AA4E447007FDBDB /* BluetoothMasterCell.m in Sources */,
+				38D486251B753C7600810602 /* SettingsViewController.m in Sources */,
 				AC855ACB1AA116FE001D761C /* SensoPlex.m in Sources */,
 				AC050A0B1B4317B0004FA68F /* SparklineTileView.m in Sources */,
 				AC855ACE1AA116FE001D761C /* SensorDataConfig.m in Sources */,
