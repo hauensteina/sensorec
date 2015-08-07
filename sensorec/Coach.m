@@ -8,11 +8,11 @@
 
 #import "Coach.h"
 
-#define AVG_SAMPLE_SIZE 15
-#define CADENCE_MIN 120
+#define AVG_SAMPLE_SIZE 10
+#define CADENCE_MIN 150
 #define CADENCE_MAX 200
 #define BOUNCE_MIN 0
-#define BOUNCE_MAX 20
+#define BOUNCE_MAX 25
 #define LURCH_MIN 0
 #define LURCH_MAX 0
 #define PLOD_MIN 0
