@@ -152,7 +152,6 @@
         // Process data
         [self onUserMsgReceived:(Byte*)sdb.bytes len:sdb.length];
     } else if([command isKindOfClass:[LBJSONCommand class]]) {
-        
         LBJSONCommand* jsonCommand = (LBJSONCommand*)command;
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[jsonCommand.jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
         if([json[@"type"] isEqualToString:@"PLATFORM"]) {
