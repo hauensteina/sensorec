@@ -121,7 +121,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     static int count = 0;
     count++;
-    if (!_gotSensoApp) {
+    if (!_gotSensoApp&& [g_app.connectVc.peripheral state] == CBPeripheralStateConnected) {
         LBJSONCommand* jsonCommand = [[LBJSONCommand alloc] initWithCommandString:@"PLATFORM"];
         [g_app.connectVc.peripheral sendCommand:jsonCommand];
         
