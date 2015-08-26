@@ -30,6 +30,12 @@
     return self;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.centralManager stopScanning];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)scanButtonPressed:(nonnull UIBarButtonItem*)sender {
@@ -103,10 +109,10 @@
 - (void)centralManagerDidDiscoverPeripheral:(nonnull LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString *,id>*)advertisementData RSSI:(nonnull NSNumber *)RSSI {
     // NSLog(@"%@", NSStringFromSelector(_cmd));
     
-//    NSString* localName = advertisementData[CBAdvertisementDataLocalNameKey];
-//    if([localName hasSuffix:@"*"]) {
-//        [self.centralManager rememberPeripheral:peripheral];
-//    }
+    NSString* localName = advertisementData[CBAdvertisementDataLocalNameKey];
+    if([localName hasSuffix:@"*"]) {
+        [self.centralManager rememberPeripheral:peripheral];
+    }
     
     [self.tableView reloadData];
 }
