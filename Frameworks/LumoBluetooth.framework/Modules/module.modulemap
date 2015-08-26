@@ -1,0 +1,6 @@
+framework module LumoBluetooth {
+  umbrella header "LumoBluetooth.h"
+
+  export *
+  module * { export * }
+}

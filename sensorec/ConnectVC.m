@@ -10,248 +10,156 @@
 #import "MainVC.h"
 #import "common.h"
 #import "Utils.h"
-#import "../SensoPlexLibrary/SensoPlex.h"
-#import "../SensoPlexLibrary/SensorDataLogStatus.h"
 #import "BluetoothMasterCell.h"
 
-//=========================
-@interface ConnectVC ()
-//=========================
-// List of discovered Sensoplex devices
-@property NSMutableArray *discoveredSensos;
-@property (weak, nonatomic) IBOutlet UITableView *tbvSensos;
+@interface ConnectVC () <LBCentralManagerDelegate, LBPeripheralDelegate>
+@property (strong, nonatomic) LBCentralManager* centralManager;
+@property (weak, nonatomic) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *scanButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeButton;
 
 @end
 
-//=========================
 @implementation ConnectVC
-//=========================
 
-//-------------------
-- (void)viewDidLoad
-//-------------------
-{
-    [super viewDidLoad];
-   
-    [self initializeSensoPlex];
-    _discoveredSensos = [NSMutableArray new];
-}
-
-//-------------------------------------
-- (void)viewDidAppear:(BOOL)animated
-//-------------------------------------
-{
-    [self disconnectConnectedSenso];
-    [self scanForSensos];
-}
-
-//==========================
-#pragma mark - SensoPlex
-//==========================
-
-//-----------------------------
-- (void) initializeSensoPlex
-//-----------------------------
-{
-    if( !self.sensoPlex ) {
-        SensoPlex *sensoPlex = [SensoPlex new];
-        self.sensoPlex = sensoPlex;
+- (nonnull instancetype)init {
+    self = [super init];
+    if(self) {
+        self.centralManager = [[LBCentralManager alloc] initWithDelegate:self lumoServices:@[LBServiceLumoLiftUUID]];
     }
-    self.sensoPlex.delegate = self;
+    return self;
 }
 
-//----------------------
-- (void) scanForSensos
-//----------------------
-{
-    [_discoveredSensos removeAllObjects];
-    [_tbvSensos reloadData];
-    
-    if(self.sensoPlex.state == SensoPlexScanning)
-        [self.sensoPlex stopScanningForBLEPeripherals];
-    
-    // If we are not connected, then scan for our peripheral to connect to
-    SensoPlexState state = self.sensoPlex.state;
-    if ( state == SensoPlexDisconnected || state == SensoPlexFailedToConnect ) {
-        [self.sensoPlex discoverBLEPeripherals];
+#pragma mark - IBActions
+
+- (IBAction)scanButtonPressed:(nonnull UIBarButtonItem*)sender {
+    if([sender.title isEqualToString:@"Scan"]) {
+        sender.title = @"Stop";
+        [self.centralManager scanForLumoProducts];
     } else {
-        //[self showConnectionState:state];
+        sender.title = @"Scan";
+        [self.centralManager stopScanning];
     }
-} // scanForSensos()
+    [self.tableView reloadData];
+}
 
-//------------------------
-- (void) connectToSenso
-//------------------------
-// Connecting means scanning for all of them (after discovery)
-// and then remembering the BLE characteristics only for
-// the sensor matching _mySenso. The check whether to connect
-// happens in the shouldConnectToSensoPlexPeripheral() callback.
-{
-    NSLog (@">>>>>> Senso State: %d", self.sensoPlex.state);
-    switch (self.sensoPlex.state) {
-        case SensoPlexConnected:
-            [self disconnectConnectedSenso];
+- (IBAction)closeButtonPressed:(id)sender {
+    if(self.peripheral) {
+        switch(self.peripheral.state) {
+            case CBPeripheralStateConnected:
+            {
+                self.connected = YES;
+                self.mySensoName = self.peripheral.identifier.UUIDString;
+                [self.centralManager stopScanning];
+                if ([g_app.naviVc topViewController] == g_app.connectVc) {
+                    [g_app.naviVc popViewControllerAnimated:YES];
+                }
+                break;
+            }
+            default:
+            {
+                self.connected = NO;
+                if ([g_app.naviVc.viewControllers count] == 1) {
+                    [g_app.naviVc pushViewController:g_app.connectVc animated:YES];
+                }
+                [self.centralManager scanForLumoProducts];
+                break;
+            }
+        }
+    }
+}
+
+#pragma mark - LBCentralManagerDelegate
+
+- (void)centralManagerDidUpdateState:(CBCentralManagerState)state {
+    switch(state) {
+        case CBCentralManagerStateUnknown:
+            NSLog(@"Bluetooth state is unknown.");
             break;
-        case SensoPlexReady:
-            [self disconnectConnectedSenso];
+        case CBCentralManagerStateResetting:
+            NSLog(@"Bluetooth is currently resetting.");
             break;
-        case SensoPlexDisconnected:
-            [self.sensoPlex scanForBLEPeripherals]; // connects to _mySenso
+        case CBCentralManagerStateUnsupported:
+            NSLog(@"The platform/hardware doesn't support Bluetooth Low Energy.");
             break;
-        case SensoPlexScanning:
-            [self.sensoPlex stopScanningForBLEPeripherals];
-            [self.sensoPlex scanForBLEPeripherals]; // connects to _mySenso
+        case CBCentralManagerStateUnauthorized:
+            NSLog(@"The app is not authorized to use Bluetooth Low Energy.");
             break;
+        case CBCentralManagerStatePoweredOff:
+            NSLog(@"Bluetooth is currently powered off.");
+            break;
+        case CBCentralManagerStatePoweredOn: {
+            NSLog(@"Bluetooth is currently powered on.");
+            break;
+        }
         default:
-            break;
-    }
-}
-
-//----------------------------------
-- (void) disconnectConnectedSenso
-//----------------------------------
-{
-    if(self.sensoPlex.isCapturingData)
-        [self.sensoPlex stopCapturingData];
-    [self.sensoPlex stopScanningForBLEPeripherals];
-    [self.sensoPlex cleanup];
-    self.mySenso = nil;
-    self.connected = NO;
-    //[self showConnectionState:self.sensoPlex.state];
-}
-
-
-//=======================================
-# pragma mark SensoPlexDelegate methods
-//=======================================
-
-//------------------------------------------------------------------
-- (void) didDiscoverSensoplexPeripheral:(CBPeripheral *)peripheral
-                                   name:(NSString *)name
-//------------------------------------------------------------------
-{
-    // Populate the tableview. If we come across our last known
-    // sensor, connect immediately.
-    [_discoveredSensos addObject:@[peripheral,name]];
-    [_tbvSensos reloadData];
-    
-    NSString *currentSenso = getStr (@"currentSenso");
-    if ([name isEqualToString:currentSenso]) {
-        _mySenso = peripheral;
-        _mySensoName = currentSenso;
-        [self connectToSenso];
-    }
-}
-
-//---------------------------------------------------------------------
-- (BOOL) shouldConnectToSensoPlexPeripheral:(CBPeripheral*)peripheral
-//---------------------------------------------------------------------
-// Control which SensoPlex peripheral to connect to.
-// This returns YES if the peripheral is _mySenso.
-// Clicking in the tableView sets _mySenso.
-{
-    if([peripheral.identifier isEqual:_mySenso.identifier])
-    {
-        _connected = YES;
-        return YES;
-    }
-    return NO;
-}
-
-// connection state callback
-//---------------------------------------
-- (void) onSensoPlexConnectStateChange
-//---------------------------------------
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        SensoPlexState state = self.sensoPlex.state;
-        [self handleConnectionState:state];
-    });
-}
-
-//-----------------------------------------------------
-- (void) handleConnectionState:(SensoPlexState) state
-//-----------------------------------------------------
-// Not a delegate method. Called on main thread from
-// onSensoPlexConnectStateChange()
-{
-    switch (state) {
-        case SensoPlexConnecting: {
-            break;
-        }
-        case SensoPlexConnected: {
-            g_app.gotSensoApp = NO;
-            break;
-        }
-        case SensoPlexReady: {
-            [self.sensoPlex setRTC];
-            if ([g_app.naviVc topViewController] == g_app.connectVc) {
-                [g_app.naviVc popViewControllerAnimated:YES];
-            }
-            break;
-        }
-        case SensoPlexDisconnected: {
-            if ([g_app.naviVc.viewControllers count] == 1) {
-                [g_app.naviVc pushViewController:g_app.connectVc animated:YES];
-            }
-            [self scanForSensos];
-            break;
-        }
-        case SensoPlexFailedToConnect: {
-            break;
-        }
-        case SensoPlexScanning: {
-            break;
-        }
-        case SensoPlexBluetoothError: {
-        }
-        default: {
-            [self popup: nsprintf (@"unknown sensor state %d",state)
-                  title:@"Error"];
-        }
-            break;
-    }
-}  // handleConnectionState()
-
-//------------------------------------------------------------
-- (void) onSensorLogStatusParsed:(SensorDataLogStatus *)data
-//------------------------------------------------------------
-// Callback when we retrieve log data status
-{
-    // Firmware unknown
-    if (!g_app.gotSensoApp) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [g_app.mainVc.btnRecord setTitle:@"Wait..." forState:UIControlStateNormal];
-            g_app.mainVc.btnRecord.enabled = NO;
-            g_app.mainVc.lbRecords.hidden = YES;
-            g_app.mainVc.lbBytes.hidden = YES;
-            g_app.mainVc.lbTotal.hidden = YES;
-            g_app.mainVc.btnLed.hidden = YES;
-            g_app.mainVc.lbRecordsUsed.hidden = YES;
-            g_app.mainVc.lbBytesUsed.hidden = YES;
-            g_app.mainVc.lbTotlab.hidden = YES;
-            g_app.mainVc.btnClear.hidden = YES;
-        });
+            NSLog(@"Bluetooth state has an unexpected value.");
     }
     
-    // Lifting demo
-    if ([g_app.sensoApp isEqualToString:@"sensolifting"]) return;
-
-    // Any other firmware
-    MainVC *mainVC = g_app.mainVc;
-    NSString *status = nsprintf(@"%@",data.enabled ? @"YES" : @"NO");
-    NSString *usedBytes = nsprintf (@"%.0f", data.logUsedBytes);
-    NSString *totalBytes = nsprintf (@"%.0f", data.logTotalBytes);
-    NSString *nRecords = nsprintf (@"%.0f", data.logNumberOfRecords);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [mainVC setLogStatus:status used:usedBytes total:totalBytes records:nRecords];
-    });
+    [self.centralManager stopScanning];
+    [self.tableView reloadData];
 }
+
+- (void)centralManagerDidDiscoverPeripheral:(nonnull LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString *,id>*)advertisementData RSSI:(nonnull NSNumber *)RSSI {
+    // NSLog(@"%@", NSStringFromSelector(_cmd));
+    
+//    NSString* localName = advertisementData[CBAdvertisementDataLocalNameKey];
+//    if([localName hasSuffix:@"*"]) {
+//        [self.centralManager rememberPeripheral:peripheral];
+//    }
+    
+    [self.tableView reloadData];
+}
+
+- (void)centralManagerDidConnectPeripheral:(nonnull LBPeripheral*)peripheral {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    peripheral.delegate = self;
+    [self.tableView reloadData];
+}
+
+- (void)centralManagerDidDisconnectPeripheral:(nonnull LBPeripheral*)peripheral {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    peripheral.delegate = nil;
+    [self.tableView reloadData];
+}
+
+- (void)centralManagerDidFailToConnectPeripheral:(nonnull LBPeripheral *)peripheral {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    [self.tableView reloadData];
+}
+
+#pragma mark - LBPeripheralDelegate
+
+- (void)peripheral:(nonnull LBPeripheral *)peripheral didUpdateState:(CBPeripheralState)state {
+    [self.tableView reloadData];
+    if(state == CBPeripheralStateConnected) {
+        self.peripheral = peripheral;
+    }
+}
+
+- (void)peripheral:(nonnull LBPeripheral *)peripheral didReceiveCommand:(nonnull LBCommand *)command {
+    NSLog(@"Command: %@", command);
+    
+    if([command isKindOfClass:[LBSDBCommand class]]) {
+        LBSDBCommand* sdbCommand = (LBSDBCommand*)command;
+        NSData* sdb = sdbCommand.selfDescriptiveBinary;
+        // Process data
+        [self onUserMsgReceived:(Byte*)sdb.bytes len:sdb.length];
+    } else if([command isKindOfClass:[LBJSONCommand class]]) {
+        
+        LBJSONCommand* jsonCommand = (LBJSONCommand*)command;
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[jsonCommand.jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+        if([json[@"type"] isEqualToString:@"PLATFORM"]) {
+            [self handleStrMsg:json[@"str"]];
+        }
+    }
+}
+
+#pragma mark - Process Self Descriptive Binary Messages
 
 //-------------------------------------------------------
-- (void) onUserMsgReceived:(Byte *)bytes
-                       len:(int)length
+- (void) onUserMsgReceived:(Byte*)bytes
+                       len:(unsigned long)length
 //-------------------------------------------------------
 // Application (aka PRM) message from sensor.
 // Called from SensoPlex.m
@@ -286,6 +194,7 @@
                 [values addObject:nsprintf(@"%ld",val)];
             }
         } // for
+        
         // Hardware Sensor Fusion  Quaternion
         if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) {
             [g_app.brickVc fusionFU];
@@ -448,95 +357,95 @@
     AudioServicesPlaySystemSound(soundID);
 }
 
-//=========================================
-# pragma mark TableView delegate methods
-//=========================================
+#pragma mark - Table view data source
 
-//-----------------------------------------------------------------
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//-----------------------------------------------------------------
-{
-    return 1;
+- (NSInteger)numberOfSectionsInTableView:(nonnull UITableView *)tableView {
+    return 2;
 }
 
-//-----------------------------------------------------------------
-- (NSInteger)tableView:(UITableView *)tableView
- numberOfRowsInSection:(NSInteger)section
-//-----------------------------------------------------------------
-{
-    return _discoveredSensos.count;
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return (section == 0) ? [self.centralManager rememberedPeripherals].count : [self.centralManager discoveredLumoPeripherals].count;
 }
 
-//----------------------------------------------------
-- (CGFloat)tableView:(UITableView *)tableView
-heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//----------------------------------------------------
-{
-    return 50;
-}
-
-//-----------------------------------------------------
-- (UITableViewCell*)tableView:(UITableView *)tableView
-        cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//-----------------------------------------------------
-{
-    CBPeripheral *peripheral = _discoveredSensos[indexPath.row][0];
-    NSString *name = _discoveredSensos[indexPath.row][1];
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    LBPeripheral* peripheral = indexPath.section == 0 ? [self.centralManager rememberedPeripherals][indexPath.row] : [self.centralManager discoveredLumoPeripherals][indexPath.row];
     
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDiscoveredPeripheralCellIdentifier forIndexPath:indexPath];
     NSString *cellId = @"cellID";
-    BluetoothMasterCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:cellId];
+    BluetoothMasterCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if(cell == nil)
     {
-        cell = [[BluetoothMasterCell alloc]
-                initWithStyle:UITableViewCellStyleDefault
-                reuseIdentifier:cellId];
+        cell = [[BluetoothMasterCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
+    }
+    cell.textLabel.text = [peripheral identifier].UUIDString;
+    cell.detailTextLabel.text = @"";
+    
+    if(peripheral.state == CBPeripheralStateConnected) {
+        // cell.textLabel.text = [NSString stringWithFormat:@"\u2713 %@", cell.textLabel.text];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        NSMutableString* detailText = [[NSMutableString alloc] initWithString:@""];
+        if(peripheral.platform) {
+            [detailText appendString:(peripheral.platform.processor == LBPlatformProcessorEFM32) ? @"EFM32 " : @"NRF51 "];
+        }
+        
+        if(peripheral.baseFirmwareMetadata) {
+            [detailText appendFormat:@"Base: %d ", peripheral.baseFirmwareMetadata.revision];
+        }
+        
+        if(peripheral.pluginFirmwareMetadata) {
+            [detailText appendFormat:@"Plugin: %d ", peripheral.pluginFirmwareMetadata.revision];
+        }
+        
+        if(peripheral.batteryState) {
+            [detailText appendFormat:@"Battery: %.1f%%", [peripheral.batteryState batteryChargePercent]];
+        }
+        
+        cell.detailTextLabel.text = detailText;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    [cell.label1 setText:@"-"];
-    //[cell.label2 setText:peripheral.name];
-    [cell.label2 setText:name];
-    [cell.label3 setText:@"-"];
-    [cell.label4 setText:peripheral.RSSI.stringValue];
-    if(cell.label4.text.length)
-        [cell.label4 setText:@"-"];
-    
     return cell;
-} // cellForRowAtIndexPath
-
-//-----------------------------------------------------
-- (void)tableView:(UITableView *)tableView
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//-----------------------------------------------------
-{
-    _mySenso = _discoveredSensos[indexPath.row][0];
-    _mySensoName = _discoveredSensos[indexPath.row][1];
-    [self connectToSenso];
-} // didSelectRowAtIndexPath
-
-//----------------------------------------------
-- (void)tableView:(UITableView *)tableView
-  willDisplayCell:(UITableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath
-//----------------------------------------------
-{
-    [cell setBackgroundColor:[UIColor clearColor]];
 }
 
-//----------------------------------------------
-- (UIView*)tableView:(UITableView *)tableView
-viewForFooterInSection:(NSInteger)section
-//----------------------------------------------
-{
-    return [[UIView alloc] init];
+- (void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if(indexPath.section == 0) {
+        // Clicking here has other uses not yet determined
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    } else {
+        // Discovered Peripherals section - let's connect
+        LBPeripheral* peripheral = [self.centralManager discoveredLumoPeripherals][indexPath.row];
+        if(peripheral.state == CBPeripheralStateDisconnected || peripheral.state == CBPeripheralStateDisconnecting) {
+            [self.centralManager rememberPeripheral:peripheral];
+            self.peripheral = peripheral;
+            [self.tableView reloadData];
+        }
+    }
 }
 
-//------------------------------------------------
-- (CGFloat)tableView:(UITableView *)tableView
-heightForFooterInSection:(NSInteger)section
-//------------------------------------------------
-{
-    return 0;
+- (BOOL)tableView:(nonnull UITableView *)tableView canEditRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return (indexPath.section == 0) ? YES : NO;
+}
+
+- (nullable NSString*)tableView:(nonnull UITableView*)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return @"Forget";
+}
+
+- (void)tableView:(nonnull UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        LBPeripheral* peripheral = [self.centralManager rememberedPeripherals][indexPath.row];
+        [self.centralManager forgetPeripheral:peripheral];
+        [self.tableView reloadData];
+    }
+}
+
+- (BOOL)tableView:(nonnull UITableView *)tableView canMoveRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return NO;
+}
+
+- (nullable NSString*)tableView:(nonnull UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return (section == 0) ? @"Remembered Peripherals" : @"Discovered Peripherals";
 }
 
 //==============================

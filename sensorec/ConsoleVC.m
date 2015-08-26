@@ -9,8 +9,6 @@
 #import "ConsoleVC.h"
 #import "common.h"
 #import "Utils.h"
-#import "../SensoPlexLibrary/SensoPlex.h"
-
 
 //========================
 @interface ConsoleVC ()
@@ -195,8 +193,11 @@
     NSString *cmd = textField.text;
     [self pr:@"\n"];
     [self pr:cmd];
-    SensoPlex *senso = g_app.connectVc.sensoPlex;
-    [senso sendString:cmd];
+    
+    if(textField.text.length > 0) {
+        LBJSONCommand* jsonCommand = [[LBJSONCommand alloc] initWithCommandString:textField.text];
+        [g_app.connectVc.peripheral sendCommand:jsonCommand];
+    }
     
     [textField resignFirstResponder];
     return YES;

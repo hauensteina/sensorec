@@ -86,11 +86,7 @@
         [_btnShutter setTitle:@"Turn On Shutter Sound"
                      forState:UIControlStateNormal];
     }
-    
-    
-    // Get data logging space,used,records,...
-    // The callback is onSensorLogStatusParsed().
-    [connectVC.sensoPlex getLogStatus];
+
 } // viewDidAppear()
 
 //--------------------------
@@ -130,16 +126,7 @@
 - (IBAction)btnLed:(id)sender
 //------------------------------
 {
-    if (!_ledOn) {
-        [g_app.connectVc.sensoPlex setLED:LEDGreen];
-        _ledOn = YES;
-        [_btnLed setTitle:@"LED off" forState:UIControlStateNormal];
-    }
-    else {
-        [g_app.connectVc.sensoPlex setLED:LEDSystemControl];
-        _ledOn = NO;
-        [_btnLed setTitle:@"LED green" forState:UIControlStateNormal];
-    }
+    NSLog(@"Deprecated Method: %@", NSStringFromSelector(_cmd));
 }
 
 //------------------------------------
@@ -168,22 +155,14 @@
 - (IBAction)btnClear:(id)sender
 //---------------------------------
 {
-    ConnectVC *connectVC = g_app.connectVc;
-    [connectVC.sensoPlex clearLoggingData];
-    [connectVC.sensoPlex getLogStatus];
+    NSLog(@"Deprecated Method: %@", NSStringFromSelector(_cmd));
 }
 
 //--------------------------------
 - (IBAction)btnRecord:(id)sender
 //--------------------------------
 {
-    ConnectVC *connectVC = g_app.connectVc;
-    if (_recording) {
-        [connectVC.sensoPlex stopLoggingData];
-    } else {
-        [connectVC.sensoPlex startLoggingData];
-    }
-    [connectVC.sensoPlex getLogStatus];
+    NSLog(@"Deprecated Method: %@", NSStringFromSelector(_cmd));
 }
 
 //--------------------------------------
@@ -204,7 +183,7 @@
 - (void) tmStatus:(id)sender
 //-----------------------------
 {
-    [g_app.connectVc.sensoPlex getLogStatus];
+    NSLog(@"Deprecated Method: %@", NSStringFromSelector(_cmd));
 }
 
 //======================================

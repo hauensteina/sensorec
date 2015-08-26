@@ -91,9 +91,8 @@
 - (void)viewDidAppear:(BOOL)animated
 //-------------------------------------
 {
-    SensoPlex *senso = g_app.connectVc.sensoPlex;
+//    SensoPlex *senso = g_app.connectVc.sensoPlex;
     //[senso sendString:@"qhon"];
-    [senso sendString:@"qson"];
 } // viewDidAppear
 
 //------------
@@ -104,17 +103,17 @@
 //---------------------------------
 {
     [g_app.naviVc popViewControllerAnimated:YES];
-    SensoPlex *senso = g_app.connectVc.sensoPlex;
-    [senso sendString:@"qhoff"];
-    [senso sendString:@"qsoff"];
+//    SensoPlex *senso = g_app.connectVc.sensoPlex;
+//    [senso sendString:@"qhoff"];
+//    [senso sendString:@"qsoff"];
 }
 
 //-----------------------------
 - (IBAction)btnFU:(id)sender
 //-----------------------------
 {
-    SensoPlex *senso = g_app.connectVc.sensoPlex;
-    [senso sendString:@"qhon"];
+//    SensoPlex *senso = g_app.connectVc.sensoPlex;
+//    [senso sendString:@"qhon"];
     //_corrAngle = 0;
 }
 
@@ -122,8 +121,8 @@
 - (IBAction)btnOS:(id)sender
 //-----------------------------
 {
-    SensoPlex *senso = g_app.connectVc.sensoPlex;
-    [senso sendString:@"qson"];
+//    SensoPlex *senso = g_app.connectVc.sensoPlex;
+//    [senso sendString:@"qson"];
     //_corrAngle = 0;
 }
 

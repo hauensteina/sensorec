@@ -122,9 +122,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     static int count = 0;
     count++;
     if (!_gotSensoApp) {
-        SensoPlex *senso = g_app.connectVc.sensoPlex;
-        [senso sendString:@"apon"];
-        [senso sendString:@"app"];
+        LBJSONCommand* jsonCommand = [[LBJSONCommand alloc] initWithCommandString:@"PLATFORM"];
+        [g_app.connectVc.peripheral sendCommand:jsonCommand];
+        
+//        SensoPlex *senso = g_app.connectVc.sensoPlex;
+//        [senso sendString:@"app"];
     }
 } // secTimer
 
