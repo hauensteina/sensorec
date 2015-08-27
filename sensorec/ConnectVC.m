@@ -25,7 +25,7 @@
 - (nonnull instancetype)init {
     self = [super init];
     if(self) {
-        self.centralManager = [[LBCentralManager alloc] initWithDelegate:self lumoServices:@[LBServiceLumoLiftUUID]];
+        self.centralManager = [[LBCentralManager alloc] initWithDelegate:self lumoServices:@[LBServiceLumoFlightUUID]];
     }
     return self;
 }
