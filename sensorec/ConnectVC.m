@@ -150,7 +150,7 @@
         LBSDBCommand* sdbCommand = (LBSDBCommand*)command;
         NSData* sdb = sdbCommand.selfDescriptiveBinary;
         // Process data
-        [self onUserMsgReceived:(Byte*)sdb.bytes len:sdb.length];
+        [self deviceSDB:sdb];
     } else if([command isKindOfClass:[LBJSONCommand class]]) {
         LBJSONCommand* jsonCommand = (LBJSONCommand*)command;
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[jsonCommand.jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
@@ -162,83 +162,60 @@
 
 #pragma mark - Process Self Descriptive Binary Messages
 
-//-------------------------------------------------------
-- (void) onUserMsgReceived:(Byte*)bytes
-                       len:(unsigned long)length
-//-------------------------------------------------------
-// Application (aka PRM) message from sensor.
-// Called from SensoPlex.m
+// Parse a self descriptive binary message from the plugin
+//---------------------------------------------------------
+- (NSDictionary *) parseSDB:(NSData *)data
 {
-    static int msgNum = 0;
-    static NSArray *currentBlurp;
-    msgNum++;
-    //    SensoPlex *senso = g_app.connectVc.sensoPlex;
-    if (bytes[1] == '@') { // binary key/value message
+    unsigned char *bytes = (unsigned char *)[data bytes];
+    if (bytes[0] == '@') { // binary key/value message
+        NSMutableDictionary *res = [NSMutableDictionary new];
         NSMutableArray *keys = [NSMutableArray new];
-        NSMutableArray *values = [NSMutableArray new];
         int16_t val16;
         int32_t val32;
-        long val;
-        for (unsigned char *p=bytes+2; *p; p++) {
-            if (*p == '@') { continue; }
+        for (unsigned char *p=bytes+1; *p; p++) {
             unsigned char c = *p;
+            NSString *key = nsprintf(@"%c",c);
+            [keys addObject:key];
             if (c >= 'a' && c <= 'z') { // lower case, 16 bit
                 ((char *)&val16)[0] = *++p;
                 ((char *)&val16)[1] = *++p;
-                [keys addObject:nsprintf(@"%c",c)];
-                val = val16; // for 64-bit phones
-                [values addObject:nsprintf(@"%ld",val)];
+                res[key] = @(val16);
             }
             else { // upper case, 32 bit
                 ((char *)&val32)[0] = *++p;
                 ((char *)&val32)[1] = *++p;
                 ((char *)&val32)[2] = *++p;
                 ((char *)&val32)[3] = *++p;
-                [keys addObject:nsprintf(@"%c",c)];
-                val = val32; // for 64-bit phones
-                [values addObject:nsprintf(@"%ld",val)];
+                res[key] = @(val32);
             }
         } // for
-        
-        // Hardware Sensor Fusion  Quaternion
-        if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) {
-            [g_app.brickVc fusionFU];
-            [g_app.brickVc animateQuaternion:values];
-        }
-        // Software Open Source Quaternion
-        else if ([keys isEqualToArray:@[@"v",@"x",@"y",@"z"]]) {
-            [g_app.brickVc fusionOS];
-            [g_app.brickVc animateQuaternion:values];
-        }
-        // Cadence, Bounce, Lurch, Plod
-        else if ([keys isEqualToArray:@[@"c",@"b",@"l",@"p"]]) {
-            [g_app.consoleVc pr:keys values:values num:msgNum];
-            // Remember blurp values until rotations come in
-            currentBlurp = values;
-        }
-        // Rotation around x,y,z
-        else if ([keys isEqualToArray:@[@"r",@"y",@"z"]]) {
-            [g_app.consoleVc pr:keys values:values num:msgNum];
-            [g_app.blurpVc cadence:currentBlurp[0]
-                            bounce:currentBlurp[1]
-                             lurch:currentBlurp[2]
-                              plod:currentBlurp[3]
-                              rotx:values[0]
-                              roty:values[1]
-                              rotz:values[2]];
-        }
-        else {
-            [g_app.consoleVc pr:keys values:values num:msgNum];
-        }
+        res[@"orderedkeys"] = keys;
+        return res;
     }
     else { // string msg
-        //msgNum++;
-        NSString *str = nsprintf(@"%s",bytes+1);
-        [g_app.consoleVc pr:str num:msgNum];
-        [self handleStrMsg:str];
+        NSLog (@"parseSDB(): Not an SDB message");
+        return nil;
     }
-    //[g_app.consoleVc pr:nsprintf (@"%ld ",msgNum) color:RGB(0x0f7002)];
-} // onUserMsgReceived
+    return nil;
+} // parseSDB()
+
+// Act on an SBD message from the plugin
+//---------------------------------------
+- (void)deviceSDB:(NSData *)data
+{
+    NSDictionary *kv = [self parseSDB:data];
+    NSArray *keys = kv[@"orderedkeys"];
+    if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) {
+        float q0 = [kv[@"w"] intValue] / (float) (1L<<14);
+        float q1 = [kv[@"x"] intValue] / (float) (1L<<14);
+        float q2 = [kv[@"y"] intValue] / (float) (1L<<14);
+        float q3 = [kv[@"z"] intValue] / (float) (1L<<14);
+        NSLog(@"wxyzl %.4f %.4f %.4f %.4f %.4f",q0,q1,q2,q3
+              ,q0*q0 + q1*q1 + q2*q2 + q3*q3);
+    } else {
+        NSLog(@"%@",kv);
+    }
+} // deviceSDB()
 
 //-----------------------------------------
 - (void) handleStrMsg: (NSString *)msg
