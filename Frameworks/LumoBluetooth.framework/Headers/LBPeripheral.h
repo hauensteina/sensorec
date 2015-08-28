@@ -9,6 +9,8 @@
 
 @import Foundation;
 @import CoreBluetooth;
+#import "LBPeripheralConstants.h"
+
 #import "LBProperty.h"
 #import "LBRadarPong.h"
 #import "LBVersion.h"
