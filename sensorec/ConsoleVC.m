@@ -18,7 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfCmd;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnStop;
 @property NSMutableArray *logBuf; // Buffered lines while not scrolling
-@property UIFont *logFont;
+@property UIFont *largeLogFont;
+@property UIFont *smallLogFont;
 @property BOOL shouldScroll;
 //@property NSString *strBuf;
 
@@ -30,25 +31,23 @@
 
 //---------------------------------
 - (void)viewDidLoad
-//---------------------------------
 {
     [super viewDidLoad];
     // The font we use for logging
-    _logFont = [UIFont fontWithName:@"TimesNewRomanPSMT" size:18];
+    _largeLogFont = [UIFont fontWithName:@"TimesNewRomanPSMT" size:18];
+    _smallLogFont = [UIFont fontWithName:@"TimesNewRomanPSMT" size:12];
     _shouldScroll = YES;
     _tfCmd.delegate = self;
 }
 
 //---------------------------------
 - (IBAction)btnBack:(id)sender
-//---------------------------------
 {
     [g_app.naviVc popViewControllerAnimated:YES];
 }
 
 //---------------------------------
 - (IBAction)btnStop:(id)sender
-//---------------------------------
 {
     if (_shouldScroll) {
         _shouldScroll = NO;
@@ -60,12 +59,15 @@
 }
 
 #pragma mark printing
+// Print a string to the console, in the given color
 //----------------------------------------------------------------------
 - (void) pr_impl:(NSString *)str
            color:(UIColor *)color
-//----------------------------------------------------------------------
-// Print a string to the console, in the given color
+           small:(BOOL)small
 {
+    UIFont *font = self.largeLogFont;
+    if (small) { font = self.smallLogFont; }
+    
     //str = nsprintf(@"%@\n",str);
     UITextView *tv = self.tvConsole;
     if (!tv) {
@@ -77,7 +79,7 @@
     [[NSAttributedString alloc]
      initWithString: str
      attributes: @{
-                   NSFontAttributeName: self.logFont,
+                   NSFontAttributeName: font,
                    NSForegroundColorAttributeName: color
                    }];
     if (self.shouldScroll) { // Display immediately
@@ -118,84 +120,73 @@
 
 #define LINE_NUM_COL RGB(0x404040)
 
-//----------------------------------------------------------------------
-- (void) pr:(NSArray *)keys
-     values:(NSArray *)values
-        num:(int)num
-//----------------------------------------------------------------------
 // Print keys and values color coded.
 // With the specified line number.
+//----------------------------------------------------------------------
+- (void) prdict:(NSDictionary *)kv
+            num:(int)num
 {
     dispatch_async (dispatch_get_main_queue(), ^{
-        [self pr_impl:@"\n" color:RED];
-        for (long i = [keys count]-1; i>=0; i--) {
+        NSArray *keys = kv[@"orderedkeys"];
+        [self pr_impl:@"\n" color:RED small:NO];
+        // for (long i = [keys count]-1; i>=0; i--) {
+        for (NSString *key in [[keys reverseObjectEnumerator] allObjects]) {
             //[self pr_impl:values[i] color:RGB(0xc3741c)];
             //[self pr_impl:values[i] color:RGB(0x8c00ec)];
-            [self pr_impl:values[i] color:RGB(0x0f7002)];
-            [self pr_impl:@" " color:RED];
-            [self pr_impl:keys[i] color:RED];
-            [self pr_impl:@" " color:RED];
+            [self pr_impl:str(kv[key]) color:RGB(0x0f7002) small:NO];
+            [self pr_impl:@" " color:RED small:NO];
+            [self pr_impl:key color:RED small:NO];
+            [self pr_impl:@" " color:RED small:NO];
         }
       //  if (_strBuf) { [self pr_impl:_strBuf color:BLUE]; }
       //  _strBuf = nil;
-        [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
+        [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL small:NO];
     });
 } // pr:values:
 
+// Print a string to the console, with line num
 //----------------------------------------------------------------------
 - (void) pr:(NSString *)str
         num:(int)num
-//----------------------------------------------------------------------
-// Print a string to the console, in the given color, with line num in green
-{
-    //if (_strBuf) {
-        dispatch_async (dispatch_get_main_queue(), ^{
-        [self pr_impl:@"\n" color:BLUE];
-        [self pr_impl:str color:BLUE];
-        [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
-        });
-    //}
-    //_strBuf = str;
-//    dispatch_async (dispatch_get_main_queue(), ^{
-//        [self pr_impl:@"\n" color:RED];
-//        [self pr_impl:nsprintf (@"%@",str) color:color];
-//        [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL];
-//        
-//    });
-} // pr:color:
-
-////----------------------------------------------------------------------
-//- (void) pr:(NSString *)str
-//      color:(UIColor *)color
-////----------------------------------------------------------------------
-//// Print a string to the console, in the given color
-//{
-//    dispatch_async (dispatch_get_main_queue(), ^{
-//        [self pr_impl:str color:color];
-//    });
-//} // pr:color:
-//
-//----------------------------------------------------------------------
-- (void) pr:(NSString *)str
-//----------------------------------------------------------------------
-// Print a string to the console, in Black
 {
     dispatch_async (dispatch_get_main_queue(), ^{
-        [self pr_impl:str color:BLACK];
+        [self pr_impl:@"\n" color:BLUE small:YES];
+        [self pr_impl:str color:BLUE small:YES];
+        [self pr_impl:nsprintf(@"%ld ",num) color:LINE_NUM_COL small:YES];
+    });
+}
+
+// Print a string to the console, in Black
+//----------------------------------------------------------------------
+- (void) pr:(NSString *)str
+{
+    dispatch_async (dispatch_get_main_queue(), ^{
+        [self pr_impl:str color:BLACK small:YES];
     });
 } // pr
 
 #pragma mark UITextFieldDelegate
 //-------------------------------------------------------
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
-//-------------------------------------------------------
 {
     NSString *cmd = textField.text;
     [self pr:@"\n"];
     [self pr:cmd];
     
-    if(textField.text.length > 0) {
-        LBJSONCommand* jsonCommand = [[LBJSONCommand alloc] initWithCommandString:textField.text];
+    NSMutableArray *parts = [[cmd componentsSeparatedByString: @" "] mutableCopy];
+    if (parts.count) {
+        NSString *command = [parts objectAtIndex: 0];
+        [parts removeObjectAtIndex: 0];
+        NSString *jsonstr;
+        if (parts.count) {
+            jsonstr = nsprintf (@"{\"CMD\":\"%@:%@\"}"
+                                , command
+                                , [parts componentsJoinedByString: @","]);
+        } else {
+            jsonstr = nsprintf (@"{\"CMD\":\"%@\"}"
+                                , command );
+        }
+        LBJSONCommand* jsonCommand = [[LBJSONCommand alloc] initWithJSON:jsonstr];
         [g_app.connectVc.peripheral sendCommand:jsonCommand];
     }
     

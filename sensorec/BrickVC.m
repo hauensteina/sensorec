@@ -10,7 +10,7 @@
 #import "common.h"
 
 #import <SceneKit/SceneKit.h>
-#import <GLKit/GLKit.h>
+
 
 #define DEG(x) ((x)*(180.0/M_PI))
 #define RAD(x) ((x)*(M_PI/180.0))
@@ -30,12 +30,6 @@
 //---------------------
 {
     [super viewDidLoad];
-    _fusionType = NONE;
-    
-    // UI Elements
-    //==============
-    [_btnFU setTitleColor:RGB(0xffffff) forState:UIControlStateNormal];
-    [_btnOS setTitleColor:RGB(0xffffff) forState:UIControlStateNormal];
     
     // Use SceneKit to show a 3D brick
     //======================================
@@ -109,82 +103,56 @@
 }
 
 //-----------------------------
-- (IBAction)btnFU:(id)sender
-//-----------------------------
-{
-//    SensoPlex *senso = g_app.connectVc.sensoPlex;
-//    [senso sendString:@"qhon"];
-    //_corrAngle = 0;
-}
-
-//-----------------------------
-- (IBAction)btnOS:(id)sender
-//-----------------------------
-{
-//    SensoPlex *senso = g_app.connectVc.sensoPlex;
-//    [senso sendString:@"qson"];
-    //_corrAngle = 0;
-}
-
-//-----------------------------
 - (IBAction)btnCorr:(id)sender
 //-----------------------------
 {
     //float rot = DEG(eulerPhi(_brickNode.rotation)) - _corrAngle;
     //_corrAngle = 90.0 - rot;
 }
-
-// Set sensor fusion button colors
-// These are called from ConnectVC depending on what
-// type quaternions come in from the sensor.
-//------------------
-- (void) fusionOS
-//------------------
-{
-    if (_fusionType != OS) {
-        _fusionType = OS;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self btnCorr:nil];
-            [_btnFU setTitleColor:RGB(0xffffff) forState:UIControlStateNormal];
-            [_btnOS setTitleColor:RGB(0xff0000) forState:UIControlStateNormal];
-        });
-    }
-}
-//------------------
-- (void) fusionFU
-//------------------
-{
-    if (_fusionType != FU) {
-        _fusionType = FU;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self btnCorr:nil];
-            [_btnFU setTitleColor:RGB(0xff0000) forState:UIControlStateNormal];
-            [_btnOS setTitleColor:RGB(0xffffff) forState:UIControlStateNormal];
-        });
-    }
-}
+//
+//// Set sensor fusion button colors
+//// These are called from ConnectVC depending on what
+//// type quaternions come in from the sensor.
+////------------------
+//- (void) fusionOS
+////------------------
+//{
+//    if (_fusionType != OS) {
+//        _fusionType = OS;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self btnCorr:nil];
+//            [_btnFU setTitleColor:RGB(0xffffff) forState:UIControlStateNormal];
+//            [_btnOS setTitleColor:RGB(0xff0000) forState:UIControlStateNormal];
+//        });
+//    }
+//}
+////------------------
+//- (void) fusionFU
+////------------------
+//{
+//    if (_fusionType != FU) {
+//        _fusionType = FU;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self btnCorr:nil];
+//            [_btnFU setTitleColor:RGB(0xff0000) forState:UIControlStateNormal];
+//            [_btnOS setTitleColor:RGB(0xffffff) forState:UIControlStateNormal];
+//        });
+//    }
+//}
 
 //-------------
 // Animation
 //-------------
 
-//------------------------------------------
-- (void) animateQuaternion:(NSArray*)p_q
-//------------------------------------------
+//----------------------------------------------
+- (void) animateQuaternion:(GLKQuaternion)glkq
 {
-    GLKQuaternion glkq;
-    glkq.q[0] = [p_q[3] intValue] / (float) (1L<<14); // x
-    glkq.q[1] = [p_q[1] intValue] / (float) (1L<<14); // y
-    glkq.q[2] = [p_q[2] intValue] / (float) (1L<<14); // z
-    glkq.q[3] = [p_q[0] intValue] / (float) (1L<<14); // w
-
     SCNQuaternion newOri = glk2SCN(glkq);
     _brickNode.rotation = [self correct:newOri];
 } // animateQuaternion
 
 //-------------------------------------------------
 - (SCNQuaternion) correct:(SCNQuaternion) ori
-//-------------------------------------------------
 {
     SCNQuaternion corr = SCNVector4Make (0, 1, 0, RAD(_corrAngle));
     //SCNQuaternion corr = SCNVector4Make (0, 0, 1, RAD(180));
@@ -192,10 +160,9 @@
 } // correct
 
 
+// Make a SCNQuaternion from a GLKQuaternion
 //-----------------------------------------------------------------------
 SCNQuaternion glk2SCN (GLKQuaternion qglk)
-//-----------------------------------------------------------------------
-// Make a SCNQuaternion from a GLKQuaternion
 {
     GLKVector3 axis = GLKQuaternionAxis (qglk);
     float angle = GLKQuaternionAngle (qglk);
@@ -203,11 +170,9 @@ SCNQuaternion glk2SCN (GLKQuaternion qglk)
     return res;
 }
 
-
+// Multiply two quaternions. This applies rotation q2 to rotation q1.
 //-----------------------------------------------------------------------
 SCNQuaternion SCNQuaternionMultiply (SCNQuaternion q1, SCNQuaternion q2)
-//-----------------------------------------------------------------------
-// Multiply two quaternions. This applies rotation q2 to rotation q1.
 {
     GLKQuaternion q1glk = // turn q1 into a GLKQuaternion
     GLKQuaternionMakeWithAngleAndAxis (q1.w, q1.x, q1.y, q1.z);
@@ -221,7 +186,6 @@ SCNQuaternion SCNQuaternionMultiply (SCNQuaternion q1, SCNQuaternion q2)
 
 //-----------------------------------
 float eulerPhi (SCNQuaternion p_q)
-//-----------------------------------
 {
     GLKQuaternion q =
     GLKQuaternionMakeWithAngleAndAxis (p_q.w, p_q.x, p_q.y, p_q.z);

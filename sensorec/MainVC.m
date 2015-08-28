@@ -63,6 +63,7 @@
 - (void)viewDidAppear:(BOOL)animated
 //-------------------------------------
 {
+    [self adaptGUI2XrmPlatform: g_app.xrmPlatform];
     ConnectVC *connectVC = g_app.connectVc;
     if (!connectVC.connected) {
         [g_app.naviVc pushViewController:connectVC animated:YES];
@@ -88,6 +89,83 @@
     }
 
 } // viewDidAppear()
+
+// Change GUI depending on xrm PLATFORM
+//----------------------------------------------------
+- (void) adaptGUI2XrmPlatform: (NSString *)platf
+{
+    //    if ([platf isEqualToString:@"lifting"]) {
+    //        dispatch_async (dispatch_get_main_queue(), ^{
+    //            [g_app.mainVc.btnRecord setTitle:@"Lifting" forState:UIControlStateNormal];
+    //            g_app.mainVc.btnRecord.enabled = NO;
+    //            g_app.mainVc.lbRecords.hidden = YES;
+    //            g_app.mainVc.lbBytes.hidden = YES;
+    //            g_app.mainVc.lbTotal.hidden = YES;
+    //            g_app.mainVc.btnLed.hidden = NO;
+    //            g_app.mainVc.lbRecordsUsed.hidden = YES;
+    //            g_app.mainVc.lbBytesUsed.hidden = YES;
+    //            g_app.mainVc.lbTotlab.hidden = YES;
+    //            g_app.mainVc.btnClear.hidden = YES;
+    //            g_app.mainVc.btnShutter.hidden = NO;
+    //            g_app.mainVc.btnAnimation.hidden = YES;
+    //            g_app.mainVc.btnBlurp.hidden = YES;
+    //        });
+    //    }
+    if (!platf) { return; }
+    if ([platf hasPrefix: @"flight-s1"]) {
+        dispatch_async (dispatch_get_main_queue(), ^{
+            [g_app.mainVc.btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
+            g_app.mainVc.btnRecord.enabled = YES;
+            g_app.mainVc.lbRecords.hidden = NO;
+            g_app.mainVc.lbBytes.hidden = NO;
+            g_app.mainVc.lbTotal.hidden = NO;
+            g_app.mainVc.btnLed.hidden = NO;
+            g_app.mainVc.lbRecordsUsed.hidden = NO;
+            g_app.mainVc.lbBytesUsed.hidden = NO;
+            g_app.mainVc.lbTotlab.hidden = NO;
+            g_app.mainVc.btnClear.hidden = NO;
+            g_app.mainVc.btnShutter.hidden = YES;
+            g_app.mainVc.btnAnimation.hidden = NO;
+            g_app.mainVc.btnBlurp.hidden = YES;
+        });
+    }
+    else { // unknown platform
+        NSLog (@"unknown platform %@", platf);
+        dispatch_async (dispatch_get_main_queue(), ^{
+            [g_app.mainVc.btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
+            g_app.mainVc.btnRecord.enabled = NO;
+            g_app.mainVc.lbRecords.hidden = YES;
+            g_app.mainVc.lbBytes.hidden = YES;
+            g_app.mainVc.lbTotal.hidden = YES;
+            g_app.mainVc.btnLed.hidden = YES;
+            g_app.mainVc.lbRecordsUsed.hidden = YES;
+            g_app.mainVc.lbBytesUsed.hidden = YES;
+            g_app.mainVc.lbTotlab.hidden = YES;
+            g_app.mainVc.btnClear.hidden = YES;
+            g_app.mainVc.btnShutter.hidden = YES;
+            g_app.mainVc.btnAnimation.hidden = YES;
+            g_app.mainVc.btnBlurp.hidden = YES;
+        });
+    }
+    //    else if ([platf hasPrefix:@"gl:"]) {
+    //        int minangle = [[msg componentsSeparatedByString:@":"][1] intValue];
+    //        //if (minangle > 50) {
+    //        if (minangle > 45) {
+    //            [self playGoodSound];
+    //        } else {
+    //            [self playStraightSound];
+    //        }
+    //    }
+    //    else if ([msg hasPrefix:@"bl:"]) {
+    //        [self playBadSound];
+    //    }
+    //    else if ([msg hasPrefix:@"calib"]) {
+    //        NSString *opt = g_app.options[@"calib_sound_flag"];
+    //        if ([opt isEqualToString:@"ON"]) {
+    //            [self playCalibSound];
+    //        }
+    //    }
+} // adaptGUI2XrmPlatform
 
 //--------------------------
 - (void) playBadSound
@@ -179,6 +257,20 @@
     [g_app.naviVc pushViewController:g_app.blurpVc animated:YES];
 }
 
+//-----------------------------------------
+- (IBAction)coachButtonClicked:(id)sender
+//-----------------------------------------
+{
+    UIStoryboard* sb = [UIStoryboard
+                        storyboardWithName:@"SettingsStoryboard"
+                        bundle:nil];
+    SettingsViewController* svc = (SettingsViewController*)[sb instantiateInitialViewController];
+    [self presentViewController:svc animated:YES completion:^{
+        
+    }];
+}
+
+
 //-----------------------------
 - (void) tmStatus:(id)sender
 //-----------------------------
@@ -254,17 +346,6 @@
 }
 
 
--(IBAction)coachButtonClicked:(id)sender{
-    UIStoryboard* sb = [UIStoryboard
-                        storyboardWithName:@"SettingsStoryboard"
-                        bundle:nil];
-    SettingsViewController* svc = (SettingsViewController*)[sb instantiateInitialViewController];
-    [self presentViewController:svc animated:YES completion:^{
-        
-    }];
-}
-
-//
 //==============================
 #pragma mark Json
 //==============================

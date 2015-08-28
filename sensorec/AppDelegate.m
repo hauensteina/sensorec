@@ -26,7 +26,6 @@ AppDelegate *g_app;
 //-------------------------------------------------------------
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-//-------------------------------------------------------------
 {
     g_app = self;
     [UIApplication sharedApplication].idleTimerDisabled = YES;
@@ -63,15 +62,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     if (!_options[@"calib_sound_flag"]) { _options[@"calib_sound_flag"] = @"ON"; }
     [self saveOptions];
     
-    self.sensoApp = @"sensorun";
-    
     NSURL *soundURL;
     soundURL = [[NSBundle mainBundle] URLForResource:@"backstraight"
                                        withExtension:@"aiff"];
     AudioServicesCreateSystemSoundID ((__bridge CFURLRef)soundURL
                                       ,&_backStraightSound);
     
-    _gotSensoApp = NO;
     _secTimer = [NSTimer scheduledTimerWithTimeInterval:1
                                                  target:self
                                                selector:@selector(secTimer:)
@@ -83,8 +79,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     return YES;
 } // didFinishLaunchingWithOptions
 
-
-
+//--------------------------------
 - (void) configureAVAudioSession
 {
     //get your app's audioSession singleton object
@@ -111,33 +106,26 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     success = [session setActive:YES error:&error];
     if (!success) NSLog(@"AVAudioSession error activating: %@",error);
     else NSLog(@"audioSession active");
-    
 }
 
+// Called once a sec to do periodic things
 //-----------------------------
 - (void) secTimer:(id)sender
-//-----------------------------
-// Called once a sec to do periodic things
 {
     static int count = 0;
     count++;
-    if (!_gotSensoApp&& [g_app.connectVc.peripheral state] == CBPeripheralStateConnected) {
+    if (!_xrmPlatform && [_connectVc.peripheral state] == CBPeripheralStateConnected) {
         LBJSONCommand* jsonCommand = [[LBJSONCommand alloc] initWithCommandString:@"PLATFORM"];
         [g_app.connectVc.peripheral sendCommand:jsonCommand];
-        
-//        SensoPlex *senso = g_app.connectVc.sensoPlex;
-//        [senso sendString:@"app"];
     }
 } // secTimer
 
 //-------------------
 - (void) saveOptions
-//-------------------
 {
     [Utils makeEmptyFile:@"options.txt"];
     [Utils appendObjToFileAsJSON:_options fname:@"options.txt"];
 }
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

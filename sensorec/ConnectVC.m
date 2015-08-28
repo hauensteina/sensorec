@@ -12,6 +12,8 @@
 #import "Utils.h"
 #import "BluetoothMasterCell.h"
 
+#import <GLKit/GLKit.h>
+
 @interface ConnectVC () <LBCentralManagerDelegate, LBPeripheralDelegate>
 @property (strong, nonatomic) LBCentralManager* centralManager;
 @property (weak, nonatomic) IBOutlet UITableView* tableView;
@@ -136,31 +138,82 @@
 
 #pragma mark - LBPeripheralDelegate
 
-- (void)peripheral:(nonnull LBPeripheral *)peripheral didUpdateState:(CBPeripheralState)state {
+// BLE connection state changed
+//----------------------------------------------------------
+- (void) peripheral: (nonnull LBPeripheral *) peripheral
+     didUpdateState: (CBPeripheralState) state
+{
     [self.tableView reloadData];
-    if(state == CBPeripheralStateConnected) {
+    if (state == CBPeripheralStateConnected) {
+        // We clicked on the sensor on the tbview and then
+        // made a BLE link and did the base fw init sequence.
+        // All base fw properties have been set.
         self.peripheral = peripheral;
+        // Reset whatever the app knows about the XRM
+        g_app.xrmPlatform = nil;
     }
 }
 
-- (void)peripheral:(nonnull LBPeripheral *)peripheral didReceiveCommand:(nonnull LBCommand *)command {
+// A JSON message or and SDB message came from the XRM
+//---------------------------------------------------------
+- (void) peripheral: (nonnull LBPeripheral *) peripheral
+  didReceiveCommand: (nonnull LBCommand *) command
+{
+    static int msgNum = 0;
+    msgNum++;
     NSLog(@"Command: %@", command);
     
     if([command isKindOfClass:[LBSDBCommand class]]) {
         LBSDBCommand* sdbCommand = (LBSDBCommand*)command;
         NSData* sdb = sdbCommand.selfDescriptiveBinary;
-        // Process data
-        [self deviceSDB:sdb];
-    } else if([command isKindOfClass:[LBJSONCommand class]]) {
+        NSDictionary *kv = [self parseSDB:sdb];
+        NSArray *keys = kv[@"orderedkeys"];
+        // Don't log quaternion
+        if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) {}
+        else { [g_app.consoleVc prdict:kv num:msgNum]; }
+        [self handleSDB:kv];
+    }
+    else if([command isKindOfClass:[LBJSONCommand class]]) {
         LBJSONCommand* jsonCommand = (LBJSONCommand*)command;
-        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[jsonCommand.jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-        if([json[@"type"] isEqualToString:@"PLATFORM"]) {
-            [self handleStrMsg:json[@"str"]];
-        }
+        NSDictionary* json =
+        [NSJSONSerialization
+         JSONObjectWithData:[jsonCommand.jsonString dataUsingEncoding:NSUTF8StringEncoding]
+         options:0 error:nil];
+        [g_app.consoleVc pr:jsonCommand.jsonString num:msgNum];
+        [self handleJSON:json];
     }
 }
 
+#pragma mark - Process JSON Messages
+//----------------------------------------
+- (void)handleJSON:(NSDictionary *) json
+{
+    if ([json[@"type"] isEqualToString:@"PLATFORM"]) {
+        g_app.xrmPlatform = json[@"str"];
+        //[g_app.naviVc pushViewController:g_app.mainVc animated:YES];
+    }
+} // handleJSON()
+
 #pragma mark - Process Self Descriptive Binary Messages
+
+// Act on an SBD message from the plugin
+//---------------------------------------
+- (void)handleSDB:(NSDictionary *)kv
+{
+    NSArray *keys = kv[@"orderedkeys"];
+    if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) {
+        GLKQuaternion glkq;
+        glkq.q[0] = [kv[@"x"] intValue] / (float) (1L<<14);
+        glkq.q[1] = [kv[@"y"] intValue] / (float) (1L<<14);
+        glkq.q[2] = [kv[@"z"] intValue] / (float) (1L<<14);
+        glkq.q[3] = [kv[@"w"] intValue] / (float) (1L<<14); 
+        
+        NSLog(@"wxyzl %.4f %.4f %.4f %.4f", glkq.q[0], glkq.q[1], glkq.q[2], glkq.q[3]);
+        [g_app.brickVc animateQuaternion: glkq];
+    } else {
+        NSLog(@"%@",kv);
+    }
+} // deviceSDB()
 
 // Parse a self descriptive binary message from the plugin
 //---------------------------------------------------------
@@ -199,105 +252,7 @@
     return nil;
 } // parseSDB()
 
-// Act on an SBD message from the plugin
-//---------------------------------------
-- (void)deviceSDB:(NSData *)data
-{
-    NSDictionary *kv = [self parseSDB:data];
-    NSArray *keys = kv[@"orderedkeys"];
-    if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) {
-        float q0 = [kv[@"w"] intValue] / (float) (1L<<14);
-        float q1 = [kv[@"x"] intValue] / (float) (1L<<14);
-        float q2 = [kv[@"y"] intValue] / (float) (1L<<14);
-        float q3 = [kv[@"z"] intValue] / (float) (1L<<14);
-        NSLog(@"wxyzl %.4f %.4f %.4f %.4f %.4f",q0,q1,q2,q3
-              ,q0*q0 + q1*q1 + q2*q2 + q3*q3);
-    } else {
-        NSLog(@"%@",kv);
-    }
-} // deviceSDB()
 
-//-----------------------------------------
-- (void) handleStrMsg: (NSString *)msg
-//-----------------------------------------
-// A string message from the sensor came in. Deal with it.
-{
-    if ([msg isEqualToString:@"lifting"]) {
-        g_app.sensoApp = @"sensolifting";
-        g_app.gotSensoApp = YES;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [g_app.mainVc.btnRecord setTitle:@"Lifting" forState:UIControlStateNormal];
-            g_app.mainVc.btnRecord.enabled = NO;
-            g_app.mainVc.lbRecords.hidden = YES;
-            g_app.mainVc.lbBytes.hidden = YES;
-            g_app.mainVc.lbTotal.hidden = YES;
-            g_app.mainVc.btnLed.hidden = NO;
-            g_app.mainVc.lbRecordsUsed.hidden = YES;
-            g_app.mainVc.lbBytesUsed.hidden = YES;
-            g_app.mainVc.lbTotlab.hidden = YES;
-            g_app.mainVc.btnClear.hidden = YES;
-            g_app.mainVc.btnShutter.hidden = NO;
-            g_app.mainVc.btnAnimation.hidden = YES;
-            g_app.mainVc.btnBlurp.hidden = YES;
-        });
-    }
-    else if ([msg isEqualToString:@"run"]) {
-        g_app.sensoApp = @"sensorun";
-        g_app.gotSensoApp = YES;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [g_app.mainVc.btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
-            g_app.mainVc.btnRecord.enabled = YES;
-            g_app.mainVc.lbRecords.hidden = NO;
-            g_app.mainVc.lbBytes.hidden = NO;
-            g_app.mainVc.lbTotal.hidden = NO;
-            g_app.mainVc.btnLed.hidden = NO;
-            g_app.mainVc.lbRecordsUsed.hidden = NO;
-            g_app.mainVc.lbBytesUsed.hidden = NO;
-            g_app.mainVc.lbTotlab.hidden = NO;
-            g_app.mainVc.btnClear.hidden = NO;
-            g_app.mainVc.btnShutter.hidden = YES;
-            g_app.mainVc.btnAnimation.hidden = YES;
-            g_app.mainVc.btnBlurp.hidden = YES;
-        });
-    }
-    else if ([msg isEqualToString:@"dev"]) {
-        g_app.sensoApp = @"sensodev";
-        g_app.gotSensoApp = YES;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [g_app.mainVc.btnRecord setTitle:@"Start Recording" forState:UIControlStateNormal];
-            g_app.mainVc.btnRecord.enabled = YES;
-            g_app.mainVc.lbRecords.hidden = NO;
-            g_app.mainVc.lbBytes.hidden = NO;
-            g_app.mainVc.lbTotal.hidden = NO;
-            g_app.mainVc.btnLed.hidden = NO;
-            g_app.mainVc.lbRecordsUsed.hidden = NO;
-            g_app.mainVc.lbBytesUsed.hidden = NO;
-            g_app.mainVc.lbTotlab.hidden = NO;
-            g_app.mainVc.btnClear.hidden = NO;
-            g_app.mainVc.btnShutter.hidden = YES;
-            g_app.mainVc.btnAnimation.hidden = NO;
-            g_app.mainVc.btnBlurp.hidden = NO;
-        });
-    }
-    else if ([msg hasPrefix:@"gl:"]) {
-        int minangle = [[msg componentsSeparatedByString:@":"][1] intValue];
-        //if (minangle > 50) {
-        if (minangle > 45) {
-            [self playGoodSound];
-        } else {
-            [self playStraightSound];
-        }
-    }
-    else if ([msg hasPrefix:@"bl:"]) {
-        [self playBadSound];
-    }
-    else if ([msg hasPrefix:@"calib"]) {
-        NSString *opt = g_app.options[@"calib_sound_flag"];
-        if ([opt isEqualToString:@"ON"]) {
-            [self playCalibSound];
-        }
-    }
-} // handleStrMsg
 
 //--------------------------
 - (void) playBadSound

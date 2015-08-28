@@ -26,9 +26,11 @@
 @property BlurpVC *blurpVc;
 @property UINavigationController *naviVc;
 
-@property NSString *sensoApp; // sensorun or sensolifting firmware
+//@property NSString *sensoApp; // sensorun or sensolifting firmware
 @property NSTimer *secTimer; // Check various things once per second
-@property BOOL gotSensoApp;
+
+// Things we have learned about the plugin (aka xrm)
+@property NSString *xrmPlatform;
 
 // Options
 @property NSMutableDictionary *options;

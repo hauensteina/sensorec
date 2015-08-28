@@ -7,21 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GLKit/GLKit.h>
 
 //--------------------------------------
 @interface BrickVC : UIViewController
 //--------------------------------------
 
-- (void) animateQuaternion:(NSArray*)p_q;
-- (void) fusionOS;
-- (void) fusionFU;
-// State properties
-@property enum {NONE,OS,FU} fusionType;
+- (void) animateQuaternion:(GLKQuaternion)glkq;
 @property float corrAngle;
 
-// UI properties
-@property (weak, nonatomic) IBOutlet UIButton *btnFU;
-@property (weak, nonatomic) IBOutlet UIButton *btnOS;
 
 @end // BrickVC
 
