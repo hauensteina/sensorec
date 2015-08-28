@@ -24,6 +24,16 @@
 @interface LBCentralManager : NSObject<CBCentralManagerDelegate>
 @property (weak, nonatomic) id<LBCentralManagerDelegate> delegate;
 
+/**
+ *  Only discover devices that are >= the minimumRSSI value. Default is LBPeripheralRSSIMinimum. Capped to LBPeripheralRSSIMinimum.
+ */
+@property (assign, nonatomic) NSInteger minimiumRSSI;
+
+/**
+ *  Only discover devices that are <= the maximumRSSI value. Default is LBPeripheralRSSIMaximum. Capped to LBPeripheralRSSIMaximum.
+ */
+@property (assign, nonatomic) NSInteger maximumRSSI;
+
 - (nullable instancetype)init NS_UNAVAILABLE;
 - (nullable instancetype)initWithDelegate:(nonnull id<LBCentralManagerDelegate>)delegate lumoServices:(nonnull NSArray<NSString*>*)lumoProductServices;
 
