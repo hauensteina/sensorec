@@ -9,20 +9,35 @@
 @import Foundation;
 
 @interface LBMotion : NSObject
-@property (assign, nonatomic, readonly) int16_t accelerometer_x;
-@property (assign, nonatomic, readonly) int16_t accelerometer_y;
-@property (assign, nonatomic, readonly) int16_t accelerometer_z;
+/**
+ *  Acceleration, measured in units of g (9.8 m/s^2)
+ */
+@property (assign, nonatomic, readonly) float accelerometer_x;
+@property (assign, nonatomic, readonly) float accelerometer_y;
+@property (assign, nonatomic, readonly) float accelerometer_z;
 
-@property (assign, nonatomic, readonly) int16_t magnetometer_x;
-@property (assign, nonatomic, readonly) int16_t magnetometer_y;
-@property (assign, nonatomic, readonly) int16_t magnetometer_z;
+/**
+ *  Magnetometer, measured in gauss
+ */
+@property (assign, nonatomic, readonly) float magnetometer_x;
+@property (assign, nonatomic, readonly) float magnetometer_y;
+@property (assign, nonatomic, readonly) float magnetometer_z;
 
-@property (assign, nonatomic, readonly) int16_t gyro_x;
-@property (assign, nonatomic, readonly) int16_t gyro_y;
-@property (assign, nonatomic, readonly) int16_t gyro_z;
+/**
+ *  Gyroscope, measured in degrees per second
+ */
+@property (assign, nonatomic, readonly) float gyro_x;
+@property (assign, nonatomic, readonly) float gyro_y;
+@property (assign, nonatomic, readonly) float gyro_z;
 
-@property (assign, nonatomic, readonly) int16_t temperature;
+/**
+ *  Temperature, measured in Celsius
+ */
+@property (assign, nonatomic, readonly) float temperature;
 
-@property (assign, nonatomic, readonly) uint32_t pressure;
+/**
+ *  Pressure, measured in Pascals
+ */
+@property (assign, nonatomic, readonly) float pressure;
 
 @end

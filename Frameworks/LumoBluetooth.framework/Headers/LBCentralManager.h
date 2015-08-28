@@ -13,7 +13,7 @@
 @protocol LBCentralManagerDelegate <NSObject>
 @required
 - (void)centralManagerDidUpdateState:(CBCentralManagerState)state;
-- (void)centralManagerDidDiscoverPeripheral:(nonnull LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString*, id>*)advertisementData RSSI:(nonnull NSNumber*)RSSI;
+- (void)centralManagerDidDiscoverPeripheral:(nullable LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString*, id>*)advertisementData RSSI:(nonnull NSNumber*)RSSI;
 
 - (void)centralManagerDidConnectPeripheral:(nonnull LBPeripheral*)peripheral;
 - (void)centralManagerDidDisconnectPeripheral:(nonnull LBPeripheral*)peripheral;
