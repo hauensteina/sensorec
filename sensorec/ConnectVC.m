@@ -106,12 +106,14 @@
     [self.tableView reloadData];
 }
 
-- (void)centralManagerDidDiscoverPeripheral:(nonnull LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString *,id>*)advertisementData RSSI:(nonnull NSNumber *)RSSI {
+- (void)centralManagerDidDiscoverPeripheral:(nullable LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString *,id>*)advertisementData RSSI:(nonnull NSNumber *)RSSI {
     // NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    NSString* localName = advertisementData[CBAdvertisementDataLocalNameKey];
-    if([localName hasSuffix:@"*"]) {
-        [self.centralManager rememberPeripheral:peripheral];
+    if(peripheral) {
+        NSString* localName = advertisementData[CBAdvertisementDataLocalNameKey];
+        if([localName hasSuffix:@"*"]) {
+            [self.centralManager rememberPeripheral:peripheral];
+        }
     }
     
     [self.tableView reloadData];
