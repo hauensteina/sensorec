@@ -13,7 +13,7 @@
 @protocol LBCentralManagerDelegate <NSObject>
 @required
 - (void)centralManagerDidUpdateState:(CBCentralManagerState)state;
-- (void)centralManagerDidDiscoverPeripheral:(nullable LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString*, id>*)advertisementData RSSI:(nonnull NSNumber*)RSSI;
+- (void)centralManagerDidDiscoverPeripheral:(nonnull LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString*, id>*)advertisementData RSSI:(nonnull NSNumber*)RSSI;
 
 - (void)centralManagerDidConnectPeripheral:(nonnull LBPeripheral*)peripheral;
 - (void)centralManagerDidDisconnectPeripheral:(nonnull LBPeripheral*)peripheral;
@@ -26,11 +26,13 @@
 
 /**
  *  Only discover devices that are >= the minimumRSSI value. Default is LBPeripheralRSSIMinimum. Capped to LBPeripheralRSSIMinimum.
+ *  Devices already discovered remain discovered until scanning is restarted.
  */
 @property (assign, nonatomic) NSInteger minimiumRSSI;
 
 /**
  *  Only discover devices that are <= the maximumRSSI value. Default is LBPeripheralRSSIMaximum. Capped to LBPeripheralRSSIMaximum.
+ *  Devices already discovered remain discovered until scanning is restarted.
  */
 @property (assign, nonatomic) NSInteger maximumRSSI;
 
