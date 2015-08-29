@@ -148,7 +148,8 @@
 - (void) animateQuaternion:(GLKQuaternion)glkq
 {
     SCNQuaternion newOri = glk2SCN(glkq);
-    _brickNode.rotation = [self correct:newOri];
+    //_brickNode.rotation = [self correct:newOri];
+    _brickNode.rotation = newOri;
 } // animateQuaternion
 
 //-------------------------------------------------

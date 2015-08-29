@@ -161,7 +161,7 @@
 {
     static int msgNum = 0;
     msgNum++;
-    NSLog(@"Command: %@", command);
+    //NSLog(@"Command: %@", command);
     
     if([command isKindOfClass:[LBSDBCommand class]]) {
         LBSDBCommand* sdbCommand = (LBSDBCommand*)command;
@@ -200,17 +200,28 @@
 //---------------------------------------
 - (void)handleSDB:(NSDictionary *)kv
 {
+    GLKQuaternion glkq;
     NSArray *keys = kv[@"orderedkeys"];
+    // 012 021 101 120 201 210
     if ([keys isEqualToArray:@[@"w",@"x",@"y",@"z"]]) {
-        GLKQuaternion glkq;
-        glkq.q[0] = [kv[@"x"] intValue] / (float) (1L<<14);
-        glkq.q[1] = [kv[@"y"] intValue] / (float) (1L<<14);
-        glkq.q[2] = [kv[@"z"] intValue] / (float) (1L<<14);
-        glkq.q[3] = [kv[@"w"] intValue] / (float) (1L<<14); 
+        glkq.q[2] = [kv[@"x"] intValue] / (float) (1L<<14);
+        glkq.q[0] = [kv[@"y"] intValue] / (float) (1L<<14);
+        glkq.q[1] = [kv[@"z"] intValue] / (float) (1L<<14);
+        glkq.q[3] = [kv[@"w"] intValue] / (float) (1L<<14);
         
-        NSLog(@"wxyzl %.4f %.4f %.4f %.4f", glkq.q[0], glkq.q[1], glkq.q[2], glkq.q[3]);
+        //NSLog(@"wxyzl %.4f %.4f %.4f %.4f", glkq.q[0], glkq.q[1], glkq.q[2], glkq.q[3]);
         [g_app.brickVc animateQuaternion: glkq];
-    } else {
+    }
+    else if ([keys isEqualToArray:@[@"v",@"x",@"y",@"z"]]) {
+        float qx,qy,qz,qv;
+        qx = [kv[@"x"] intValue];
+        qy  = [kv[@"y"] intValue];
+        qz  = [kv[@"z"] intValue];
+        qv  = [kv[@"v"] intValue];
+        
+        NSLog(@"vxyz %.4f %.4f %.4f %.4f", qv, qx, qy, qz);
+    }
+    else {
         NSLog(@"%@",kv);
     }
 } // deviceSDB()
@@ -225,6 +236,7 @@
         NSMutableArray *keys = [NSMutableArray new];
         int16_t val16;
         int32_t val32;
+        NSInteger val;
         for (unsigned char *p=bytes+1; *p; p++) {
             unsigned char c = *p;
             NSString *key = nsprintf(@"%c",c);
@@ -232,14 +244,16 @@
             if (c >= 'a' && c <= 'z') { // lower case, 16 bit
                 ((char *)&val16)[0] = *++p;
                 ((char *)&val16)[1] = *++p;
-                res[key] = @(val16);
+                val = val16;
+                res[key] = [NSNumber numberWithInteger:val];
             }
             else { // upper case, 32 bit
                 ((char *)&val32)[0] = *++p;
                 ((char *)&val32)[1] = *++p;
                 ((char *)&val32)[2] = *++p;
                 ((char *)&val32)[3] = *++p;
-                res[key] = @(val32);
+                val = val32;
+                res[key] = [NSNumber numberWithInteger:val];
             }
         } // for
         res[@"orderedkeys"] = keys;
