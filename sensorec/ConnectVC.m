@@ -110,7 +110,6 @@
 
 - (void)centralManagerDidDiscoverPeripheral:(nonnull LBPeripheral*)peripheral advertisementData:(nonnull NSDictionary<NSString *,id>*)advertisementData RSSI:(nonnull NSNumber *)RSSI {
     // NSLog(@"%@", NSStringFromSelector(_cmd));
-    
     NSString* localName = advertisementData[CBAdvertisementDataLocalNameKey];
     if([localName hasSuffix:@"*"]) {
         [self.centralManager rememberPeripheral:peripheral];
