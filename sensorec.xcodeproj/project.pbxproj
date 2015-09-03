@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		381E2D0A1B73D1F900171763 /* Coach.m in Sources */ = {isa = PBXBuildFile; fileRef = 381E2D091B73D1F900171763 /* Coach.m */; };
+		38A189B51B97AA6C00786A29 /* coach.js in Resources */ = {isa = PBXBuildFile; fileRef = 38A189B41B97AA6C00786A29 /* coach.js */; };
+		38A189B81B97AE2600786A29 /* CoachV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A189B71B97AE2600786A29 /* CoachV2.m */; };
 		38D4861F1B75123500810602 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */; };
 		38D486251B753C7600810602 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D486241B753C7600810602 /* SettingsViewController.m */; };
 		AC050A001B431363004FA68F /* SparklineContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0509FF1B431363004FA68F /* SparklineContainerView.m */; };
@@ -79,6 +81,9 @@
 /* Begin PBXFileReference section */
 		381E2D081B73D1F900171763 /* Coach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coach.h; sourceTree = "<group>"; };
 		381E2D091B73D1F900171763 /* Coach.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coach.m; sourceTree = "<group>"; };
+		38A189B41B97AA6C00786A29 /* coach.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = coach.js; sourceTree = "<group>"; };
+		38A189B61B97AE2600786A29 /* CoachV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachV2.h; sourceTree = "<group>"; };
+		38A189B71B97AE2600786A29 /* CoachV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachV2.m; sourceTree = "<group>"; };
 		38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		38D486231B753C7600810602 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		38D486241B753C7600810602 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -304,6 +309,8 @@
 				AC050A0C1B4317F9004FA68F /* Views */,
 				381E2D081B73D1F900171763 /* Coach.h */,
 				381E2D091B73D1F900171763 /* Coach.m */,
+				38A189B61B97AE2600786A29 /* CoachV2.h */,
+				38A189B71B97AE2600786A29 /* CoachV2.m */,
 			);
 			path = sensorec;
 			sourceTree = "<group>";
@@ -311,6 +318,7 @@
 		ACA43FF91A65C4C2009C30C0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				38A189B41B97AA6C00786A29 /* coach.js */,
 				ACA43FFA1A65C4C2009C30C0 /* Info.plist */,
 				ACA43FFB1A65C4C2009C30C0 /* main.m */,
 			);
@@ -469,6 +477,7 @@
 				38D4861F1B75123500810602 /* SettingsStoryboard.storyboard in Resources */,
 				ACD0DB271A6D9B3B0038E94D /* Icon-180.png in Resources */,
 				ACA4403D1A68A2CE009C30C0 /* amber-led-on-md.png in Resources */,
+				38A189B51B97AA6C00786A29 /* coach.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +517,7 @@
 				ACA43FFC1A65C4C2009C30C0 /* main.m in Sources */,
 				AC7D5A121A96A4A2003FFB11 /* Utils.m in Sources */,
 				AC60E56D1A8A6FFD00E73EC5 /* cfuncs.m in Sources */,
+				38A189B81B97AE2600786A29 /* CoachV2.m in Sources */,
 				AC855AD21AA116FE001D761C /* SSPacketLogger.m in Sources */,
 				AC855AD01AA116FE001D761C /* SensorDataLogStreamConfig.m in Sources */,
 				AC050A0F1B43185D004FA68F /* SparklineView.m in Sources */,

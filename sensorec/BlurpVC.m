@@ -13,6 +13,7 @@
 #import "SparklineTileView.h"
 #import "SparklineView.h"
 #import "Coach.h"
+#import "CoachV2.h"
 
 @interface BlurpVC ()
 @property SparklineContainerView* sparklinesView;
@@ -136,8 +137,10 @@
                                 ,ROTZ:rotz
                                 };
         [self.sparklinesView plotPoints:point];
-        Coach* coach = [Coach sharedInstance];
-        [self.sparklinesView postTips:[coach getCoachingTips:point]];
+//        Coach* coach = [Coach sharedInstance];
+//        [self.sparklinesView postTips:[coach getCoachingTips:point]];
+        CoachV2* coach = [CoachV2 sharedInstance];
+        [self.sparklinesView postTips:[coach addDataPoint:point]];
     });
 } // [cadence ...]
 
