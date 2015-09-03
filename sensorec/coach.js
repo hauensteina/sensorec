@@ -1,25 +1,25 @@
 "use strict";
 var tip_metadata = {
-    'sample_size': 10,
+    'sample_size': 15,
     'thresholds': [
                    {
                    'param': 'bounce',
                    'display_name': 'bounce',
                    'min': 10000,
                    'max': 50000,
-                   'priority': 1
+                   'priority': 2
                    },
                    {
                    'param': 'pelvic_rot_x',
                    'display_name': 'pelvic rotation',
                    'max': 10,
-                   'priority': 2
+                   'priority': 1
                    }
                    ],
     'tips': [
              {
              'id': 1,
-             'text': 'Keep your midsection engaged, like someone is going to punch you',
+             'text': 'Keep your midsection engaged, like someone is going to punch you.',
              'triggers': [
                           {
                           'parameter': 'pelvic_rot_x',
@@ -30,7 +30,7 @@ var tip_metadata = {
              },
              {
              'id': 2,
-             'text': 'Evenness - you\'re running one leg at a time',
+             'text': 'You\'re running one leg at a time.',
              'triggers': [
                           {
                           'parameter': 'pelvic_rot_x',
@@ -49,8 +49,10 @@ var tip_metadata = {
 /*
  Utility functions
  */
-var LOG = function(s){
-    console.log(s);
+if(LOG === undefined){
+    LOG = function(s){
+        console.log(s);
+    }
 };
 
 /*
@@ -231,7 +233,7 @@ var run_data_mgr = function () {
          Adds a data point and returns tips if there are any.
          */
         'addDataPoint': function (dp) {
-            LOG('addDataPoint():START');
+            LOG('addDataPoint():START;dp=' + JSON.stringify(dp));
             if (dp.t === undefined || dp.cadence === undefined || dp.bounce === undefined || dp.lurch === undefined
                 || dp.pelvic_rot_x === undefined || dp.pelvic_rot_y === undefined || dp.pelvic_rot_z === undefined
                 || dp.stride === undefined || dp.ground_contact_t === undefined) {
@@ -256,17 +258,19 @@ var run_data_mgr = function () {
                     LOG('checking param=' + param + ' threshold.min=' + threshold.min +
                         ' threshold.max=' + threshold.max + ' avg=' + sample_avg[param]);
                     if (sample_avg[param] < min) {
-                        tips.push('Your ' + threshold.display_name + ' is too low');
+                        var s = 'Your ' + threshold.display_name + ' is too low.';
                         if(tips_matrix[param].min_tips.length >0){
-                            tips.push(tips_matrix[param].min_tips[0].text);
+                            s += tips_matrix[param].min_tips[0].text;
                         }
+                        tips.push(s);
                         break;
-                    } 
+                    }
                     else if (sample_avg[param] > max) {
-                        tips.push('Your ' + threshold.display_name + ' is too high');
+                        var s = 'Your ' + threshold.display_name + ' is too high.';
                         if(tips_matrix[param].max_tips.length >0){
-                            tips.push(tips_matrix[param].max_tips[0].text);
+                            s += tips_matrix[param].max_tips[0].text;
                         }
+                        tips.push(s);
                         break;
                     }
                     else{
@@ -407,3 +411,4 @@ function test() {
 }
 
 //test();
+

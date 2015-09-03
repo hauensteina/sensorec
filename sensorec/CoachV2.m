@@ -39,11 +39,11 @@
         [self.js setExceptionHandler:^(JSContext * ctx, JSValue * val) {
             NSLog(@"%@", val);
         }];
-        [self.js evaluateScript:jsStr];
         //Override LOG to print to console
         self.js[@"LOG"] = ^(NSString* s){
             NSLog(@"%@", s);
         };
+        [self.js evaluateScript:jsStr];
     }
     return self;
 }

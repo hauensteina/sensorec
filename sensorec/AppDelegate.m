@@ -103,7 +103,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     if (!success)  NSLog(@"AVAudioSession error setting category:%@",error);
     
     //set the audioSession override
-    success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+    success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideNone
                                          error:&error];
     if (!success)  NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
     

@@ -305,13 +305,13 @@
         // Rotation around x,y,z
         else if ([keys isEqualToArray:@[@"r",@"y",@"z"]]) {
             [g_app.consoleVc pr:keys values:values num:msgNum];
-            [g_app.blurpVc cadence:currentBlurp[0]
-                            bounce:currentBlurp[1]
-                             lurch:currentBlurp[2]
-                              plod:currentBlurp[3]
-                              rotx:values[0]
-                              roty:values[1]
-                              rotz:values[2]];
+            [g_app.blurpVc cadence:@([currentBlurp[0] floatValue])
+                            bounce:@([currentBlurp[1] floatValue])
+                             lurch:@([currentBlurp[2] floatValue])
+                              plod:@([currentBlurp[3] floatValue])
+                              rotx:@([values[0] floatValue])
+                              roty:@([values[1] floatValue])
+                              rotz:@([values[2] floatValue])];
         }
         else {
             [g_app.consoleVc pr:keys values:values num:msgNum];
