@@ -8,32 +8,6 @@
 
 #import "Coach.h"
 
-#define AVG_SAMPLE_SIZE 10
-
-//default thresholds
-#define CADENCE_MIN 150
-#define CADENCE_MAX 200
-#define BOUNCE_MIN 0
-#define BOUNCE_MAX 25
-#define LURCH_MIN 0
-#define LURCH_MAX 0
-#define PLOD_MIN 0
-#define PLOD_MAX 0
-#define ROTX_MIN 0
-#define ROTX_MAX 0
-#define ROTY_MIN 0
-#define ROTY_MAX 0
-#define ROTZ_MIN 0
-#define ROTZ_MAX 0
-
-//user defaults keys
-#define CADENCE_MIN_KEY @"CADENCE_MIN_KEY"
-#define CADENCE_MAX_KEY @"CADENCE_MAX_KEY"
-#define BOUNCE_MIN_KEY @"BOUNCE_MIN_KEY"
-#define BOUNCE_MAX_KEY @"BOUNCE_MAX_KEY"
-#define SAMPLE_SIZE_KEY @"SAMPLE_SIZE_KEY"
-
-
 @interface Coach ()
 
 //Data structures to store historical and avergage values of sensor properties
@@ -187,36 +161,6 @@
     return total/dataPoints.count;
 }
 
--(void) readSettings{
-    self.bounceMin = [[NSUserDefaults standardUserDefaults] integerForKey:BOUNCE_MIN_KEY];
-    if(self.bounceMin == 0)
-        self.bounceMin = BOUNCE_MIN;
-
-    self.bounceMax = [[NSUserDefaults standardUserDefaults] integerForKey:BOUNCE_MAX_KEY];
-    if(self.bounceMax == 0)
-        self.bounceMax = BOUNCE_MAX;
-    
-    self.cadenceMin = [[NSUserDefaults standardUserDefaults] integerForKey:CADENCE_MIN_KEY];
-    if(self.cadenceMin == 0)
-        self.cadenceMin = CADENCE_MIN;
-
-    self.cadenceMax = [[NSUserDefaults standardUserDefaults] integerForKey:CADENCE_MAX_KEY];
-    if(self.cadenceMax == 0)
-        self.cadenceMax = CADENCE_MAX;
-    
-    self.sampleSize= [[NSUserDefaults standardUserDefaults] integerForKey:SAMPLE_SIZE_KEY];
-    if(self.sampleSize == 0)
-        self.sampleSize = AVG_SAMPLE_SIZE;
-}
-
--(void) writeSettings{
-    [[NSUserDefaults standardUserDefaults] setInteger:self.bounceMin forKey:BOUNCE_MIN_KEY];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.bounceMax forKey:BOUNCE_MAX_KEY];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.cadenceMin forKey:CADENCE_MIN_KEY];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.cadenceMax forKey:CADENCE_MAX_KEY];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.sampleSize forKey:SAMPLE_SIZE_KEY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
 
 
 

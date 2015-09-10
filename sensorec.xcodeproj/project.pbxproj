@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		381DB8E51B9FA04900A7F331 /* SettingsV2TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381DB8E41B9FA04900A7F331 /* SettingsV2TableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		381E2D0A1B73D1F900171763 /* Coach.m in Sources */ = {isa = PBXBuildFile; fileRef = 381E2D091B73D1F900171763 /* Coach.m */; };
 		38A189B51B97AA6C00786A29 /* coach.js in Resources */ = {isa = PBXBuildFile; fileRef = 38A189B41B97AA6C00786A29 /* coach.js */; };
 		38A189B81B97AE2600786A29 /* CoachV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A189B71B97AE2600786A29 /* CoachV2.m */; };
+		38C2A0C91BA0D19B005094B0 /* SettingsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C2A0C81BA0D19B005094B0 /* SettingsDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
 		38D4861F1B75123500810602 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */; };
 		38D486251B753C7600810602 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D486241B753C7600810602 /* SettingsViewController.m */; };
 		AC050A001B431363004FA68F /* SparklineContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0509FF1B431363004FA68F /* SparklineContainerView.m */; };
@@ -79,11 +81,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		381DB8E31B9FA04900A7F331 /* SettingsV2TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsV2TableViewController.h; sourceTree = "<group>"; };
+		381DB8E41B9FA04900A7F331 /* SettingsV2TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsV2TableViewController.m; sourceTree = "<group>"; };
 		381E2D081B73D1F900171763 /* Coach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coach.h; sourceTree = "<group>"; };
 		381E2D091B73D1F900171763 /* Coach.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coach.m; sourceTree = "<group>"; };
 		38A189B41B97AA6C00786A29 /* coach.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = coach.js; sourceTree = "<group>"; };
 		38A189B61B97AE2600786A29 /* CoachV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachV2.h; sourceTree = "<group>"; };
 		38A189B71B97AE2600786A29 /* CoachV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachV2.m; sourceTree = "<group>"; };
+		38C2A0C71BA0D19B005094B0 /* SettingsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsDetailViewController.h; sourceTree = "<group>"; };
+		38C2A0C81BA0D19B005094B0 /* SettingsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsDetailViewController.m; sourceTree = "<group>"; };
 		38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		38D486231B753C7600810602 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		38D486241B753C7600810602 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -193,9 +199,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38C2A0C61BA0CE0E005094B0 /* Coach Settings */ = {
+			isa = PBXGroup;
+			children = (
+				38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */,
+				38D486231B753C7600810602 /* SettingsViewController.h */,
+				38D486241B753C7600810602 /* SettingsViewController.m */,
+				381DB8E31B9FA04900A7F331 /* SettingsV2TableViewController.h */,
+				381DB8E41B9FA04900A7F331 /* SettingsV2TableViewController.m */,
+				38C2A0C71BA0D19B005094B0 /* SettingsDetailViewController.h */,
+				38C2A0C81BA0D19B005094B0 /* SettingsDetailViewController.m */,
+			);
+			name = "Coach Settings";
+			sourceTree = "<group>";
+		};
 		AC050A0C1B4317F9004FA68F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				38C2A0C61BA0CE0E005094B0 /* Coach Settings */,
 				AC050A101B4318A3004FA68F /* AutolayoutUtils.h */,
 				AC050A111B4318A3004FA68F /* AutolayoutUtils.m */,
 				AC050A0D1B43185D004FA68F /* SparklineView.h */,
@@ -206,9 +227,6 @@
 				AC050A0A1B4317B0004FA68F /* SparklineTileView.m */,
 				AC160B791ACE062D002275D8 /* LBBarChartView.h */,
 				AC160B7A1ACE062E002275D8 /* LBBarChartView.m */,
-				38D4861E1B75123500810602 /* SettingsStoryboard.storyboard */,
-				38D486231B753C7600810602 /* SettingsViewController.h */,
-				38D486241B753C7600810602 /* SettingsViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -411,7 +429,7 @@
 		ACA43FEE1A65C4C2009C30C0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = AHN;
 				TargetAttributes = {
 					ACA43FF51A65C4C2009C30C0 = {
@@ -495,12 +513,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38C2A0C91BA0D19B005094B0 /* SettingsDetailViewController.m in Sources */,
 				AC855AD11AA116FE001D761C /* SensorLogData.m in Sources */,
 				ACA440221A65C683009C30C0 /* MainVC.m in Sources */,
 				AC9F59B51AA4E447007FDBDB /* BluetoothMasterCell.m in Sources */,
 				38D486251B753C7600810602 /* SettingsViewController.m in Sources */,
 				AC855ACB1AA116FE001D761C /* SensoPlex.m in Sources */,
 				AC050A0B1B4317B0004FA68F /* SparklineTileView.m in Sources */,
+				381DB8E51B9FA04900A7F331 /* SettingsV2TableViewController.m in Sources */,
 				AC855ACE1AA116FE001D761C /* SensorDataConfig.m in Sources */,
 				AC050A001B431363004FA68F /* SparklineContainerView.m in Sources */,
 				AC855AD31AA116FE001D761C /* SSPacketParser.m in Sources */,
@@ -565,6 +585,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -630,6 +651,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = sensorec/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.teamlumobodytech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -642,6 +664,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = sensorec/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.teamlumobodytech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -661,6 +684,7 @@
 				);
 				INFOPLIST_FILE = sensorecTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ahn.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sensorec.app/sensorec";
 			};
@@ -676,6 +700,7 @@
 				);
 				INFOPLIST_FILE = sensorecTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ahn.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sensorec.app/sensorec";
 			};
